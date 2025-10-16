@@ -6,14 +6,19 @@ import Image from "next/image";
 import { NEWARRIVALS_PRODUCTS } from "@/lib/products";
 import type { Product } from "@/lib/types";
 
-export default function StoreHome() {
-  const [cart, setCart] = React.useState<Product[]>([]);
+interface StoreHomeProps {
+  addToCart?: (product: Product) => void;
+}
 
-  const addToCart = (product: Product) => {
-    setCart((prevCart) => [...prevCart, product]);
-  };
+export default function StoreHome({ addToCart }: StoreHomeProps) {
 
   const allProducts = NEWARRIVALS_PRODUCTS;
+
+  const handleAddToCart = (product: Product) => {
+    if (addToCart) {
+      addToCart(product);
+    }
+  };
 
   return (
     <>
@@ -55,7 +60,7 @@ export default function StoreHome() {
               </div>
               <Button
                 className="w-full mt-4 bg-red-500 hover:bg-red-600"
-                onClick={() => addToCart(product)}
+                onClick={() => handleAddToCart(product)}
               >
                 Add to Cart
               </Button>

@@ -1,3 +1,4 @@
+
 "use client";
 import * as React from "react";
 import Link from "next/link";
@@ -41,6 +42,15 @@ export default function StoreLayout({
     (total, item) => total + (item.price.discounted || item.price.original),
     0
   );
+
+  const addToCart = (product: Product) => {
+    setCart((prevCart) => [...prevCart, product]);
+  };
+
+  const removeFromCart = (productId: string) => {
+    setCart((prevCart) => prevCart.filter(item => item.id !== productId));
+  };
+
 
   return (
     <div className="flex min-h-screen bg-gray-100">
@@ -116,7 +126,14 @@ export default function StoreLayout({
           </div>
         </header>
 
-        <main className="flex-1 p-6">{children}</main>
+        <main className="flex-1 p-6">
+           {React.Children.map(children, (child) => {
+              if (React.isValidElement(child)) {
+                return React.cloneElement(child, { addToCart } as { addToCart: (product: Product) => void; });
+              }
+              return child;
+            })}
+        </main>
 
         <Sheet>
           <SheetTrigger asChild>
@@ -139,8 +156,8 @@ export default function StoreLayout({
                 {cart.length === 0 ? (
                   <p>Your cart is empty.</p>
                 ) : (
-                  cart.map((item, index) => (
-                    <div key={`${item.id}-${index}`} className="border-b pb-4">
+                  cart.map((item) => (
+                    <div key={item.id} className="border-b pb-4">
                       <div className="flex items-center space-x-4">
                         <Image
                           src={item.image}
@@ -165,7 +182,7 @@ export default function StoreLayout({
                               <Plus className="h-4 w-4" />
                             </Button>
                           </div>
-                          <Button variant="link" className="p-0 h-auto text-red-500 mt-2 text-xs">
+                          <Button variant="link" className="p-0 h-auto text-red-500 mt-2 text-xs" onClick={() => removeFromCart(item.id)}>
                             Remove
                           </Button>
                         </div>
