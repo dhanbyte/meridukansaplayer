@@ -56,23 +56,41 @@ export default function StoreHome() {
   return (
     <div className="flex min-h-screen bg-gray-100">
       <aside className="w-16 bg-white flex-col items-center py-4 space-y-6 hidden sm:flex">
-        <div className="p-2 bg-red-500 rounded-md">
-          <Search className="h-6 w-6 text-white" />
-        </div>
-        <Landmark className="h-6 w-6 text-gray-500" />
-        <Box className="h-6 w-6 text-gray-500" />
-        <Truck className="h-6 w-6 text-gray-500" />
-        <FileText className="h-6 w-6 text-gray-500" />
-        <div className="relative">
-          <Bookmark className="h-6 w-6 text-gray-500" />
-          <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-4 w-4 flex items-center justify-center">
-            1
-          </span>
-        </div>
-        <PlaySquare className="h-6 w-6 text-gray-500" />
-        <MoreHorizontal className="h-6 w-6 text-gray-500" />
+        <Link href="#">
+          <div className="p-2 bg-red-500 rounded-md">
+            <Search className="h-6 w-6 text-white" />
+          </div>
+        </Link>
+        <Link href="#">
+          <Landmark className="h-6 w-6 text-gray-500" />
+        </Link>
+        <Link href="#">
+          <Box className="h-6 w-6 text-gray-500" />
+        </Link>
+        <Link href="#">
+          <Truck className="h-6 w-6 text-gray-500" />
+        </Link>
+        <Link href="#">
+          <FileText className="h-6 w-6 text-gray-500" />
+        </Link>
+        <Link href="#">
+          <div className="relative">
+            <Bookmark className="h-6 w-6 text-gray-500" />
+            <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-4 w-4 flex items-center justify-center">
+              1
+            </span>
+          </div>
+        </Link>
+        <Link href="#">
+          <PlaySquare className="h-6 w-6 text-gray-500" />
+        </Link>
+        <Link href="#">
+          <MoreHorizontal className="h-6 w-6 text-gray-500" />
+        </Link>
         <div className="mt-auto">
-          <LogOut className="h-6 w-6 text-gray-500" />
+          <Link href="#">
+            <LogOut className="h-6 w-6 text-gray-500" />
+          </Link>
         </div>
       </aside>
 
