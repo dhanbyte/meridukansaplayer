@@ -57,7 +57,7 @@ export default function StoreHome() {
 
   return (
     <div className="flex min-h-screen bg-gray-100">
-       <aside className="w-16 bg-white flex-col items-center py-4 space-y-6 hidden sm:flex">
+      <aside className="fixed inset-y-0 left-0 z-20 w-16 bg-white flex-col items-center py-4 space-y-6 hidden sm:flex">
         <Link href="/">
           <div className="p-2 bg-red-500 rounded-md">
             <Search className="h-6 w-6 text-white" />
@@ -96,8 +96,8 @@ export default function StoreHome() {
         </div>
       </aside>
 
-      <main className="flex-1 p-6">
-        <header className="flex flex-col sm:flex-row items-center justify-between mb-6 gap-4">
+      <div className="flex flex-col flex-1 sm:pl-16">
+        <header className="sticky top-0 z-10 flex flex-col sm:flex-row items-center justify-between mb-6 gap-4 bg-white p-4 border-b">
           <div className="w-full sm:w-auto">
             <Link href="/">
               <Image
@@ -143,53 +143,55 @@ export default function StoreHome() {
           </div>
         </header>
 
-        <section>
-          <div className="flex justify-between items-center mb-4">
-            <h2 className="text-xl font-bold">Products</h2>
-            <Button variant="link">VIEW ALL</Button>
-          </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
-            {filteredProducts.map((product) => (
-              <div
-                key={product.id}
-                className="bg-white rounded-lg shadow-md overflow-hidden group"
-              >
-                <div className="relative">
-                  <Image
-                    src={product.image}
-                    alt={product.name}
-                    width={300}
-                    height={300}
-                    className="object-cover w-full h-48"
-                  />
-                </div>
-                <div className="p-4">
-                  <h3 className="text-sm font-semibold truncate group-hover:whitespace-normal h-10">
-                    {product.name}
-                  </h3>
-                  <div className="flex items-baseline mt-2">
-                    <span className="text-lg font-bold">
-                      {product.price.currency}
-                      {product.price.discounted || product.price.original}
-                    </span>
-                    {product.price.discounted && (
-                      <span className="ml-2 text-sm text-gray-500 line-through">
-                        {product.price.currency}
-                        {product.price.original}
-                      </span>
-                    )}
+        <main className="flex-1 p-6">
+          <section>
+            <div className="flex justify-between items-center mb-4">
+              <h2 className="text-xl font-bold">Products</h2>
+              <Button variant="link">VIEW ALL</Button>
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
+              {filteredProducts.map((product) => (
+                <div
+                  key={product.id}
+                  className="bg-white rounded-lg shadow-md overflow-hidden group"
+                >
+                  <div className="relative">
+                    <Image
+                      src={product.image}
+                      alt={product.name}
+                      width={300}
+                      height={300}
+                      className="object-cover w-full h-48"
+                    />
                   </div>
-                  <Button
-                    className="w-full mt-4 bg-red-500 hover:bg-red-600"
-                    onClick={() => addToCart(product)}
-                  >
-                    Add to Cart
-                  </Button>
+                  <div className="p-4">
+                    <h3 className="text-sm font-semibold truncate group-hover:whitespace-normal h-10">
+                      {product.name}
+                    </h3>
+                    <div className="flex items-baseline mt-2">
+                      <span className="text-lg font-bold">
+                        {product.price.currency}
+                        {product.price.discounted || product.price.original}
+                      </span>
+                      {product.price.discounted && (
+                        <span className="ml-2 text-sm text-gray-500 line-through">
+                          {product.price.currency}
+                          {product.price.original}
+                        </span>
+                      )}
+                    </div>
+                    <Button
+                      className="w-full mt-4 bg-red-500 hover:bg-red-600"
+                      onClick={() => addToCart(product)}
+                    >
+                      Add to Cart
+                    </Button>
+                  </div>
                 </div>
-              </div>
-            ))}
-          </div>
-        </section>
+              ))}
+            </div>
+          </section>
+        </main>
         <Sheet>
           <SheetTrigger asChild>
             <Button className="fixed bottom-10 right-10 rounded-full h-16 w-16 bg-red-500 hover:bg-red-600 shadow-lg">
@@ -245,7 +247,7 @@ export default function StoreHome() {
             </div>
           </SheetContent>
         </Sheet>
-      </main>
+      </div>
     </div>
   );
 }
