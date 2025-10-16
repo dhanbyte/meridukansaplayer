@@ -49,31 +49,33 @@ export default function StoreHome() {
     0
   );
 
-  const filteredProducts = NEWARRIVALS_PRODUCTS.filter((product) =>
+  const allProducts = NEWARRIVALS_PRODUCTS;
+
+  const filteredProducts = allProducts.filter((product) =>
     product.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   return (
     <div className="flex min-h-screen bg-gray-100">
-      <aside className="w-16 bg-white flex-col items-center py-4 space-y-6 hidden sm:flex">
-        <Link href="#">
+       <aside className="w-16 bg-white flex-col items-center py-4 space-y-6 hidden sm:flex">
+        <Link href="/">
           <div className="p-2 bg-red-500 rounded-md">
             <Search className="h-6 w-6 text-white" />
           </div>
         </Link>
-        <Link href="#">
+        <Link href="/banking">
           <Landmark className="h-6 w-6 text-gray-500" />
         </Link>
-        <Link href="#">
+        <Link href="/orders">
           <Box className="h-6 w-6 text-gray-500" />
         </Link>
-        <Link href="#">
+        <Link href="/shipping">
           <Truck className="h-6 w-6 text-gray-500" />
         </Link>
-        <Link href="#">
+        <Link href="/invoices">
           <FileText className="h-6 w-6 text-gray-500" />
         </Link>
-        <Link href="#">
+        <Link href="/bookmarks">
           <div className="relative">
             <Bookmark className="h-6 w-6 text-gray-500" />
             <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-4 w-4 flex items-center justify-center">
@@ -81,10 +83,10 @@ export default function StoreHome() {
             </span>
           </div>
         </Link>
-        <Link href="#">
+        <Link href="/tutorials">
           <PlaySquare className="h-6 w-6 text-gray-500" />
         </Link>
-        <Link href="#">
+        <Link href="/settings">
           <MoreHorizontal className="h-6 w-6 text-gray-500" />
         </Link>
         <div className="mt-auto">
