@@ -9,15 +9,21 @@ import { Label } from "@/components/ui/label";
 import { Minus, Plus } from "lucide-react";
 import type { Product } from "@/lib/types";
 
-interface CartPageProps {
-  cart?: Product[];
-  removeFromCart?: (productId: string) => void;
+interface CartItem extends Product {
+  quantity: number;
 }
 
-export default function CartPage({ cart = [], removeFromCart }: CartPageProps) {
+interface CartPageProps {
+  cart?: CartItem[];
+  removeFromCart?: (productId: string) => void;
+  increaseQuantity?: (productId: string) => void;
+  decreaseQuantity?: (productId: string) => void;
+}
+
+export default function CartPage({ cart = [], removeFromCart, increaseQuantity, decreaseQuantity }: CartPageProps) {
 
   const totalCartPrice = cart.reduce(
-    (total, item) => total + (item.price.discounted || item.price.original),
+    (total, item) => total + (item.price.discounted || item.price.original) * item.quantity,
     0
   );
 
@@ -27,9 +33,22 @@ export default function CartPage({ cart = [], removeFromCart }: CartPageProps) {
     }
   }
 
+  const handleIncreaseQuantity = (productId: string) => {
+    if (increaseQuantity) {
+      increaseQuantity(productId);
+    }
+  };
+
+  const handleDecreaseQuantity = (productId: string) => {
+    if (decreaseQuantity) {
+      decreaseQuantity(productId);
+    }
+  };
+
+
   return (
     <div className="container mx-auto">
-        <h1 className="text-2xl font-bold mb-6">Your Cart ({cart.length} items)</h1>
+        <h1 className="text-2xl font-bold mb-6">Your Cart ({cart.reduce((acc, item) => acc + item.quantity, 0)} items)</h1>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 py-4">
             {/* Left Column: Cart Items */}
             <div className="space-y-4">
@@ -49,16 +68,16 @@ export default function CartPage({ cart = [], removeFromCart }: CartPageProps) {
                     <div className="flex-1">
                         <h4 className="text-sm font-semibold">{item.name}</h4>
                         <div className="flex items-center mt-2">
-                        <Button size="icon" variant="outline" className="h-8 w-8">
+                        <Button size="icon" variant="outline" className="h-8 w-8" onClick={() => handleDecreaseQuantity(item.id)}>
                             <Minus className="h-4 w-4" />
                         </Button>
                         <Input
                             type="number"
-                            value={1}
+                            value={item.quantity}
                             readOnly
                             className="w-12 text-center mx-2 h-8"
                         />
-                        <Button size="icon" variant="outline" className="h-8 w-8">
+                        <Button size="icon" variant="outline" className="h-8 w-8" onClick={() => handleIncreaseQuantity(item.id)}>
                             <Plus className="h-4 w-4" />
                         </Button>
                         </div>
@@ -68,7 +87,7 @@ export default function CartPage({ cart = [], removeFromCart }: CartPageProps) {
                     </div>
                     <p className="text-sm font-semibold">
                         Item Price: {item.price.currency}
-                        {item.price.discounted || item.price.original}
+                        {(item.price.discounted || item.price.original) * item.quantity}
                     </p>
                     </div>
                 </div>

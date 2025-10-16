@@ -27,20 +27,53 @@ import {
 } from "@/components/ui/dropdown-menu";
 import type { Product } from "@/lib/types";
 
+interface CartItem extends Product {
+  quantity: number;
+}
+
 export default function StoreLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const [cart, setCart] = React.useState<Product[]>([]);
+  const [cart, setCart] = React.useState<CartItem[]>([]);
   
   const addToCart = (product: Product) => {
-    setCart((prevCart) => [...prevCart, product]);
+    setCart((prevCart) => {
+      const existingItem = prevCart.find((item) => item.id === product.id);
+      if (existingItem) {
+        return prevCart.map((item) =>
+          item.id === product.id ? { ...item, quantity: item.quantity + 1 } : item
+        );
+      } else {
+        return [...prevCart, { ...product, quantity: 1 }];
+      }
+    });
   };
 
   const removeFromCart = (productId: string) => {
     setCart((prevCart) => prevCart.filter(item => item.id !== productId));
   };
+
+  const increaseQuantity = (productId: string) => {
+    setCart((prevCart) =>
+      prevCart.map((item) =>
+        item.id === productId ? { ...item, quantity: item.quantity + 1 } : item
+      )
+    );
+  };
+
+  const decreaseQuantity = (productId: string) => {
+    setCart((prevCart) =>
+      prevCart.map((item) =>
+        item.id === productId && item.quantity > 1
+          ? { ...item, quantity: item.quantity - 1 }
+          : item
+      ).filter(item => item.quantity > 0)
+    );
+  };
+
+  const totalItems = cart.reduce((acc, item) => acc + item.quantity, 0);
 
 
   return (
@@ -65,9 +98,9 @@ export default function StoreLayout({
         </Link>
         <Link href="/cart" className="relative">
             <ShoppingCart className="h-6 w-6 text-gray-500" />
-            {cart.length > 0 && (
+            {totalItems > 0 && (
             <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center font-bold">
-                {cart.length}
+                {totalItems}
             </span>
             )}
         </Link>
@@ -136,6 +169,8 @@ export default function StoreLayout({
                   addToCart, 
                   cart,
                   removeFromCart,
+                  increaseQuantity,
+                  decreaseQuantity,
                  } as any);
               }
               return child;
