@@ -87,7 +87,7 @@ export default function CartPage({ cart = [], removeFromCart, increaseQuantity, 
                     </div>
                     <p className="text-sm font-semibold">
                         {item.price.currency}
-                        {(item.price.discounted || item.price.original) * item.quantity}
+                        {((item.price.discounted || item.price.original) * item.quantity).toFixed(2)}
                     </p>
                     </div>
                 </div>
