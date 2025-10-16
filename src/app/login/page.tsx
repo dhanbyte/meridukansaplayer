@@ -1,20 +1,40 @@
 
 "use client";
+import * as React from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { useToast } from "@/hooks/use-toast";
 
 export default function LoginPage() {
   const router = useRouter();
+  const { toast } = useToast();
+  const [email, setEmail] = React.useState("");
+  const [password, setPassword] = React.useState("");
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
-    // Simulate login
-    const user = { name: "Test User", email: "test@example.com" };
-    localStorage.setItem("user", JSON.stringify(user));
-    router.push("/partner/orders");
+
+    if (email === "admin@example.com" && password === "704331") {
+      // Admin login
+      const admin = { name: "Admin User", email: "admin@example.com" };
+      localStorage.setItem("user", JSON.stringify(admin));
+      router.push("/admin");
+    } else if (email && password) {
+       // Partner login (simulation)
+       // In a real app, you would validate partner credentials against a database
+      const user = { name: "Partner User", email: email };
+      localStorage.setItem("user", JSON.stringify(user));
+      router.push("/partner/orders");
+    } else {
+        toast({
+            variant: "destructive",
+            title: "Invalid Credentials",
+            description: "Please check your email and password.",
+        });
+    }
   };
 
   const handleSkip = () => {
@@ -49,6 +69,8 @@ export default function LoginPage() {
               required
               className="w-full"
               placeholder="Email address"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
             />
           </div>
           <div>
@@ -63,6 +85,8 @@ export default function LoginPage() {
               required
               className="w-full"
               placeholder="Password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
             />
           </div>
           <div>
@@ -88,4 +112,3 @@ export default function LoginPage() {
     </div>
   );
 }
-
