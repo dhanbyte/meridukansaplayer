@@ -86,7 +86,7 @@ export default function CartPage({ cart = [], removeFromCart, increaseQuantity, 
                         </Button>
                     </div>
                     <p className="text-sm font-semibold">
-                        Item Price: {item.price.currency}
+                        {item.price.currency}
                         {(item.price.discounted || item.price.original) * item.quantity}
                     </p>
                     </div>
