@@ -22,7 +22,7 @@ export default function StoreHome({ addToCart }: StoreHomeProps) {
 
   return (
     <>
-    <div className="flex-1 p-6">
+    <div className="flex-1">
       <div className="flex justify-between items-center mb-4">
         <h2 className="text-xl font-bold">Products</h2>
         <Button variant="link">VIEW ALL</Button>
