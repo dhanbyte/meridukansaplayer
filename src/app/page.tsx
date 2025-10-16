@@ -57,6 +57,7 @@ export default function Home() {
               <Input id="password" type="password" placeholder="Password" required />
             </div>
             <Button type="submit" className="w-full">Login</Button>
+            <Button type="button" variant="secondary" className="w-full" onClick={() => router.push('/partner/orders')}>Skip for now</Button>
           </form>
         </CardContent>
       </Card>
