@@ -156,16 +156,6 @@ export default function StoreHome() {
                     height={300}
                     className="object-cover w-full h-48"
                   />
-                  {product.price.discounted && (
-                     <div className="absolute top-2 left-2 bg-red-500 text-white text-xs px-2 py-1 rounded">
-                      {(
-                        ((product.price.original - product.price.discounted) /
-                          product.price.original) *
-                        100
-                      ).toFixed(0)}
-                      % OFF
-                    </div>
-                  )}
                 </div>
                 <div className="p-4">
                   <h3 className="text-sm font-semibold truncate group-hover:whitespace-normal">
