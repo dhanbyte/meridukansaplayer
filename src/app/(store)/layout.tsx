@@ -63,7 +63,7 @@ export default function StoreLayout({
           <MoreHorizontal className="h-6 w-6 text-gray-500" />
         </Link>
         <div className="mt-auto">
-          <Link href="#">
+          <Link href="/login">
             <LogOut className="h-6 w-6 text-gray-500" />
           </Link>
         </div>
@@ -95,9 +95,11 @@ export default function StoreLayout({
           <div className="w-full sm:w-auto flex items-center justify-center sm:justify-end space-x-2 sm:space-x-4">
             <span className="hidden md:inline">+91 93115-25609</span>
             <Button variant="destructive" className="bg-red-500">Support</Button>
-            <Button variant="outline">
-              <Wallet className="mr-2 h-4 w-4" />
-              Recharge Wallet
+            <Button asChild variant="outline">
+              <Link href="/recharge">
+                <Wallet className="mr-2 h-4 w-4" />
+                Recharge Wallet
+              </Link>
             </Button>
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
