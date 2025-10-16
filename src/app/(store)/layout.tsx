@@ -10,9 +10,6 @@ import {
   Landmark,
   Box,
   Truck,
-  FileText,
-  Bookmark,
-  PlaySquare,
   MoreHorizontal,
   LogOut,
   ChevronDown,
@@ -61,20 +58,6 @@ export default function StoreLayout({
         </Link>
         <Link href="/shipping">
           <Truck className="h-6 w-6 text-gray-500" />
-        </Link>
-        <Link href="/invoices">
-          <FileText className="h-6 w-6 text-gray-500" />
-        </Link>
-        <Link href="/bookmarks">
-          <div className="relative">
-            <Bookmark className="h-6 w-6 text-gray-500" />
-            <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-4 w-4 flex items-center justify-center">
-              1
-            </span>
-          </div>
-        </Link>
-        <Link href="/tutorials">
-          <PlaySquare className="h-6 w-6 text-gray-500" />
         </Link>
         <Link href="/settings">
           <MoreHorizontal className="h-6 w-6 text-gray-500" />
