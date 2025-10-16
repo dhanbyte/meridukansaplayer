@@ -16,6 +16,7 @@ import {
 } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
 import { PlusCircle } from "lucide-react";
+import Link from "next/link";
 
 export default function AdminPartnersPage() {
   return (
@@ -23,12 +24,14 @@ export default function AdminPartnersPage() {
         <div className="flex items-center">
             <h1 className="text-lg font-semibold md:text-2xl">Partners</h1>
             <div className="ml-auto flex items-center gap-2">
+              <Link href="/admin/partners/create">
                 <Button size="sm" className="h-7 gap-1">
                     <PlusCircle className="h-3.5 w-3.5" />
                     <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
                         Create Partner
                     </span>
                 </Button>
+              </Link>
             </div>
         </div>
 
