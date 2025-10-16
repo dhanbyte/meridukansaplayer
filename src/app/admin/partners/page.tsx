@@ -48,7 +48,7 @@ export default function AdminPartnersPage() {
               <TableRow>
                 <TableHead>Partner Name</TableHead>
                 <TableHead>Email</TableHead>
-                <TableHead>Phone</TableHead>
+                <TableHead>Bank Details</TableHead>
                 <TableHead>Status</TableHead>
                 <TableHead>Actions</TableHead>
               </TableRow>
@@ -59,7 +59,12 @@ export default function AdminPartnersPage() {
                   <div className="font-medium">Partner One</div>
                 </TableCell>
                 <TableCell>partner.one@example.com</TableCell>
-                <TableCell>+1 111 222 3333</TableCell>
+                 <TableCell>
+                  <div className="text-sm">
+                    <p><strong>Bank:</strong> State Bank of India</p>
+                    <p><strong>A/C:</strong> ****1234</p>
+                  </div>
+                </TableCell>
                 <TableCell>
                   <Badge>Active</Badge>
                 </TableCell>

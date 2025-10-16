@@ -5,14 +5,22 @@ import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import { NEWARRIVALS_PRODUCTS } from "@/lib/products";
 import type { Product } from "@/lib/types";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+
 
 interface StoreHomeProps {
   addToCart?: (product: Product) => void;
 }
 
 export default function StoreHome({ addToCart }: StoreHomeProps) {
-
-  const allProducts = NEWARRIVALS_PRODUCTS;
+  const [products, setProducts] = React.useState(NEWARRIVALS_PRODUCTS);
+  const [filter, setFilter] = React.useState("all");
 
   const handleAddToCart = (product: Product) => {
     if (addToCart) {
@@ -20,15 +28,47 @@ export default function StoreHome({ addToCart }: StoreHomeProps) {
     }
   };
 
+  const handleFilterChange = (value: string) => {
+    setFilter(value);
+    if (value === "all") {
+      setProducts(NEWARRIVALS_PRODUCTS);
+    } else {
+      setProducts(
+        NEWARRIVALS_PRODUCTS.filter(
+          (p) => p.subcategory.toLowerCase() === value.toLowerCase()
+        )
+      );
+    }
+  };
+  
+  const subcategories = [
+    ...new Set(NEWARRIVALS_PRODUCTS.map((p) => p.subcategory)),
+  ];
+
   return (
     <>
     <div className="flex-1">
       <div className="flex justify-between items-center mb-4">
         <h2 className="text-xl font-bold">Products</h2>
-        <Button variant="link">VIEW ALL</Button>
+         <div className="flex items-center gap-4">
+          <Select onValueChange={handleFilterChange} defaultValue="all">
+            <SelectTrigger className="w-[180px]">
+              <SelectValue placeholder="Filter by category" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">All</SelectItem>
+              {subcategories.map((sub) => (
+                <SelectItem key={sub} value={sub}>
+                  {sub}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+          <Button variant="link">VIEW ALL</Button>
+        </div>
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
-        {allProducts.map((product) => (
+        {products.map((product) => (
           <div
             key={product.id}
             className="bg-white rounded-lg shadow-md overflow-hidden group"
