@@ -1,252 +1,90 @@
+
 "use client";
-import * as React from "react";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
+import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import {
-  Sheet,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-} from "@/components/ui/sheet";
-import {
-  Search,
-  ShoppingCart,
-  User,
-  Bell,
-  Landmark,
-  Box,
-  Truck,
-  FileText,
-  Bookmark,
-  PlaySquare,
-  MoreHorizontal,
-  LogOut,
-  ChevronDown,
-  Wallet,
-} from "lucide-react";
-import Image from "next/image";
-import { NEWARRIVALS_PRODUCTS } from "@/lib/products";
-import type { Product } from "@/lib/types";
-import Link from "next/link";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+import { Label } from "@/components/ui/label";
 
-export default function StoreHome() {
-  const [cart, setCart] = React.useState<Product[]>([]);
-  const [searchTerm, setSearchTerm] = React.useState("");
+export default function LoginPage() {
+  const router = useRouter();
 
-  const addToCart = (product: Product) => {
-    setCart((prevCart) => [...prevCart, product]);
+  const handleLogin = (e: React.FormEvent) => {
+    e.preventDefault();
+    // Simulate login
+    const user = { name: "Test User", email: "test@example.com" };
+    localStorage.setItem("user", JSON.stringify(user));
+    router.push("/partner/orders");
   };
 
-  const totalCartPrice = cart.reduce(
-    (total, item) => total + (item.price.discounted || item.price.original),
-    0
-  );
-
-  const allProducts = NEWARRIVALS_PRODUCTS;
-
-  const filteredProducts = allProducts.filter((product) =>
-    product.name.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  const handleSkip = () => {
+    router.push("/");
+  };
 
   return (
-    <div className="flex min-h-screen bg-gray-100">
-      <aside className="fixed inset-y-0 left-0 z-20 w-16 bg-white flex-col items-center py-4 space-y-6 hidden sm:flex">
-        <Link href="/">
-          <div className="p-2 bg-red-500 rounded-md">
-            <Search className="h-6 w-6 text-white" />
-          </div>
-        </Link>
-        <Link href="/banking">
-          <Landmark className="h-6 w-6 text-gray-500" />
-        </Link>
-        <Link href="/orders">
-          <Box className="h-6 w-6 text-gray-500" />
-        </Link>
-        <Link href="/shipping">
-          <Truck className="h-6 w-6 text-gray-500" />
-        </Link>
-        <Link href="/invoices">
-          <FileText className="h-6 w-6 text-gray-500" />
-        </Link>
-        <Link href="/bookmarks">
-          <div className="relative">
-            <Bookmark className="h-6 w-6 text-gray-500" />
-            <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-4 w-4 flex items-center justify-center">
-              1
-            </span>
-          </div>
-        </Link>
-        <Link href="/tutorials">
-          <PlaySquare className="h-6 w-6 text-gray-500" />
-        </Link>
-        <Link href="/settings">
-          <MoreHorizontal className="h-6 w-6 text-gray-500" />
-        </Link>
-        <div className="mt-auto">
-          <Link href="#">
-            <LogOut className="h-6 w-6 text-gray-500" />
-          </Link>
+    <div className="flex min-h-screen items-center justify-center bg-gray-100">
+      <div className="w-full max-w-md rounded-lg bg-white p-8 shadow-lg">
+        <div className="mb-8 text-center">
+           <Image
+            src="https://wukusy.com/wp-content/uploads/2024/05/wukusy-logo.png"
+            alt="Wukusy Logo"
+            width={180}
+            height={50}
+            className="mx-auto"
+            priority
+          />
+          <h1 className="mt-4 text-2xl font-bold text-gray-800">Shopwave Dropshipping</h1>
+          <p className="text-gray-600">Partner me aapka swagat hai</p>
         </div>
-      </aside>
-
-      <div className="flex flex-col flex-1 sm:pl-16">
-        <header className="sticky top-0 z-10 flex flex-col sm:flex-row items-center justify-between mb-6 gap-4 bg-white p-4 border-b">
-          <div className="w-full sm:w-auto">
-            <Link href="/">
-              <Image
-                src="https://wukusy.com/wp-content/uploads/2024/05/wukusy-logo.png"
-                alt="Wukusy Logo"
-                width={150}
-                height={40}
-                priority
-              />
-            </Link>
+        <form onSubmit={handleLogin} className="space-y-6">
+          <div>
+            <Label htmlFor="email" className="sr-only">
+              Email address
+            </Label>
+            <Input
+              id="email"
+              name="email"
+              type="email"
+              autoComplete="email"
+              required
+              className="w-full"
+              placeholder="Email address"
+            />
           </div>
-          <div className="w-full sm:flex-1 flex justify-center">
-            <div className="relative w-full max-w-md">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
-              <Input
-                type="text"
-                placeholder="Search Products..."
-                className="pl-10 w-full"
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-              />
-            </div>
+          <div>
+            <Label htmlFor="password" className="sr-only">
+              Password
+            </Label>
+            <Input
+              id="password"
+              name="password"
+              type="password"
+              autoComplete="current-password"
+              required
+              className="w-full"
+              placeholder="Password"
+            />
           </div>
-          <div className="w-full sm:w-auto flex items-center justify-center sm:justify-end space-x-2 sm:space-x-4">
-            <span className="hidden md:inline">+91 93115-25609</span>
-            <Button variant="destructive" className="bg-red-500">Support</Button>
-            <Button variant="outline">
-              <Wallet className="mr-2 h-4 w-4" />
-              Recharge Wallet
+          <div>
+            <Button
+              type="submit"
+              className="w-full bg-red-500 text-white hover:bg-red-600"
+            >
+              Sign in
             </Button>
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant="ghost">
-                  Shopwave <ChevronDown className="h-4 w-4" />
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent>
-                <DropdownMenuItem>Select Store</DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
-            <Bell className="h-6 w-6" />
-            <User className="h-6 w-6" />
           </div>
-        </header>
-
-        <main className="flex-1 p-6">
-          <section>
-            <div className="flex justify-between items-center mb-4">
-              <h2 className="text-xl font-bold">Products</h2>
-              <Button variant="link">VIEW ALL</Button>
-            </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
-              {filteredProducts.map((product) => (
-                <div
-                  key={product.id}
-                  className="bg-white rounded-lg shadow-md overflow-hidden group"
-                >
-                  <div className="relative">
-                    <Image
-                      src={product.image}
-                      alt={product.name}
-                      width={300}
-                      height={300}
-                      className="object-cover w-full h-48"
-                    />
-                  </div>
-                  <div className="p-4">
-                    <h3 className="text-sm font-semibold truncate group-hover:whitespace-normal h-10">
-                      {product.name}
-                    </h3>
-                    <div className="flex items-baseline mt-2">
-                      <span className="text-lg font-bold">
-                        {product.price.currency}
-                        {product.price.discounted || product.price.original}
-                      </span>
-                      {product.price.discounted && (
-                        <span className="ml-2 text-sm text-gray-500 line-through">
-                          {product.price.currency}
-                          {product.price.original}
-                        </span>
-                      )}
-                    </div>
-                    <Button
-                      className="w-full mt-4 bg-red-500 hover:bg-red-600"
-                      onClick={() => addToCart(product)}
-                    >
-                      Add to Cart
-                    </Button>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </section>
-        </main>
-        <Sheet>
-          <SheetTrigger asChild>
-            <Button className="fixed bottom-10 right-10 rounded-full h-16 w-16 bg-red-500 hover:bg-red-600 shadow-lg">
-              <ShoppingCart className="h-7 w-7" />
-              {cart.length > 0 && (
-                <span className="absolute -top-1 -right-1 bg-white text-red-500 text-xs rounded-full h-5 w-5 flex items-center justify-center font-bold">
-                  {cart.length}
-                </span>
-              )}
+          <div>
+            <Button
+              type="button"
+              variant="outline"
+              className="w-full"
+              onClick={handleSkip}
+            >
+              Skip for now
             </Button>
-          </SheetTrigger>
-          <SheetContent>
-            <SheetHeader>
-              <SheetTitle>My Cart</SheetTitle>
-            </SheetHeader>
-            <div className="py-4">
-              {cart.length === 0 ? (
-                <p>Your cart is empty.</p>
-              ) : (
-                <div className="space-y-4">
-                  {cart.map((item, index) => (
-                    <div
-                      key={`${item.id}-${index}`}
-                      className="flex items-center space-x-4"
-                    >
-                      <Image
-                        src={item.image}
-                        alt={item.name}
-                        width={64}
-                        height={64}
-                        className="rounded-md"
-                      />
-                      <div className="flex-1">
-                        <h4 className="text-sm font-semibold">{item.name}</h4>
-                        <p className="text-sm text-gray-500">
-                          {item.price.currency}
-                          {item.price.discounted || item.price.original}
-                        </p>
-                      </div>
-                    </div>
-                  ))}
-                  <div className="border-t pt-4 mt-4">
-                    <div className="flex justify-between font-bold">
-                      <span>Total</span>
-                      <span>₹{totalCartPrice.toFixed(2)}</span>
-                    </div>
-                    <Button className="w-full mt-4 bg-red-500 hover:bg-red-600">
-                      Checkout
-                    </Button>
-                  </div>
-                </div>
-              )}
-            </div>
-          </SheetContent>
-        </Sheet>
+          </div>
+        </form>
       </div>
     </div>
   );
