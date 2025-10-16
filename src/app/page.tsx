@@ -7,6 +7,7 @@ import {
   SheetContent,
   SheetHeader,
   SheetTitle,
+  SheetTrigger,
 } from "@/components/ui/sheet";
 import {
   Search,
@@ -22,24 +23,22 @@ import {
   MoreHorizontal,
   LogOut,
   ChevronDown,
+  Wallet,
 } from "lucide-react";
 import Image from "next/image";
 import { NEWARRIVALS_PRODUCTS } from "@/lib/products";
 import type { Product } from "@/lib/types";
 import Link from "next/link";
-
-const uniqueCategories = [
-  ...new Map(
-    NEWARRIVALS_PRODUCTS.map((product) => [
-      product.category,
-      product,
-    ])
-  ).values(),
-].map(p => ({name: p.category, image: p.image}));
-
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 export default function StoreHome() {
   const [cart, setCart] = React.useState<Product[]>([]);
+  const [searchTerm, setSearchTerm] = React.useState("");
 
   const addToCart = (product: Product) => {
     setCart((prevCart) => [...prevCart, product]);
@@ -48,6 +47,10 @@ export default function StoreHome() {
   const totalCartPrice = cart.reduce(
     (total, item) => total + (item.price.discounted || item.price.original),
     0
+  );
+
+  const filteredProducts = NEWARRIVALS_PRODUCTS.filter((product) =>
+    product.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   return (
@@ -75,8 +78,8 @@ export default function StoreHome() {
 
       <main className="flex-1 p-6">
         <header className="flex flex-col sm:flex-row items-center justify-between mb-6 gap-4">
-          <div className="w-full sm:w-1/3">
-             <Link href="/">
+          <div className="w-full sm:w-auto">
+            <Link href="/">
               <Image
                 src="https://wukusy.com/wp-content/uploads/2024/05/wukusy-logo.png"
                 alt="Wukusy Logo"
@@ -86,53 +89,47 @@ export default function StoreHome() {
               />
             </Link>
           </div>
-          <div className="w-full sm:w-1/3 flex">
-            <div className="relative flex-grow">
+          <div className="w-full sm:flex-1 flex justify-center">
+            <div className="relative w-full max-w-md">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
               <Input
                 type="text"
-                placeholder="Search Orders & Products..."
+                placeholder="Search Products..."
                 className="pl-10 w-full"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
               />
             </div>
           </div>
-          <div className="w-full sm:w-1/3 flex items-center justify-end space-x-4">
-            <span>+91 93115-25609</span>
+          <div className="w-full sm:w-auto flex items-center justify-center sm:justify-end space-x-2 sm:space-x-4">
+            <span className="hidden md:inline">+91 93115-25609</span>
             <Button variant="destructive" className="bg-red-500">Support</Button>
-            <div className="flex items-center">
-              <Button variant="ghost" size="sm">
-                Shopwave <ChevronDown className="h-4 w-4" />
-              </Button>
-            </div>
+            <Button variant="outline">
+              <Wallet className="mr-2 h-4 w-4" />
+              Recharge Wallet
+            </Button>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="ghost">
+                  Shopwave <ChevronDown className="h-4 w-4" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent>
+                <DropdownMenuItem>Select Store</DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
             <Bell className="h-6 w-6" />
             <User className="h-6 w-6" />
           </div>
         </header>
 
-        <section className="mb-8">
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-7 gap-4 text-center">
-                {uniqueCategories.map((category) => (
-                  <div key={category.name} className="flex flex-col items-center">
-                    <Image
-                      src={category.image}
-                      alt={category.name}
-                      width={80}
-                      height={80}
-                      className="rounded-full object-cover aspect-square"
-                    />
-                    <span className="mt-2 text-sm">{category.name}</span>
-                  </div>
-                ))}
-            </div>
-        </section>
-
         <section>
           <div className="flex justify-between items-center mb-4">
-            <h2 className="text-xl font-bold">New Arrivals</h2>
+            <h2 className="text-xl font-bold">Products</h2>
             <Button variant="link">VIEW ALL</Button>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
-            {NEWARRIVALS_PRODUCTS.map((product) => (
+            {filteredProducts.map((product) => (
               <div
                 key={product.id}
                 className="bg-white rounded-lg shadow-md overflow-hidden group"
@@ -147,7 +144,7 @@ export default function StoreHome() {
                   />
                 </div>
                 <div className="p-4">
-                  <h3 className="text-sm font-semibold truncate group-hover:whitespace-normal">
+                  <h3 className="text-sm font-semibold truncate group-hover:whitespace-normal h-10">
                     {product.name}
                   </h3>
                   <div className="flex items-baseline mt-2">
@@ -162,16 +159,12 @@ export default function StoreHome() {
                       </span>
                     )}
                   </div>
-                  <Sheet>
-                    <SheetTrigger asChild>
-                      <Button
-                        className="w-full mt-4 bg-red-500 hover:bg-red-600"
-                        onClick={() => addToCart(product)}
-                      >
-                        Add to Cart
-                      </Button>
-                    </SheetTrigger>
-                  </Sheet>
+                  <Button
+                    className="w-full mt-4 bg-red-500 hover:bg-red-600"
+                    onClick={() => addToCart(product)}
+                  >
+                    Add to Cart
+                  </Button>
                 </div>
               </div>
             ))}
