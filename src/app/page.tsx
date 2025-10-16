@@ -7,14 +7,12 @@ import {
   SheetContent,
   SheetHeader,
   SheetTitle,
-  SheetTrigger,
 } from "@/components/ui/sheet";
 import {
   Search,
   ShoppingCart,
   User,
   Bell,
-  Wallet,
   Landmark,
   Box,
   Truck,
@@ -28,16 +26,17 @@ import {
 import Image from "next/image";
 import { NEWARRIVALS_PRODUCTS } from "@/lib/products";
 import type { Product } from "@/lib/types";
+import Link from "next/link";
 
-const categories = [
-  { name: "Accessories", image: "https://picsum.photos/seed/1/100/100" },
-  { name: "Automotive", image: "https://picsum.photos/seed/2/100/100" },
-  { name: "Baby Care", image: "https://picsum.photos/seed/3/100/100" },
-  { name: "Bracelets", image: "https://picsum.photos/seed/4/100/100" },
-  { name: "Chocolates", image: "https://picsum.photos/seed/5/100/100" },
-  { name: "Electronics", image: "https://picsum.photos/seed/6/100/100" },
-  { name: "Face & Body Care", image: "https://picsum.photos/seed/7/100/100" },
-];
+const uniqueCategories = [
+  ...new Map(
+    NEWARRIVALS_PRODUCTS.map((product) => [
+      product.category,
+      product,
+    ])
+  ).values(),
+].map(p => ({name: p.category, image: p.image}));
+
 
 export default function StoreHome() {
   const [cart, setCart] = React.useState<Product[]>([]);
@@ -46,11 +45,14 @@ export default function StoreHome() {
     setCart((prevCart) => [...prevCart, product]);
   };
 
-  const totalCartPrice = cart.reduce((total, item) => total + (item.price.discounted || item.price.original), 0);
+  const totalCartPrice = cart.reduce(
+    (total, item) => total + (item.price.discounted || item.price.original),
+    0
+  );
 
   return (
     <div className="flex min-h-screen bg-gray-100">
-      <aside className="w-16 bg-white flex flex-col items-center py-4 space-y-6">
+      <aside className="w-16 bg-white flex-col items-center py-4 space-y-6 hidden sm:flex">
         <div className="p-2 bg-red-500 rounded-md">
           <Search className="h-6 w-6 text-white" />
         </div>
@@ -72,33 +74,33 @@ export default function StoreHome() {
       </aside>
 
       <main className="flex-1 p-6">
-        <header className="flex items-center justify-between mb-6">
-          <div className="w-1/3">
-            <Image
-              src="https://wukusy.com/wp-content/uploads/2024/05/wukusy-logo.png"
-              alt="Wukusy Logo"
-              width={150}
-              height={40}
-              priority
-            />
+        <header className="flex flex-col sm:flex-row items-center justify-between mb-6 gap-4">
+          <div className="w-full sm:w-1/3">
+             <Link href="/">
+              <Image
+                src="https://wukusy.com/wp-content/uploads/2024/05/wukusy-logo.png"
+                alt="Wukusy Logo"
+                width={150}
+                height={40}
+                priority
+              />
+            </Link>
           </div>
-          <div className="w-1/3 flex">
+          <div className="w-full sm:w-1/3 flex">
             <div className="relative flex-grow">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
               <Input
                 type="text"
-                placeholder="Search Orders & Products (e.g. DE124, Magic Book)"
+                placeholder="Search Orders & Products..."
                 className="pl-10 w-full"
               />
             </div>
           </div>
-          <div className="w-1/3 flex items-center justify-end space-x-4">
+          <div className="w-full sm:w-1/3 flex items-center justify-end space-x-4">
             <span>+91 93115-25609</span>
             <Button variant="destructive" className="bg-red-500">Support</Button>
-            <Button variant="destructive" className="bg-red-500">Recharge Wallet</Button>
             <div className="flex items-center">
-              <span>Select Store</span>
-              <Button variant="ghost" size="icon">
+              <Button variant="ghost" size="sm">
                 Shopwave <ChevronDown className="h-4 w-4" />
               </Button>
             </div>
@@ -108,33 +110,20 @@ export default function StoreHome() {
         </header>
 
         <section className="mb-8">
-          <div className="flex justify-around">
-            {categories.map((category) => (
-              <div key={category.name} className="flex flex-col items-center">
-                <Image
-                  src={category.image}
-                  alt={category.name}
-                  width={80}
-                  height={80}
-                  className="rounded-full object-cover"
-                />
-                <span className="mt-2 text-sm">{category.name}</span>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        <section className="mb-8">
-          <div className="flex items-center space-x-2">
-            <span>Filter By Weight</span>
-            {["0-500 GM", "500-1000 GM", "1000-2000 GM", "2000-3000 GM", "3000-4000 GM", "4000-10000 GM"].map(
-              (weight) => (
-                <Button key={weight} variant="outline" size="sm" className="bg-white">
-                  {weight}
-                </Button>
-              )
-            )}
-          </div>
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-7 gap-4 text-center">
+                {uniqueCategories.map((category) => (
+                  <div key={category.name} className="flex flex-col items-center">
+                    <Image
+                      src={category.image}
+                      alt={category.name}
+                      width={80}
+                      height={80}
+                      className="rounded-full object-cover aspect-square"
+                    />
+                    <span className="mt-2 text-sm">{category.name}</span>
+                  </div>
+                ))}
+            </div>
         </section>
 
         <section>
@@ -173,9 +162,12 @@ export default function StoreHome() {
                       </span>
                     )}
                   </div>
-                   <Sheet>
+                  <Sheet>
                     <SheetTrigger asChild>
-                       <Button className="w-full mt-4 bg-red-500 hover:bg-red-600" onClick={() => addToCart(product)}>
+                      <Button
+                        className="w-full mt-4 bg-red-500 hover:bg-red-600"
+                        onClick={() => addToCart(product)}
+                      >
                         Add to Cart
                       </Button>
                     </SheetTrigger>
@@ -185,45 +177,61 @@ export default function StoreHome() {
             ))}
           </div>
         </section>
-         <Sheet>
-            <SheetTrigger asChild>
-              <Button className="fixed bottom-10 right-10 rounded-full h-16 w-16 bg-red-500 hover:bg-red-600 shadow-lg">
-                <ShoppingCart className="h-7 w-7"/>
-                 {cart.length > 0 && (
-                    <span className="absolute -top-1 -right-1 bg-white text-red-500 text-xs rounded-full h-5 w-5 flex items-center justify-center font-bold">{cart.length}</span>
-                  )}
-              </Button>
-            </SheetTrigger>
-            <SheetContent>
-              <SheetHeader>
-                <SheetTitle>My Cart</SheetTitle>
-              </SheetHeader>
-              <div className="py-4">
-                {cart.length === 0 ? (
-                  <p>Your cart is empty.</p>
-                ) : (
-                  <div className="space-y-4">
-                    {cart.map((item, index) => (
-                      <div key={`${item.id}-${index}`} className="flex items-center space-x-4">
-                        <Image src={item.image} alt={item.name} width={64} height={64} className="rounded-md"/>
-                        <div className="flex-1">
-                          <h4 className="text-sm font-semibold">{item.name}</h4>
-                          <p className="text-sm text-gray-500">{item.price.currency}{item.price.discounted || item.price.original}</p>
-                        </div>
+        <Sheet>
+          <SheetTrigger asChild>
+            <Button className="fixed bottom-10 right-10 rounded-full h-16 w-16 bg-red-500 hover:bg-red-600 shadow-lg">
+              <ShoppingCart className="h-7 w-7" />
+              {cart.length > 0 && (
+                <span className="absolute -top-1 -right-1 bg-white text-red-500 text-xs rounded-full h-5 w-5 flex items-center justify-center font-bold">
+                  {cart.length}
+                </span>
+              )}
+            </Button>
+          </SheetTrigger>
+          <SheetContent>
+            <SheetHeader>
+              <SheetTitle>My Cart</SheetTitle>
+            </SheetHeader>
+            <div className="py-4">
+              {cart.length === 0 ? (
+                <p>Your cart is empty.</p>
+              ) : (
+                <div className="space-y-4">
+                  {cart.map((item, index) => (
+                    <div
+                      key={`${item.id}-${index}`}
+                      className="flex items-center space-x-4"
+                    >
+                      <Image
+                        src={item.image}
+                        alt={item.name}
+                        width={64}
+                        height={64}
+                        className="rounded-md"
+                      />
+                      <div className="flex-1">
+                        <h4 className="text-sm font-semibold">{item.name}</h4>
+                        <p className="text-sm text-gray-500">
+                          {item.price.currency}
+                          {item.price.discounted || item.price.original}
+                        </p>
                       </div>
-                    ))}
-                     <div className="border-t pt-4 mt-4">
-                        <div className="flex justify-between font-bold">
-                          <span>Total</span>
-                          <span>₹{totalCartPrice.toFixed(2)}</span>
-                        </div>
-                        <Button className="w-full mt-4 bg-red-500 hover:bg-red-600">Checkout</Button>
-                      </div>
+                    </div>
+                  ))}
+                  <div className="border-t pt-4 mt-4">
+                    <div className="flex justify-between font-bold">
+                      <span>Total</span>
+                      <span>₹{totalCartPrice.toFixed(2)}</span>
+                    </div>
+                    <Button className="w-full mt-4 bg-red-500 hover:bg-red-600">
+                      Checkout
+                    </Button>
                   </div>
-                )}
-              </div>
-            </SheetContent>
-          </Sheet>
+                </div>
+              )}
+            </div>
+          </SheetContent>
+        </Sheet>
       </main>
     </div>
   );
