@@ -35,6 +35,10 @@ export default function CreatePartnerPage() {
               <Label htmlFor="phone">Phone</Label>
               <Input id="phone" type="tel" placeholder="+1 234 567 890" />
             </div>
+             <div className="grid gap-2">
+              <Label htmlFor="password">Password</Label>
+              <Input id="password" type="password" placeholder="Set a password" />
+            </div>
           </div>
           
           <div className="grid gap-2">
