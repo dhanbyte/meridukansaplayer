@@ -4,7 +4,9 @@ import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
+  CardDescription,
   CardHeader,
+  CardTitle,
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -29,6 +31,10 @@ export default function Home() {
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-center bg-muted/40 p-4">
+      <div className="text-center mb-4">
+        <h1 className="text-2xl font-bold">Shopwave Dropshipping</h1>
+        <p className="text-muted-foreground">Partner me aapka swagat hai</p>
+      </div>
       <Card className="w-full max-w-sm">
         <CardHeader className="items-center p-6">
             <Image 
