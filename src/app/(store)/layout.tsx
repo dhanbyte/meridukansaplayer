@@ -15,6 +15,7 @@ import {
   LogOut,
   ChevronDown,
   Wallet,
+  TrendingUp,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -47,17 +48,28 @@ export default function StoreLayout({
       <aside className="fixed inset-y-0 left-0 z-20 w-16 bg-white flex-col items-center py-4 space-y-6 hidden sm:flex">
         <Link href="/">
           <div className="p-2 bg-red-500 rounded-md">
-            <Search className="h-6 w-6 text-white" />
+            <TrendingUp className="h-6 w-6 text-white" />
           </div>
         </Link>
-        <Link href="/banking">
-          <Landmark className="h-6 w-6 text-gray-500" />
+        <Link href="/">
+            <Search className="h-6 w-6 text-gray-500" />
         </Link>
         <Link href="/orders">
           <Box className="h-6 w-6 text-gray-500" />
         </Link>
         <Link href="/shipping">
           <Truck className="h-6 w-6 text-gray-500" />
+        </Link>
+        <Link href="/banking">
+          <Wallet className="h-6 w-6 text-gray-500" />
+        </Link>
+        <Link href="/cart" className="relative">
+            <ShoppingCart className="h-6 w-6 text-gray-500" />
+            {cart.length > 0 && (
+            <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center font-bold">
+                {cart.length}
+            </span>
+            )}
         </Link>
         <Link href="/settings">
           <MoreHorizontal className="h-6 w-6 text-gray-500" />
@@ -129,15 +141,6 @@ export default function StoreLayout({
               return child;
             })}
         </main>
-
-        <Link href="/cart" className="fixed bottom-10 right-10 rounded-full h-16 w-16 bg-red-500 hover:bg-red-600 shadow-lg flex items-center justify-center">
-            <ShoppingCart className="h-7 w-7 text-white" />
-            {cart.length > 0 && (
-            <span className="absolute -top-1 -right-1 bg-white text-red-500 text-xs rounded-full h-5 w-5 flex items-center justify-center font-bold">
-                {cart.length}
-            </span>
-            )}
-        </Link>
         
       </div>
     </div>
