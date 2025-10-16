@@ -27,7 +27,25 @@ const nextConfig: NextConfig = {
         hostname: 'wukusy.com',
         port: '',
         pathname: '/**',
-      }
+      },
+      {
+        protocol: 'https',
+        hostname: 'shopwave.b-cdn.net',
+        port: '',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'ik.imagekit.io',
+        port: '',
+        pathname: '/**',
+      },
+       {
+        protocol: 'https',
+        hostname: 'deodap.in',
+        port: '',
+        pathname: '/**',
+      },
     ],
   },
 };
