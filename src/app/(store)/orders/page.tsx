@@ -21,8 +21,39 @@ import {
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Search } from "lucide-react";
 import Link from "next/link";
+import { useToast } from "@/hooks/use-toast";
+
 
 export default function OrdersPage() {
+    const { toast } = useToast();
+
+    const handleRefer = async () => {
+    const shareData = {
+      title: "Refer a friend",
+      text: "mere share 9157499884",
+    };
+
+    try {
+      if (navigator.share) {
+        await navigator.share(shareData);
+      } else {
+        // Fallback for browsers that don't support the Web Share API
+        await navigator.clipboard.writeText(shareData.text);
+        toast({
+          title: "Copied to clipboard",
+          description: "Referral message copied to your clipboard.",
+        });
+      }
+    } catch (err) {
+      console.error("Error sharing:", err);
+       toast({
+          variant: "destructive",
+          title: "Could not share",
+          description: "Something went wrong while trying to share.",
+        });
+    }
+  };
+
   return (
     <div className="flex flex-col h-full">
       <header className="flex items-center justify-between mb-6">
@@ -109,7 +140,7 @@ export default function OrdersPage() {
           <Link href="#" className="hover:underline">KYC Policy</Link>
         </div>
       </footer>
-      <Button variant="destructive" className="fixed bottom-10 right-10 rounded-full h-12">
+       <Button variant="destructive" className="fixed bottom-10 right-32 rounded-full h-12" onClick={handleRefer}>
         Refer a friend
       </Button>
     </div>
