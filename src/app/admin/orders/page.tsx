@@ -25,7 +25,12 @@ const mockOrders = [
   {
     id: "ORD001",
     partner: "Partner One",
-    customer: { name: "Liam Johnson", email: "liam@example.com" },
+    customer: {
+      name: "Liam Johnson",
+      email: "liam@example.com",
+      phone: "123-456-7890",
+      address: "123 Main St, Anytown, USA 12345",
+    },
     status: "Pending",
     trackingId: "N/A",
     amount: 250.0,
@@ -34,7 +39,12 @@ const mockOrders = [
   {
     id: "ORD002",
     partner: "Partner Two",
-    customer: { name: "Olivia Smith", email: "olivia@example.com" },
+    customer: {
+      name: "Olivia Smith",
+      email: "olivia@example.com",
+      phone: "987-654-3210",
+      address: "456 Oak Ave, Sometown, USA 54321",
+    },
     status: "Accepted",
     trackingId: "SHP123456789",
     amount: 150.0,
@@ -43,7 +53,12 @@ const mockOrders = [
   {
     id: "ORD003",
     partner: "Partner One",
-    customer: { name: "Noah Williams", email: "noah@example.com" },
+    customer: {
+      name: "Noah Williams",
+      email: "noah@example.com",
+      phone: "555-555-5555",
+      address: "789 Pine Ln, Otherville, USA 67890",
+    },
     status: "Shipped",
     trackingId: "SHP987654321",
     amount: 350.0,
@@ -52,7 +67,12 @@ const mockOrders = [
    {
     id: "ORD004",
     partner: "Partner Three",
-    customer: { name: "Emma Brown", email: "emma@example.com" },
+    customer: {
+      name: "Emma Brown",
+      email: "emma@example.com",
+      phone: "111-222-3333",
+      address: "321 Cedar Rd, Newcity, USA 13579",
+    },
     status: "Rejected",
     trackingId: "N/A",
     amount: 75.0,
@@ -158,6 +178,12 @@ export default function AdminOrdersPage() {
                             <div className="font-medium">{order.customer.name}</div>
                             <div className="text-sm text-muted-foreground">
                             {order.customer.email}
+                            </div>
+                             <div className="text-sm text-muted-foreground">
+                            {order.customer.phone}
+                            </div>
+                            <div className="text-sm text-muted-foreground">
+                            {order.customer.address}
                             </div>
                         </TableCell>
                         <TableCell>
