@@ -1,3 +1,4 @@
+
 "use client";
 
 import { Button } from "@/components/ui/button";
@@ -21,11 +22,20 @@ import {
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Search } from "lucide-react";
 import Link from "next/link";
-import { useToast } from "@/hooks/use-toast";
-
+import { useToast } from "@/components/ui/use-toast";
+import { useUser } from "@/firebase/use-user";
+import { useCollection } from "@/firebase/use-collection";
+import type { Order } from "@/lib/types";
+import { where } from "firebase/firestore";
+import { Badge } from "@/components/ui/badge";
 
 export default function OrdersPage() {
     const { toast } = useToast();
+    const { user, loading: userLoading } = useUser();
+    const { data: orders, loading: ordersLoading } = useCollection<Order>(
+        user ? `orders` : null,
+        user ? where('partnerId', '==', user.uid) : null
+    );
 
     const handleRefer = async () => {
     const shareData = {
@@ -53,6 +63,8 @@ export default function OrdersPage() {
         });
     }
   };
+  
+  const isLoading = userLoading || ordersLoading;
 
   return (
     <div className="flex flex-col h-full">
@@ -112,15 +124,46 @@ export default function OrdersPage() {
                 <TableHead>Product Details</TableHead>
                 <TableHead>Payment</TableHead>
                 <TableHead>Customer Details</TableHead>
+                <TableHead>Status</TableHead>
                 <TableHead>Action</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
-              <TableRow>
-                <TableCell colSpan={8} className="text-center py-10">
-                  <p>Page 1 of 1, showing 0 record(s) out of 0 total</p>
-                </TableCell>
-              </TableRow>
+              {isLoading ? (
+                <TableRow>
+                  <TableCell colSpan={9} className="text-center py-10">Loading orders...</TableCell>
+                </TableRow>
+              ) : orders.length === 0 ? (
+                <TableRow>
+                  <TableCell colSpan={9} className="text-center py-10">
+                    <p>You haven't placed any orders yet.</p>
+                  </TableCell>
+                </TableRow>
+              ) : (
+                orders.map((order) => (
+                   <TableRow key={order.id}>
+                    <TableCell><Input type="checkbox" /></TableCell>
+                    <TableCell>{order.id.slice(0, 8)}...</TableCell>
+                    <TableCell>N/A</TableCell>
+                    <TableCell>{order.orderDate?.toDate().toLocaleDateString()}</TableCell>
+                    <TableCell>{order.productSku}</TableCell>
+                    <TableCell>{order.paymentMethod}</TableCell>
+                    <TableCell>{order.customerName}</TableCell>
+                     <TableCell>
+                      <Badge variant={
+                        order.status === "Pending" ? "secondary" : 
+                        order.status === "Cancelled" || order.status === "Rejected" ? "destructive" :
+                        "default"
+                      }>
+                        {order.status}
+                      </Badge>
+                    </TableCell>
+                    <TableCell>
+                      <Button variant="ghost" size="sm">...</Button>
+                    </TableCell>
+                  </TableRow>
+                ))
+              )}
             </TableBody>
           </Table>
         </div>
