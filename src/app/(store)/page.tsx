@@ -13,25 +13,20 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { useToast } from "@/components/ui/use-toast";
+import { useCart } from "@/lib/CartContext";
 
-
-interface StoreHomeProps {
-  addToCart?: (product: Product) => void;
-}
-
-export default function StoreHome({ addToCart }: StoreHomeProps) {
+export default function StoreHome() {
   const { toast } = useToast();
+  const { addToCart } = useCart();
   const allProducts = NEWARRIVALS_PRODUCTS;
   const [filter, setFilter] = React.useState("all");
 
   const handleAddToCart = (product: Product) => {
-    if (addToCart) {
-      addToCart(product);
-       toast({
-        title: "Added to cart!",
-        description: `${product.name} has been added to your cart.`,
-      });
-    }
+    addToCart(product);
+     toast({
+      title: "Added to cart!",
+      description: `${product.name} has been added to your cart.`,
+    });
   };
 
   const handleFilterChange = (value: string) => {

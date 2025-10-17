@@ -7,27 +7,17 @@ import { Input } from "@/components/ui/input";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
 import { Minus, Plus } from "lucide-react";
-import type { Product, Order } from "@/lib/types";
+import type { Order } from "@/lib/types";
 import { useUser } from "@/firebase/use-user";
 import { useFirestore } from "@/firebase/provider";
 import { addDoc, collection, serverTimestamp, doc, setDoc } from "firebase/firestore";
 import { useToast } from "@/components/ui/use-toast";
 import { errorEmitter } from "@/firebase/error-emitter";
 import { FirestorePermissionError } from "@/firebase/errors";
+import { useCart } from "@/lib/CartContext";
 
-interface CartItem extends Product {
-  quantity: number;
-}
-
-interface CartPageProps {
-  cart?: CartItem[];
-  removeFromCart?: (productId: string) => void;
-  increaseQuantity?: (productId: string) => void;
-  decreaseQuantity?: (productId: string) => void;
-  clearCart?: () => void;
-}
-
-export default function CartPage({ cart = [], removeFromCart = () => {}, increaseQuantity = () => {}, decreaseQuantity = () => {}, clearCart = () => {} }: CartPageProps) {
+export default function CartPage() {
+  const { cart, removeFromCart, increaseQuantity, decreaseQuantity, clearCart } = useCart();
   const { user } = useUser();
   const firestore = useFirestore();
   const { toast } = useToast();
