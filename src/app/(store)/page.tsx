@@ -3,7 +3,7 @@
 import * as React from "react";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
-import { useCollection } from "@/firebase/use-collection";
+import { NEWARRIVALS_PRODUCTS } from "@/lib/products";
 import type { Product } from "@/lib/types";
 import {
   Select,
@@ -19,7 +19,7 @@ interface StoreHomeProps {
 }
 
 export default function StoreHome({ addToCart }: StoreHomeProps) {
-  const { data: allProducts, loading } = useCollection<Product>("products");
+  const allProducts = NEWARRIVALS_PRODUCTS;
   const [filter, setFilter] = React.useState("all");
 
   const handleAddToCart = (product: Product) => {
@@ -46,10 +46,6 @@ export default function StoreHome({ addToCart }: StoreHomeProps) {
     );
   }, [allProducts, filter]);
   
-  if (loading) {
-    return <div>Loading products...</div>
-  }
-
   return (
     <>
     <div className="flex-1">
