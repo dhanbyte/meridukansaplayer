@@ -1,3 +1,5 @@
+
+"use client";
 import {
   Card,
   CardContent,
@@ -14,8 +16,22 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
+import { useUser } from "@/firebase/use-user";
+import { useCollection } from "@/firebase/use-collection";
+import type { Order } from "@/lib/types";
+import { where } from "firebase/firestore";
 
 export default function PartnerOrdersPage() {
+  const { user } = useUser();
+  const { data: orders, loading } = useCollection<Order>(
+    user ? `orders` : null,
+    user ? where('partnerId', '==', user.uid) : null
+  );
+
+  if (loading) {
+    return <div>Loading your orders...</div>
+  }
+
   return (
     <Card>
       <CardHeader>
@@ -34,20 +50,35 @@ export default function PartnerOrdersPage() {
             </TableRow>
           </TableHeader>
           <TableBody>
-            <TableRow>
-              <TableCell>
-                <div className="font-medium">Liam Johnson</div>
-                <div className="text-sm text-muted-foreground">
-                  liam@example.com
-                </div>
-              </TableCell>
-              <TableCell>Product A</TableCell>
-              <TableCell>
-                <Badge variant="outline">Pending</Badge>
-              </TableCell>
-              <TableCell>$250.00</TableCell>
-              <TableCell>2023-06-23</TableCell>
-            </TableRow>
+            {orders.length === 0 ? (
+               <TableRow>
+                  <TableCell colSpan={5} className="text-center">You have not placed any orders yet.</TableCell>
+               </TableRow>
+            ) : (
+            orders.map(order => (
+              <TableRow key={order.id}>
+                <TableCell>
+                  <div className="font-medium">{order.customerName}</div>
+                  <div className="text-sm text-muted-foreground">
+                    {order.customerPhone}
+                  </div>
+                </TableCell>
+                <TableCell>{order.productSku}</TableCell>
+                <TableCell>
+                   <Badge
+                    variant={
+                      order.status === 'Pending' ? 'secondary' :
+                      order.status === 'Rejected' || order.status === 'Cancelled' ? 'destructive' :
+                      'default'
+                    }
+                  >
+                    {order.status}
+                  </Badge>
+                </TableCell>
+                <TableCell>₹{order.amount.toFixed(2)}</TableCell>
+                <TableCell>{order.orderDate?.toDate().toLocaleDateString()}</TableCell>
+              </TableRow>
+            )))}
           </TableBody>
         </Table>
       </CardContent>

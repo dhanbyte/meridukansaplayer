@@ -7,7 +7,13 @@ import { Input } from "@/components/ui/input";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
 import { Minus, Plus } from "lucide-react";
-import type { Product } from "@/lib/types";
+import type { Product, Order } from "@/lib/types";
+import { useUser } from "@/firebase/use-user";
+import { useFirestore } from "@/firebase/provider";
+import { addDoc, collection, serverTimestamp, doc, setDoc } from "firebase/firestore";
+import { useToast } from "@/components/ui/use-toast";
+import { errorEmitter } from "@/firebase/error-emitter";
+import { FirestorePermissionError } from "@/firebase/errors";
 
 interface CartItem extends Product {
   quantity: number;
@@ -18,14 +24,88 @@ interface CartPageProps {
   removeFromCart?: (productId: string) => void;
   increaseQuantity?: (productId: string) => void;
   decreaseQuantity?: (productId: string) => void;
+  clearCart?: () => void;
 }
 
-export default function CartPage({ cart = [], removeFromCart, increaseQuantity, decreaseQuantity }: CartPageProps) {
+export default function CartPage({ cart = [], removeFromCart, increaseQuantity, decreaseQuantity, clearCart }: CartPageProps) {
+  const { user } = useUser();
+  const firestore = useFirestore();
+  const { toast } = useToast();
+  const [paymentMethod, setPaymentMethod] = React.useState("prepaid");
+  const [sellingPrice, setSellingPrice] = React.useState('');
 
   const totalCartPrice = cart.reduce(
     (total, item) => total + (item.price.discounted || item.price.original) * item.quantity,
     0
   );
+
+  const profit = sellingPrice ? parseFloat(sellingPrice) - totalCartPrice : 0;
+
+  const handlePlaceOrder = async () => {
+    if (!user || !firestore) {
+      toast({
+        variant: "destructive",
+        title: "Not Logged In",
+        description: "You need to be logged in to place an order.",
+      });
+      return;
+    }
+    if (cart.length === 0) {
+      toast({
+        variant: "destructive",
+        title: "Empty Cart",
+        description: "You cannot place an order with an empty cart.",
+      });
+      return;
+    }
+
+    try {
+      // For simplicity, we'll create one order document per item in the cart.
+      // A more robust solution might group them under a single order ID.
+      for (const item of cart) {
+        const orderData: Omit<Order, 'id' | 'orderDate'> = {
+          partnerId: user.uid, // Assuming the logged-in user is a partner placing the order
+          customerName: "New Customer", // This would come from a form
+          customerPhone: "1234567890", // This would come from a form
+          shippingAddress: "123 Main St", // This would come from a form
+          productSku: item.sku || 'N/A',
+          quantity: item.quantity,
+          paymentMethod: paymentMethod,
+          status: "Pending",
+          amount: (item.price.discounted || item.price.original) * item.quantity,
+        };
+        const finalData = { ...orderData, orderDate: serverTimestamp() };
+        
+        const docRef = await addDoc(collection(firestore, "orders"), finalData);
+        await setDoc(doc(firestore, "orders", docRef.id), { id: docRef.id }, { merge: true })
+          .catch(async (err) => {
+            const permissionError = new FirestorePermissionError({
+              path: `orders/${docRef.id}`,
+              operation: 'update',
+              requestResourceData: { id: docRef.id }
+            });
+            errorEmitter.emit('permission-error', permissionError);
+          });
+      }
+
+      toast({
+        title: "Order Placed!",
+        description: "Your order has been successfully placed.",
+      });
+
+      if(clearCart) clearCart();
+      setSellingPrice('');
+
+
+    } catch (error) {
+       console.error("Error placing order:", error);
+       toast({
+        variant: "destructive",
+        title: "Order Failed",
+        description: "There was an error placing your order. Please try again.",
+      });
+    }
+  };
 
   const handleRemoveFromCart = (productId: string) => {
     if(removeFromCart) {
@@ -103,7 +183,7 @@ export default function CartPage({ cart = [], removeFromCart, increaseQuantity, 
             </div>
             <div className="border rounded-lg p-4">
                 <h3 className="font-semibold mb-2">Payment Method</h3>
-                <RadioGroup defaultValue="prepaid">
+                <RadioGroup value={paymentMethod} onValueChange={setPaymentMethod}>
                 <div className="flex items-center space-x-2">
                     <RadioGroupItem value="prepaid" id="prepaid" />
                     <Label htmlFor="prepaid">Prepaid</Label>
@@ -130,17 +210,17 @@ export default function CartPage({ cart = [], removeFromCart, increaseQuantity, 
                 </div>
                 <div className="flex justify-between items-center text-sm">
                 <Label htmlFor="selling-price">Selling Price Total (INR):</Label>
-                <Input id="selling-price" type="text" className="w-24 h-8" placeholder="₹" />
+                <Input id="selling-price" type="text" className="w-24 h-8" placeholder="₹" value={sellingPrice} onChange={e => setSellingPrice(e.target.value)} />
                 </div>
                 <div className="flex justify-between text-sm text-green-600 font-semibold">
                 <span>Profit:</span>
-                <span>₹{totalCartPrice.toFixed(2)}</span>
+                <span>₹{profit.toFixed(2)}</span>
                 </div>
             </div>
                 <p className="text-xs text-muted-foreground">
                 Recommendation: GST for this order will be filed under B2C. To claim B2B GST credit, please update GSTIN and PAN details in your Profile.
                 </p>
-            <Button className="w-full bg-slate-900 text-white hover:bg-slate-800">
+            <Button className="w-full bg-slate-900 text-white hover:bg-slate-800" onClick={handlePlaceOrder}>
                 Place Order
             </Button>
                 <Button variant="destructive" className="w-full">

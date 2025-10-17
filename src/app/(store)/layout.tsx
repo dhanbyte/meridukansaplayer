@@ -72,6 +72,10 @@ export default function StoreLayout({
       ).filter(item => item.quantity > 0)
     );
   };
+  
+  const clearCart = () => {
+    setCart([]);
+  }
 
   const totalItems = cart.reduce((acc, item) => acc + item.quantity, 0);
 
@@ -171,6 +175,7 @@ export default function StoreLayout({
                   removeFromCart,
                   increaseQuantity,
                   decreaseQuantity,
+                  clearCart,
                  } as any);
               }
               return child;
