@@ -26,3 +26,32 @@ export interface Product {
   isCustomizable?: boolean;
   tags?: string[];
 }
+
+
+export interface Partner {
+  id: string;
+  name: string;
+  email: string;
+  phone: string;
+  bankName: string;
+  accountHolderName: string;
+  accountNumber: string;
+  ifscCode: string;
+  status: 'Active' | 'Inactive';
+  uid: string;
+}
+
+export interface Order {
+    id: string;
+    partnerId: string;
+    customerName: string;
+    customerPhone: string;
+    shippingAddress: string;
+    productSku: string;
+    quantity: number;
+    paymentMethod: string;
+    status: 'Pending' | 'Accepted' | 'Rejected' | 'Shipped' | 'Delivered' | 'Cancelled';
+    trackingId?: string;
+    amount: number;
+    orderDate: any; // Using 'any' for Firebase ServerTimestamp
+}

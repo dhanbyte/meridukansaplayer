@@ -1,4 +1,3 @@
-
 "use client";
 import * as React from "react";
 import { useRouter } from "next/navigation";
@@ -11,8 +10,10 @@ import {
   getAuth,
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
+  onAuthStateChanged,
 } from "firebase/auth";
-import { useFirebaseApp } from "@/firebase";
+import { useFirebaseApp, useFirestore, useUser, useAuth } from "@/firebase";
+import { doc, getDoc } from "firebase/firestore";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -20,20 +21,66 @@ export default function LoginPage() {
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
   const app = useFirebaseApp();
+  const auth = useAuth();
+  const firestore = useFirestore();
+  const { user, loading } = useUser();
+
+  React.useEffect(() => {
+    if (user && !loading) {
+      const checkUserRole = async () => {
+        const userDoc = await getDoc(doc(firestore, "users", user.uid));
+        if (userDoc.exists()) {
+          const userData = userDoc.data();
+          if (userData.role === "admin") {
+            router.push("/admin");
+          } else if (userData.role === "partner") {
+            router.push("/partner/orders");
+          } else {
+             router.push("/");
+          }
+        }
+      };
+      checkUserRole();
+    }
+  }, [user, loading, firestore, router]);
+
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    const auth = getAuth(app);
 
-    if (email === "admin@example.com" && password === "704331") {
-      try {
-        await signInWithEmailAndPassword(auth, email, password);
-        router.push("/admin");
-      } catch (error: any) {
-        // If admin doesn't exist, create it.
-        if (error.code === 'auth/user-not-found') {
+    try {
+      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      const user = userCredential.user;
+      
+      const userDoc = await getDoc(doc(firestore, "users", user.uid));
+
+      if (userDoc.exists()) {
+        const userData = userDoc.data();
+        if (userData.role === 'admin') {
+          router.push("/admin");
+        } else if (userData.role === 'partner') {
+          router.push("/partner/orders");
+        } else {
+           router.push("/");
+        }
+      } else {
+          // This case handles regular users or partners who don't have a specific role document yet.
+          // For this app, we assume they are customers/store visitors.
+          router.push("/");
+      }
+
+    } catch (error: any) {
+       // Special handling for admin user creation on first login
+      if (email === "admin@example.com" && password === "704331" && error.code === 'auth/user-not-found') {
           try {
-            await createUserWithEmailAndPassword(auth, email, password);
+            const adminCredential = await createUserWithEmailAndPassword(auth, email, password);
+            const adminUser = adminCredential.user;
+            await setDoc(doc(firestore, "users", adminUser.uid), {
+              uid: adminUser.uid,
+              email: adminUser.email,
+              displayName: "Admin",
+              role: "admin",
+            });
             router.push("/admin");
           } catch (creationError: any) {
              toast({
@@ -42,38 +89,27 @@ export default function LoginPage() {
                 description: creationError.message,
             });
           }
-        } else {
-             toast({
-                variant: "destructive",
-                title: "Admin Login Failed",
-                description: error.message,
-            });
-        }
-      }
-    } else if (email && password) {
-      // Partner login
-      try {
-        await signInWithEmailAndPassword(auth, email, password);
-        router.push("/partner/orders");
-      } catch (error: any) {
+      } else {
          toast({
             variant: "destructive",
-            title: "Partner Login Failed",
+            title: "Login Failed",
             description: "Please check your email and password.",
         });
       }
-    } else {
-      toast({
-        variant: "destructive",
-        title: "Invalid Credentials",
-        description: "Please enter an email and password.",
-      });
     }
   };
 
   const handleSkip = () => {
     router.push("/");
   };
+
+  if(loading || user) {
+    return (
+       <div className="flex min-h-screen items-center justify-center bg-gray-100">
+        <div>Loading...</div>
+      </div>
+    )
+  }
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-gray-100">

@@ -1,3 +1,5 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -17,23 +19,32 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { PlusCircle } from "lucide-react";
 import Link from "next/link";
+import { useCollection } from "@/firebase/use-collection";
+import type { Partner } from "@/lib/types";
 
 export default function AdminPartnersPage() {
+
+  const { data: partners, loading } = useCollection<Partner>("partners");
+
+  if (loading) {
+    return <div>Loading...</div>
+  }
+
   return (
     <div>
-        <div className="flex items-center">
-            <h1 className="text-lg font-semibold md:text-2xl">Partners</h1>
-            <div className="ml-auto flex items-center gap-2">
-              <Link href="/admin/partners/create">
-                <Button size="sm" className="h-7 gap-1">
-                    <PlusCircle className="h-3.5 w-3.5" />
-                    <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
-                        Create Partner
-                    </span>
-                </Button>
-              </Link>
-            </div>
+      <div className="flex items-center">
+        <h1 className="text-lg font-semibold md:text-2xl">Partners</h1>
+        <div className="ml-auto flex items-center gap-2">
+          <Link href="/admin/partners/create">
+            <Button size="sm" className="h-7 gap-1">
+              <PlusCircle className="h-3.5 w-3.5" />
+              <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
+                Create Partner
+              </span>
+            </Button>
+          </Link>
         </div>
+      </div>
 
       <Card className="mt-4">
         <CardHeader>
@@ -54,26 +65,28 @@ export default function AdminPartnersPage() {
               </TableRow>
             </TableHeader>
             <TableBody>
-              <TableRow>
-                <TableCell>
-                  <div className="font-medium">Partner One</div>
-                </TableCell>
-                <TableCell>partner.one@example.com</TableCell>
-                 <TableCell>
-                  <div className="text-sm">
-                    <p><strong>Bank:</strong> State Bank of India</p>
-                    <p><strong>A/C:</strong> ****1234</p>
-                  </div>
-                </TableCell>
-                <TableCell>
-                  <Badge>Active</Badge>
-                </TableCell>
-                <TableCell>
-                  <Button variant="outline" size="sm">
-                    Deactivate
-                  </Button>
-                </TableCell>
-              </TableRow>
+              {partners.map(partner => (
+                <TableRow key={partner.id}>
+                  <TableCell>
+                    <div className="font-medium">{partner.name}</div>
+                  </TableCell>
+                  <TableCell>{partner.email}</TableCell>
+                  <TableCell>
+                    <div className="text-sm">
+                      <p><strong>Bank:</strong> {partner.bankName}</p>
+                      <p><strong>A/C:</strong> ****{partner.accountNumber?.slice(-4)}</p>
+                    </div>
+                  </TableCell>
+                  <TableCell>
+                    <Badge variant={partner.status === "Active" ? "default" : "destructive"}>{partner.status}</Badge>
+                  </TableCell>
+                  <TableCell>
+                    <Button variant="outline" size="sm">
+                      {partner.status === "Active" ? "Deactivate" : "Activate"}
+                    </Button>
+                  </TableCell>
+                </TableRow>
+              ))}
             </TableBody>
           </Table>
         </CardContent>
