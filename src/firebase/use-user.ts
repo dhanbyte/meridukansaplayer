@@ -1,9 +1,8 @@
 "use client";
 import { useState, useEffect } from 'react';
 import { onAuthStateChanged, User } from 'firebase/auth';
-import { useAuth } from './provider';
-import { doc, getDoc, onSnapshot } from 'firebase/firestore';
-import { useFirestore } from './provider';
+import { useAuth, useFirestore } from './provider';
+import { doc, onSnapshot } from 'firebase/firestore';
 
 interface UserProfile {
   uid: string;
@@ -20,6 +19,10 @@ export const useUser = () => {
   const [error, setError] = useState<Error | null>(null);
   
   useEffect(() => {
+    if (!auth || !firestore) {
+      setLoading(false);
+      return;
+    }
     const unsubscribe = onAuthStateChanged(
       auth,
       async (authUser: User | null) => {

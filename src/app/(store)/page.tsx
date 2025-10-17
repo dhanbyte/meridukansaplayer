@@ -3,7 +3,7 @@
 import * as React from "react";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
-import { useCollection } from "@/firebase";
+import { useCollection } from "@/firebase/use-collection";
 import type { Product } from "@/lib/types";
 import {
   Select,

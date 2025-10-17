@@ -1,6 +1,6 @@
 "use client";
 import { useState, useEffect, useMemo } from 'react';
-import { useFirestore } from './provider';
+import { useFirestore } from '@/firebase/provider';
 import {
   collection,
   query,
@@ -10,6 +10,8 @@ import {
   collectionGroup,
   where,
 } from 'firebase/firestore';
+import { errorEmitter } from '@/firebase/error-emitter';
+import { FirestorePermissionError } from '@/firebase/errors';
 
 // A utility hook to memoize the query object.
 // This is important to prevent re-renders from causing infinite loops.
@@ -17,16 +19,20 @@ const useMemoQuery = (queryString: string | null, ...queryConstraints: any[]) =>
   const firestore = useFirestore();
   return useMemo(() => {
     if (!firestore || !queryString) return null;
+    
+    const validConstraints = queryConstraints.filter(Boolean); // Filter out any undefined/null constraints
+
     let q: Query<DocumentData>;
-    if (queryConstraints.some(c => c.type === 'collectionGroup')) {
-        const collectionId = queryConstraints.find(c => c.type === 'collectionGroup').collectionId;
-        const constraints = queryConstraints.filter(c => c.type !== 'collectionGroup');
+    if (validConstraints.some(c => c && c._type === 'collectionGroup')) {
+        const collectionId = validConstraints.find(c => c && c._type === 'collectionGroup')._collectionId;
+        const constraints = validConstraints.filter(c => c && c._type !== 'collectionGroup');
         q = query(collectionGroup(firestore, collectionId), ...constraints);
     } else {
-        q = query(collection(firestore, queryString), ...queryConstraints);
+        q = query(collection(firestore, queryString), ...validConstraints);
     }
     return q;
-  }, [firestore, queryString, ...queryConstraints.map(c => c.toString())]); // Simple dependency check
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [firestore, queryString, ...queryConstraints.map(c => c ? c.toString() : '')]); // Simple dependency check
 };
 
 export const useCollection = <T extends DocumentData>(
@@ -42,6 +48,7 @@ export const useCollection = <T extends DocumentData>(
   useEffect(() => {
     if (!q) {
         setLoading(false);
+        setData([]);
         return;
     };
 
@@ -58,14 +65,18 @@ export const useCollection = <T extends DocumentData>(
         setLoading(false);
       },
       (err) => {
-        console.error(err);
-        setError(err);
+        const permissionError = new FirestorePermissionError({
+          path: path || 'unknown path',
+          operation: 'list',
+        });
+        errorEmitter.emit('permission-error', permissionError);
+        setError(permissionError);
         setLoading(false);
       }
     );
 
     return () => unsubscribe();
-  }, [q]);
+  }, [q, path]);
 
   return { data, loading, error };
 };

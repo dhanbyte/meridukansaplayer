@@ -10,11 +10,13 @@ import {
 import type { Auth } from 'firebase/auth';
 import type { FirebaseApp } from 'firebase/app';
 import type { Firestore } from 'firebase/firestore';
+import { FirebaseErrorListener } from '@/components/FirebaseErrorListener';
+
 
 export interface FirebaseContextType {
-  firebaseApp: FirebaseApp;
-  auth: Auth;
-  firestore: Firestore;
+  firebaseApp: FirebaseApp | null;
+  auth: Auth | null;
+  firestore: Firestore | null;
   loading: boolean;
   setLoading: Dispatch<SetStateAction<boolean>>;
 }
@@ -33,11 +35,11 @@ export const useFirebaseApp = () => {
   return useFirebase().firebaseApp;
 };
 
-export const useFirestore = () => {
+export const useFirestore = (): Firestore | null => {
   return useFirebase().firestore;
 };
 
-export const useAuth = () => {
+export const useAuth = (): Auth | null => {
   return useFirebase().auth;
 };
 
@@ -64,6 +66,7 @@ export function FirebaseProvider({
         setLoading: () => {},
       }}
     >
+      <FirebaseErrorListener />
       {children}
     </FirebaseContext.Provider>
   );

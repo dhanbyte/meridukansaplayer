@@ -8,28 +8,18 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger,
-} from "@/components/ui/alert-dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { useToast } from "@/hooks/use-toast";
+import { useToast } from "@/components/ui/use-toast";
 import {
   getAuth,
   createUserWithEmailAndPassword,
 } from "firebase/auth";
-import { useFirebaseApp } from "@/firebase";
+import { useFirebaseApp, useFirestore } from "@/firebase/provider";
 import { collection, addDoc, doc, setDoc } from "firebase/firestore";
-import { useFirestore } from "@/firebase";
 import { useRouter } from "next/navigation";
+import { errorEmitter } from "@/firebase/error-emitter";
+import { FirestorePermissionError } from "@/firebase/errors";
 
 
 export default function CreatePartnerPage() {
@@ -50,6 +40,7 @@ export default function CreatePartnerPage() {
 
   const handleCreatePartner = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!app) return;
     const auth = getAuth(app);
 
     if (!partnerName || !email || !password) {
@@ -71,6 +62,7 @@ export default function CreatePartnerPage() {
       const user = userCredential.user;
 
       // 2. Add partner details to Firestore
+      if (!firestore) throw new Error("Firestore is not available");
       const partnerData = {
         name: partnerName,
         email: email,
@@ -84,16 +76,34 @@ export default function CreatePartnerPage() {
       };
       
       const docRef = await addDoc(collection(firestore, "partners"), partnerData);
-      await setDoc(doc(firestore, "partners", docRef.id), { id: docRef.id }, { merge: true });
+      
+      setDoc(doc(firestore, "partners", docRef.id), { id: docRef.id }, { merge: true })
+      .catch(async (err) => {
+          const permissionError = new FirestorePermissionError({
+            path: `partners/${docRef.id}`,
+            operation: 'update',
+            requestResourceData: { id: docRef.id }
+          });
+          errorEmitter.emit('permission-error', permissionError);
+      });
 
 
       // 3. Add user role to a 'users' collection
-       await setDoc(doc(firestore, "users", user.uid), {
-        uid: user.uid,
-        email: user.email,
-        displayName: partnerName,
-        role: "partner",
-      });
+       const userDocData = {
+          uid: user.uid,
+          email: user.email,
+          displayName: partnerName,
+          role: "partner",
+        };
+       setDoc(doc(firestore, "users", user.uid), userDocData)
+        .catch(async (err) => {
+            const permissionError = new FirestorePermissionError({
+              path: `users/${user.uid}`,
+              operation: 'create',
+              requestResourceData: userDocData,
+            });
+            errorEmitter.emit('permission-error', permissionError);
+        });
 
 
       toast({

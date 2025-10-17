@@ -5,15 +5,16 @@ import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { useToast } from "@/hooks/use-toast";
+import { useToast } from "@/components/ui/use-toast";
 import {
   getAuth,
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
   onAuthStateChanged,
 } from "firebase/auth";
-import { useFirebaseApp, useFirestore, useUser, useAuth } from "@/firebase";
-import { doc, getDoc } from "firebase/firestore";
+import { useFirebaseApp, useFirestore, useAuth } from "@/firebase/provider";
+import { useUser } from "@/firebase/use-user";
+import { doc, getDoc, setDoc } from "firebase/firestore";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -28,6 +29,7 @@ export default function LoginPage() {
   React.useEffect(() => {
     if (user && !loading) {
       const checkUserRole = async () => {
+        if (!firestore) return;
         const userDoc = await getDoc(doc(firestore, "users", user.uid));
         if (userDoc.exists()) {
           const userData = userDoc.data();
@@ -47,6 +49,7 @@ export default function LoginPage() {
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!auth || !firestore) return;
 
     try {
       const userCredential = await signInWithEmailAndPassword(auth, email, password);

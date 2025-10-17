@@ -14,7 +14,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import Image from "next/image";
-import { useToast } from "@/hooks/use-toast";
+import { useToast } from "@/components/ui/use-toast";
 import {
   Table,
   TableBody,
@@ -24,10 +24,14 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
-import { useUser, useFirestore, useCollection } from "@/firebase";
+import { useUser } from "@/firebase/use-user";
+import { useFirestore } from "@/firebase/provider";
+import { useCollection } from "@/firebase/use-collection";
 import { collection, addDoc, serverTimestamp, where } from "firebase/firestore";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import type { RechargeRequest } from "@/lib/types";
+import { errorEmitter } from "@/firebase/error-emitter";
+import { FirestorePermissionError } from "@/firebase/errors";
 
 export default function RechargePage() {
   const { toast } = useToast();
@@ -37,7 +41,7 @@ export default function RechargePage() {
   const [amount, setAmount] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const { data: transactions, loading: transactionsLoading } = useCollection<RechargeRequest>(
+  const { data: transactions = [], loading: transactionsLoading } = useCollection<RechargeRequest>(
     user ? 'rechargeRequests' : null,
     user ? where('userId', '==', user.uid) : ''
   );
@@ -48,7 +52,7 @@ export default function RechargePage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!amount || !screenshot || !user) {
+    if (!amount || !screenshot || !user || !firestore) {
       toast({
         variant: "destructive",
         title: "Missing Information",
@@ -67,23 +71,34 @@ export default function RechargePage() {
       const downloadURL = await getDownloadURL(snapshot.ref);
 
       // 2. Create recharge request in Firestore
-      await addDoc(collection(firestore, "rechargeRequests"), {
+      const rechargeData = {
         userId: user.uid,
         amount: Number(amount),
         screenshotUrl: downloadURL,
         status: "Pending",
         requestDate: serverTimestamp(),
-      });
-
-      toast({
-        title: "Request Submitted",
-        description: "Your recharge request has been sent for approval.",
-      });
-      setAmount("");
-      setScreenshot(null);
-       // Clear the file input
-      const fileInput = document.getElementById('screenshot') as HTMLInputElement;
-      if (fileInput) fileInput.value = '';
+      };
+      
+      addDoc(collection(firestore, "rechargeRequests"), rechargeData)
+        .then(() => {
+            toast({
+              title: "Request Submitted",
+              description: "Your recharge request has been sent for approval.",
+            });
+            setAmount("");
+            setScreenshot(null);
+            // Clear the file input
+            const fileInput = document.getElementById('screenshot') as HTMLInputElement;
+            if (fileInput) fileInput.value = '';
+        })
+        .catch(async (err) => {
+            const permissionError = new FirestorePermissionError({
+              path: 'rechargeRequests',
+              operation: 'create',
+              requestResourceData: rechargeData
+            });
+            errorEmitter.emit('permission-error', permissionError);
+        });
 
     } catch (error) {
       console.error("Error submitting recharge request:", error);

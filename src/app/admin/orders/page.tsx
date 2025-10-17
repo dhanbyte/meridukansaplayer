@@ -22,8 +22,8 @@ import { useCollection } from "@/firebase/use-collection";
 import type { Order } from "@/lib/types";
 
 export default function AdminOrdersPage() {
-  const { data: orders, loading: ordersLoading } = useCollection<Order>("orders");
-  const { data: partners, loading: partnersLoading } = useCollection("partners");
+  const { data: orders = [], loading: ordersLoading } = useCollection<Order>("orders");
+  const { data: partners = [], loading: partnersLoading } = useCollection("partners");
 
   const totalRevenue = orders
     .filter(order => order.status !== 'Rejected' && order.status !== 'Pending')

@@ -24,7 +24,7 @@ import type { Partner } from "@/lib/types";
 
 export default function AdminPartnersPage() {
 
-  const { data: partners, loading } = useCollection<Partner>("partners");
+  const { data: partners = [], loading } = useCollection<Partner>("partners");
 
   if (loading) {
     return <div>Loading...</div>

@@ -1,12 +1,15 @@
 "use client";
 import { useState, useEffect, useMemo } from 'react';
-import { useFirestore } from './provider';
+import { useFirestore } from '@/firebase/provider';
 import {
   doc,
   onSnapshot,
   DocumentReference,
   DocumentData,
 } from 'firebase/firestore';
+import { errorEmitter } from '@/firebase/error-emitter';
+import { FirestorePermissionError } from '@/firebase/errors';
+
 
 // A utility hook to memoize the document reference object.
 const useMemoDocRef = (path: string | null) => {
@@ -31,6 +34,7 @@ export const useDoc = <T extends DocumentData>(
   useEffect(() => {
     if (!docRef) {
       setLoading(false);
+      setData(null);
       return
     };
 
@@ -47,14 +51,18 @@ export const useDoc = <T extends DocumentData>(
         setLoading(false);
       },
       (err) => {
-        console.error(err);
-        setError(err);
+        const permissionError = new FirestorePermissionError({
+          path: path || 'unknown path',
+          operation: 'get',
+        });
+        errorEmitter.emit('permission-error', permissionError);
+        setError(permissionError);
         setLoading(false);
       }
     );
 
     return () => unsubscribe();
-  }, [docRef]);
+  }, [docRef, path]);
 
   return { data, loading, error };
 };
