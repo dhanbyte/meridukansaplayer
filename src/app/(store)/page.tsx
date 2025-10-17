@@ -12,6 +12,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { useToast } from "@/components/ui/use-toast";
 
 
 interface StoreHomeProps {
@@ -19,12 +20,17 @@ interface StoreHomeProps {
 }
 
 export default function StoreHome({ addToCart }: StoreHomeProps) {
+  const { toast } = useToast();
   const allProducts = NEWARRIVALS_PRODUCTS;
   const [filter, setFilter] = React.useState("all");
 
   const handleAddToCart = (product: Product) => {
     if (addToCart) {
       addToCart(product);
+       toast({
+        title: "Added to cart!",
+        description: `${product.name} has been added to your cart.`,
+      });
     }
   };
 

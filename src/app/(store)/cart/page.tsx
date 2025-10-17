@@ -27,7 +27,7 @@ interface CartPageProps {
   clearCart?: () => void;
 }
 
-export default function CartPage({ cart = [], removeFromCart, increaseQuantity, decreaseQuantity, clearCart }: CartPageProps) {
+export default function CartPage({ cart = [], removeFromCart = () => {}, increaseQuantity = () => {}, decreaseQuantity = () => {}, clearCart = () => {} }: CartPageProps) {
   const { user } = useUser();
   const firestore = useFirestore();
   const { toast } = useToast();
@@ -60,14 +60,12 @@ export default function CartPage({ cart = [], removeFromCart, increaseQuantity, 
     }
 
     try {
-      // For simplicity, we'll create one order document per item in the cart.
-      // A more robust solution might group them under a single order ID.
       for (const item of cart) {
         const orderData: Omit<Order, 'id' | 'orderDate'> = {
-          partnerId: user.uid, // Assuming the logged-in user is a partner placing the order
-          customerName: "New Customer", // This would come from a form
-          customerPhone: "1234567890", // This would come from a form
-          shippingAddress: "123 Main St", // This would come from a form
+          partnerId: user.uid,
+          customerName: "New Customer", 
+          customerPhone: "1234567890", 
+          shippingAddress: "123 Main St", 
           productSku: item.sku || 'N/A',
           quantity: item.quantity,
           paymentMethod: paymentMethod,
@@ -93,7 +91,7 @@ export default function CartPage({ cart = [], removeFromCart, increaseQuantity, 
         description: "Your order has been successfully placed.",
       });
 
-      if(clearCart) clearCart();
+      clearCart();
       setSellingPrice('');
 
 
@@ -106,25 +104,6 @@ export default function CartPage({ cart = [], removeFromCart, increaseQuantity, 
       });
     }
   };
-
-  const handleRemoveFromCart = (productId: string) => {
-    if(removeFromCart) {
-      removeFromCart(productId);
-    }
-  }
-
-  const handleIncreaseQuantity = (productId: string) => {
-    if (increaseQuantity) {
-      increaseQuantity(productId);
-    }
-  };
-
-  const handleDecreaseQuantity = (productId: string) => {
-    if (decreaseQuantity) {
-      decreaseQuantity(productId);
-    }
-  };
-
 
   return (
     <div className="container mx-auto">
@@ -148,7 +127,7 @@ export default function CartPage({ cart = [], removeFromCart, increaseQuantity, 
                     <div className="flex-1">
                         <h4 className="text-sm font-semibold">{item.name}</h4>
                         <div className="flex items-center mt-2">
-                        <Button size="icon" variant="outline" className="h-8 w-8" onClick={() => handleDecreaseQuantity(item.id)}>
+                        <Button size="icon" variant="outline" className="h-8 w-8" onClick={() => decreaseQuantity(item.id)}>
                             <Minus className="h-4 w-4" />
                         </Button>
                         <Input
@@ -157,11 +136,11 @@ export default function CartPage({ cart = [], removeFromCart, increaseQuantity, 
                             readOnly
                             className="w-12 text-center mx-2 h-8"
                         />
-                        <Button size="icon" variant="outline" className="h-8 w-8" onClick={() => handleIncreaseQuantity(item.id)}>
+                        <Button size="icon" variant="outline" className="h-8 w-8" onClick={() => increaseQuantity(item.id)}>
                             <Plus className="h-4 w-4" />
                         </Button>
                         </div>
-                        <Button variant="link" className="p-0 h-auto text-red-500 mt-2 text-xs" onClick={() => handleRemoveFromCart(item.id)}>
+                        <Button variant="link" className="p-0 h-auto text-red-500 mt-2 text-xs" onClick={() => removeFromCart(item.id)}>
                         Remove
                         </Button>
                     </div>
