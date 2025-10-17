@@ -2345,9 +2345,9 @@ export const NEWARRIVALS_PRODUCTS: Product[] = [
         "Warm wooden base",
         "Perfect for pooja room decor"
       ],
-      ratings: { average: 4.7, count: 47 },
+      ratings: { average: 4.7, count: 45 },
       taxPercent: 1.8,
-      sku: "whl175_50214_rj_1482_rk",
+      sku: "whl175_50222_rj_1482_adi",
       specifications: { 
         "Country of Origin": "India"
       }
@@ -2873,6 +2873,4 @@ specifications: {
   }
 ];
 
-
-
-
+    
