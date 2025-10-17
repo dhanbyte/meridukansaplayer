@@ -7,33 +7,67 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
+import {
+  getAuth,
+  signInWithEmailAndPassword,
+  createUserWithEmailAndPassword,
+} from "firebase/auth";
+import { useFirebaseApp } from "@/firebase";
 
 export default function LoginPage() {
   const router = useRouter();
   const { toast } = useToast();
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
+  const app = useFirebaseApp();
 
-  const handleLogin = (e: React.FormEvent) => {
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
+    const auth = getAuth(app);
 
     if (email === "admin@example.com" && password === "704331") {
-      // Admin login
-      const admin = { name: "Admin User", email: "admin@example.com" };
-      localStorage.setItem("user", JSON.stringify(admin));
-      router.push("/admin");
+      try {
+        await signInWithEmailAndPassword(auth, email, password);
+        router.push("/admin");
+      } catch (error: any) {
+        // If admin doesn't exist, create it.
+        if (error.code === 'auth/user-not-found') {
+          try {
+            await createUserWithEmailAndPassword(auth, email, password);
+            router.push("/admin");
+          } catch (creationError: any) {
+             toast({
+                variant: "destructive",
+                title: "Admin Creation Failed",
+                description: creationError.message,
+            });
+          }
+        } else {
+             toast({
+                variant: "destructive",
+                title: "Admin Login Failed",
+                description: error.message,
+            });
+        }
+      }
     } else if (email && password) {
-       // Partner login (simulation)
-       // In a real app, you would validate partner credentials against a database
-      const user = { name: "Partner User", email: email };
-      localStorage.setItem("user", JSON.stringify(user));
-      router.push("/partner/orders");
-    } else {
-        toast({
+      // Partner login
+      try {
+        await signInWithEmailAndPassword(auth, email, password);
+        router.push("/partner/orders");
+      } catch (error: any) {
+         toast({
             variant: "destructive",
-            title: "Invalid Credentials",
+            title: "Partner Login Failed",
             description: "Please check your email and password.",
         });
+      }
+    } else {
+      toast({
+        variant: "destructive",
+        title: "Invalid Credentials",
+        description: "Please enter an email and password.",
+      });
     }
   };
 
@@ -45,7 +79,7 @@ export default function LoginPage() {
     <div className="flex min-h-screen items-center justify-center bg-gray-100">
       <div className="w-full max-w-md rounded-lg bg-white p-8 shadow-lg">
         <div className="mb-8 text-center">
-           <Image
+          <Image
             src="https://wukusy.com/wp-content/uploads/2024/05/wukusy-logo.png"
             alt="Wukusy Logo"
             width={180}
