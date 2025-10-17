@@ -35,6 +35,18 @@ export default function AdminLayout({
             <Tooltip>
               <TooltipTrigger asChild>
                 <Link
+                  href="/admin/users"
+                  className="flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8"
+                >
+                  <Users className="h-5 w-5" />
+                  <span className="sr-only">Users</span>
+                </Link>
+              </TooltipTrigger>
+              <TooltipContent side="right">Users</TooltipContent>
+            </Tooltip>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Link
                   href="/admin/partners"
                   className="flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8"
                 >

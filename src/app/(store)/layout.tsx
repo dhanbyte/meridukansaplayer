@@ -34,6 +34,8 @@ import {
 import { CartProvider, useCart } from "@/lib/CartContext";
 import { searchProducts, getSearchSuggestions } from "@/lib/search";
 import type { Product } from "@/lib/types";
+import { AuthProvider, useAuth } from "@/lib/AuthContext";
+import { LoginForm } from "@/components/LoginForm";
 
 const SearchContext = React.createContext<{
   searchQuery: string;
@@ -103,11 +105,12 @@ function SearchBox() {
               onClick={() => handleSuggestionClick(product)}
             >
               <Image
-                src={product.image || '/placeholder.jpg'}
+                src={product.image}
                 alt={product.name}
                 width={40}
                 height={40}
                 className="rounded object-cover"
+                unoptimized
               />
               <div className="flex-1">
                 <p className="text-sm font-medium truncate">{product.name}</p>
@@ -130,7 +133,12 @@ function SearchBox() {
 
 function Header() {
   const { cart } = useCart();
+  const { logout } = useAuth();
   const totalItems = cart.reduce((acc, item) => acc + item.quantity, 0);
+
+  const handleLogout = () => {
+    logout();
+  };
 
   return (
     <>
@@ -223,9 +231,9 @@ function Header() {
           <div className="mt-auto">
             <Tooltip>
               <TooltipTrigger asChild>
-                <Link href="/login">
+                <button onClick={handleLogout}>
                   <LogOut className="h-6 w-6 text-gray-500" />
-                </Link>
+                </button>
               </TooltipTrigger>
               <TooltipContent side="right">
                 <p>Logout</p>
@@ -280,6 +288,11 @@ function Header() {
 function StoreLayoutContent({ children }: { children: React.ReactNode }) {
   const [searchQuery, setSearchQuery] = React.useState("");
   const searchResults = React.useMemo(() => searchProducts(searchQuery), [searchQuery]);
+  const { isLoggedIn } = useAuth();
+
+  if (!isLoggedIn) {
+    return <LoginForm />;
+  }
 
   return (
     <SearchContext.Provider value={{ searchQuery, setSearchQuery, searchResults }}>
@@ -302,8 +315,10 @@ export default function StoreLayout({
   children: React.ReactNode;
 }) {
   return (
-    <CartProvider>
-      <StoreLayoutContent>{children}</StoreLayoutContent>
-    </CartProvider>
+    <AuthProvider>
+      <CartProvider>
+        <StoreLayoutContent>{children}</StoreLayoutContent>
+      </CartProvider>
+    </AuthProvider>
   );
 }

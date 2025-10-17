@@ -111,6 +111,7 @@ export default function StoreHome() {
                 width={300}
                 height={300}
                 className="object-cover w-full h-48"
+                unoptimized
               />
             </div>
             <div className="p-4">

@@ -301,7 +301,7 @@ export const HOME_PRODUCTS: Product[] = [
     brand: 'Serve Stellar',
     category: 'Home',
     subcategory: 'Kitchenware',
-    price: { original: 899, discounted: 419, currency: '₹' },
+    price: { original: 499, discounted: 218, currency: '₹' },
     quantity: 100,
     image: 'https://Shopwave.b-cdn.net/puja%20photos/01_a5e6a8dd-fdcb-42f7-a562-cd82e87fe406.webp ',
     extraImages: [
@@ -331,7 +331,7 @@ export const HOME_PRODUCTS: Product[] = [
     brand: 'Quickslice',
     category: 'New Arrivals',
     subcategory: 'Kitchenware',
-    price: { original:899, discounted: 499, currency: '₹' },
+    price: { original: 399, discounted: 181, currency: '₹' },
     quantity: 100,
     image: 'https://Shopwave.b-cdn.net/Homekichan/01_a4e3c239-73ae-4939-8b28-aa03ed6f760f.webp',
     extraImages: [
@@ -356,7 +356,7 @@ export const HOME_PRODUCTS: Product[] = [
     brand: 'Quickslice',
     category: 'Home',
     subcategory: 'Kitchenware',
-    price: { original: 199, discounted: 130, currency: '₹' },
+    price: { original: 99, discounted: 29, currency: '₹' },
     quantity: 100,
     image: 'https://Shopwave.b-cdn.net/Homekichan/Wisk-04_95e5789d-9382-4050-ace7-b8fd7b8148e6.webp ',
     extraImages: [
@@ -381,7 +381,7 @@ export const HOME_PRODUCTS: Product[] = [
     brand: 'Quickslice',
     category: 'Home',
     subcategory: 'Kitchenware',
-    price: { original: 249, discounted: 179, currency: '₹' },
+    price: { original: 149, discounted: 39, currency: '₹' },
     quantity: 100,
     image: 'https://Shopwave.b-cdn.net/Homekichan/Masher-01_6617d7b1-5000-4af1-bf8b-e9aa25a5ff40.webp ',
     extraImages: [
@@ -405,7 +405,7 @@ export const HOME_PRODUCTS: Product[] = [
     brand: 'ToolMate Pro',
     category: 'Home',
     subcategory: 'Kitchenware',
-    price: { original: 199, discounted: 168, currency: '₹' },
+    price: { original: 199, discounted: 68, currency: '₹' },
     quantity: 100,
     image: 'https://Shopwave.b-cdn.net/Homekichan/02_76c58758-d248-41d7-8ab1-ec841eec541b.jpg ',
     extraImages: [
@@ -429,7 +429,7 @@ export const HOME_PRODUCTS: Product[] = [
     brand: 'Cisora',
     category: 'Home',
     subcategory: 'Kitchenware',
-    price: { original: 199, discounted: 120, currency: '₹' },
+    price: { original: 99, discounted: 26, currency: '₹' },
     quantity: 100,
     image: 'https://Shopwave.b-cdn.net/Homekichan/02_2cd55a9e-248e-42d1-a0d0-6d3df191f5a9.webp ',
     extraImages: [
@@ -453,7 +453,7 @@ export const HOME_PRODUCTS: Product[] = [
     brand: 'Liger',
     category: 'Home',
     subcategory: 'Kitchenware',
-    price: { original: 130, discounted: 105, currency: '₹' },
+    price: { original: 30, discounted: 16, currency: '₹' },
     quantity: 100,
     image: 'https://Shopwave.b-cdn.net/Homekichan/Dry-Fruit-Slicer-01.webp ',
     extraImages: [
@@ -477,7 +477,7 @@ export const HOME_PRODUCTS: Product[] = [
     brand: 'Bake &amp; Dwell',
     category: 'Home',
     subcategory: 'Kitchenware',
-    price: { original: 199, discounted: 121, currency: '₹' },
+    price: { original: 99, discounted: 21, currency: '₹' },
     quantity: 100,
     image: 'https://Shopwave.b-cdn.net/Homekichan/silicone-spatula-0_f8542c73-3fb5-4893-a53f-ef39163db274.webp ',
     extraImages: [
@@ -501,7 +501,7 @@ export const HOME_PRODUCTS: Product[] = [
     brand: 'Quickslice',
     category: 'Home',
     subcategory: 'Kitchenware',
-    price: { original: 149, discounted: 112, currency: '₹' },
+    price: { original: 99, discounted: 22, currency: '₹' },
     quantity: 100,
     image: 'https://Shopwave.b-cdn.net/Homekichan/6image_1b90ee0f-e169-4913-a580-3bf80b509cc0.webp ',
     extraImages: [
@@ -525,7 +525,7 @@ export const HOME_PRODUCTS: Product[] = [
     brand: 'Quickslice',
     category: 'Home',
     subcategory: 'Kitchenware',
-    price: { original: 399, discounted: 230, currency: '₹' },
+    price: { original: 399, discounted: 165, currency: '₹' },
     quantity: 100,
     image: 'https://Shopwave.b-cdn.net/Homekichan/Chopping-Board-01.webp ',
     extraImages: [
@@ -549,7 +549,7 @@ export const HOME_PRODUCTS: Product[] = [
     brand: 'XcelCraft',
     category: 'Home',
     subcategory: 'Household-Appliances',
-    price: { original: 199, discounted: 183, currency: '₹' },
+    price: { original: 199, discounted: 83, currency: '₹' },
     quantity: 100,
     image: 'https://Shopwave.b-cdn.net/Homekichan/02_13a215dc-07e6-4d05-98bc-dd30f55e92dc.webp ',
     extraImages: [
@@ -571,7 +571,7 @@ export const HOME_PRODUCTS: Product[] = [
     brand: 'DeoDap',
     category: 'Home',
     subcategory: 'Kitchenware',
-    price: { original: 149, discounted: 149, currency: '₹' },
+    price: { original: 149, discounted: 68, currency: '₹' },
     quantity: 100,
     image: 'https://Shopwave.b-cdn.net/Homekichan/03_5e3e4bf7-5c97-44a7-9a25-3796a48644e2.webp ',
     extraImages: [
@@ -594,7 +594,7 @@ export const HOME_PRODUCTS: Product[] = [
     brand: 'Dabster',
     category: 'Home',
     subcategory: 'Household-Appliances',
-    price: { original: 295, discounted: 239, currency: '₹' },
+    price: { original: 245, discounted: 59, currency: '₹' },
     quantity: 100,
     image: 'ht tps://Shopwave.b-cdn.net/homekichan-2/0060_power_free_blender.webp',
     extraImages: [
@@ -618,7 +618,7 @@ export const HOME_PRODUCTS: Product[] = [
     brand: 'Apex',
     category: 'Home',
     subcategory: 'Household-Appliances',
-    price: { original: 399, discounted: 216, currency: '₹' },
+    price: { original: 399, discounted: 116, currency: '₹' },
     quantity: 100,
     image: 'https://Shopwave.b-cdn.net/homekichan-2/01_605b09bc-2596-43ba-879e-cb674ebb53fc.webp ',
     extraImages: [
@@ -642,7 +642,7 @@ export const HOME_PRODUCTS: Product[] = [
     brand: 'Quickslice',
     category: 'Home',
     subcategory: 'Kitchenware',
-    price: { original: 190, discounted: 144, currency: '₹' },
+    price: { original: 90, discounted: 34, currency: '₹' },
     quantity: 100,
     image: 'https://Shopwave.b-cdn.net/homekichan-2/0087_apple_cutter%20(1).webp',
     extraImages: [
@@ -666,7 +666,7 @@ export const HOME_PRODUCTS: Product[] = [
     brand: 'Quickslice',
     category: 'Home',
     subcategory: 'Kitchenware',
-    price: { original: 199, discounted: 189, currency: '₹' },
+    price: { original: 199, discounted: 49, currency: '₹' },
     quantity: 100,
     image: 'https://Shopwave.b-cdn.net/homekichan-2/06_3ee6aae0-986a-4635-9ba4-ad1a724bbba1.webp ',
     extraImages: [
@@ -690,7 +690,7 @@ export const HOME_PRODUCTS: Product[] = [
     brand: 'Quickslice',
     category: 'Home',
     subcategory: 'Kitchenware',
-    price: { original: 199, discounted: 134, currency: '₹' },
+    price: { original: 99, discounted: 34, currency: '₹' },
     quantity: 100,
     image: 'https://Shopwave.b-cdn.net/homekichan-2/02_01442f2e-c767-42c1-b760-bfcb8474520c%20(1).webp ',
     extraImages: [
@@ -714,7 +714,7 @@ export const HOME_PRODUCTS: Product[] = [
     brand: 'Quickslice',
     category: 'Home',
     subcategory: 'Kitchenware',
-    price: { original: 499, discounted: 468, currency: '₹' },
+    price: { original: 499, discounted: 268, currency: '₹' },
     quantity: 100,
     image: 'https://Shopwave.b-cdn.net/homekichan-2/01_77cdefb0-c1c5-4f13-a75e-17d6e32347dd.webp',
     extraImages: [
@@ -738,7 +738,7 @@ export const HOME_PRODUCTS: Product[] = [
     brand: 'Quickslice',
     category: 'Home',
     subcategory: 'Kitchenware',
-    price: { original: 299, discounted: 218, currency: '₹' },
+    price: { original: 199, discounted: 78, currency: '₹' },
     quantity: 100,
     image: 'https://Shopwave.b-cdn.net/homekichan-2/4_16ad88c6-dc34-4e48-a418-ee763234ca32.webp ',
     extraImages: [
@@ -762,7 +762,7 @@ export const HOME_PRODUCTS: Product[] = [
     brand: 'Quickslice',
     category: 'Home',
     subcategory: 'Kitchenware',
-    price: { original: 299, discounted: 207, currency: '₹' },
+    price: { original: 299, discounted: 107, currency: '₹' },
     quantity: 100,
     image: 'https://Shopwave.b-cdn.net/homekichan-2/01_cc5a92dd-0a00-4c39-96ae-9b2712800de5%20(1).webp ',
     extraImages: [
@@ -786,7 +786,7 @@ export const HOME_PRODUCTS: Product[] = [
     brand: 'Quickslice',
     category: 'Home',
     subcategory: 'Kitchenware',
-    price: { original: 499, discounted: 340, currency: '₹' },
+    price: { original: 199, discounted: 87, currency: '₹' },
     quantity: 100,
     image: 'https://Shopwave.b-cdn.net/homekichan-2/6112kAbw9SL._SL1000__1.webp',
     extraImages: [
@@ -809,7 +809,7 @@ export const HOME_PRODUCTS: Product[] = [
     brand: 'ToolMate Pro',
     category: 'Home',
     subcategory: 'Kitchenware',
-    price: { original: 299, discounted: 199, currency: '₹' },
+    price: { original: 199, discounted: 111, currency: '₹' },
     quantity: 100,
     image: 'https://Shopwave.b-cdn.net/homekichan-2/01_952049f0-20df-409f-a704-9289bad95347.webp ',
     extraImages: [
@@ -834,8 +834,8 @@ export const HOME_PRODUCTS: Product[] = [
     "category": "Home",
     "subcategory": "Kitchenware",
     "price": {
-      "original": 399,
-      "discounted": 260,
+      "original": 199,
+      "discounted": 112,
       "currency": "₹"
     },
     "quantity": 100,
@@ -876,8 +876,8 @@ export const HOME_PRODUCTS: Product[] = [
     "category": "Home",
     "subcategory": "Kitchenware",
     "price": {
-      "original": 179,
-      "discounted": 134,
+      "original": 79,
+      "discounted": 34,
       "currency": "₹"
     },
     "quantity": 100,
@@ -917,7 +917,7 @@ export const HOME_PRODUCTS: Product[] = [
     "subcategory": "Kitchenware",
     "price": {
       "original": 249,
-      "discounted": 219,
+      "discounted": 119,
       "currency": "₹"
     },
     "quantity": 100,
@@ -960,7 +960,7 @@ export const HOME_PRODUCTS: Product[] = [
     "subcategory": "Kitchenware",
     "price": {
       "original": 499,
-      "discounted": 365,
+      "discounted": 215,
       "currency": "₹"
     },
     "quantity": 100,
@@ -1001,8 +1001,8 @@ export const HOME_PRODUCTS: Product[] = [
     "category": "Home",
     "subcategory": "Kitchenware",
     "price": {
-      "original": 249,
-      "discounted": 184,
+      "original": 149,
+      "discounted": 84,
       "currency": "₹"
     },
     "quantity": 100,
@@ -1044,7 +1044,7 @@ export const HOME_PRODUCTS: Product[] = [
     "subcategory": "Kitchenware",
     "price": {
       "original": 199,
-      "discounted": 171,
+      "discounted": 111,
       "currency": "₹"
     },
     "quantity": 100,
@@ -1085,7 +1085,7 @@ export const HOME_PRODUCTS: Product[] = [
   brand: 'Supermom',
   category: 'Home',
   subcategory: 'Kitchenware',
-  price: { original: 320, discounted: 253, currency: '₹' },
+  price: { original: 320, discounted: 153, currency: '₹' },
   quantity: 100,
   image: 'https://ik.imagekit.io/b5qewhvhb/e%20commers/tach/electronics%20aaitams/Slicer-03_e1cc5383-f73c-4b4c-be6e-66ec9d2212a0.webp?updatedAt=1757053183823',
   extraImages: [
@@ -1109,7 +1109,7 @@ export const HOME_PRODUCTS: Product[] = [
   brand: 'Vastate',
   category: 'Home',
   subcategory: 'Kitchenware',
-  price: { original: 652, discounted: 267, currency: '₹' },
+  price: { original: 652, discounted: 167, currency: '₹' },
   quantity: 100,
   image: 'https://ik.imagekit.io/b5qewhvhb/e%20commers/tach/electronics%20aaitams/300-30003_b3f1da46-5f4f-49e5-bf52-cbfd371c59d8.webp?updatedAt=1757053396031',
   extraImages: [
@@ -1133,7 +1133,7 @@ export const HOME_PRODUCTS: Product[] = [
   brand: 'Vastate',
   category: 'Home',
   subcategory: 'Kitchenware',
-  price: { original: 399, discounted: 354, currency: '₹' },
+  price: { original: 199, discounted: 54, currency: '₹' },
   quantity: 100,
   image: 'https://ik.imagekit.io/b5qewhvhb/e%20commers/tach/electronics%20aaitams/03_85a51842-069a-4f87-8ef2-002254a476e5.webp?updatedAt=1757053645972',
   extraImages: [
@@ -1157,7 +1157,7 @@ export const HOME_PRODUCTS: Product[] = [
   brand: 'Vastate',
   category: 'Home',
   subcategory: 'Kitchenware',
-  price: { original: 399, discounted: 264, currency: '₹' },
+  price: { original: 399, discounted: 164, currency: '₹' },
   quantity: 100,
   image: 'https://ik.imagekit.io/b5qewhvhb/e%20commers/tach/electronics%20aaitams/06_dfa960fe-ef63-4d01-a06a-058b1dbc331f.webp?updatedAt=1757054285274',
   extraImages: [
@@ -1181,7 +1181,7 @@ export const HOME_PRODUCTS: Product[] = [
   brand: 'Quickslice',
   category: 'Home',
   subcategory: 'Kitchenware',
-  price: { original: 140, discounted: 137, currency: '₹' },
+  price: { original: 140, discounted: 67, currency: '₹' },
   quantity: 100,
   image: 'https://ik.imagekit.io/b5qewhvhb/e%20commers/tach/electronics%20aaitams/4_4706b4ab-6e7e-4c48-92db-9b715a6901b6.webp?updatedAt=1757054791713',
   extraImages: [
@@ -1205,7 +1205,7 @@ export const HOME_PRODUCTS: Product[] = [
   brand: 'Quickslice',
   category: 'Home',
   subcategory: 'Kitchenware',
-  price: { original: 199, discounted: 168, currency: '₹' },
+  price: { original: 199, discounted: 68, currency: '₹' },
   quantity: 100,
   image: 'https://ik.imagekit.io/b5qewhvhb/e%20commers/tach/electronics%20aaitams/18_8df6458f-f740-4387-94c7-1ac040e8505d.webp?updatedAt=1757055016937',
   extraImages: [
@@ -1229,7 +1229,7 @@ export const HOME_PRODUCTS: Product[] = [
   brand: 'Quickslice',
   category: 'Home',
   subcategory: 'Kitchenware',
-  price: { original: 240, discounted: 174, currency: '₹' },
+  price: { original: 240, discounted: 84, currency: '₹' },
   quantity: 100,
   image: 'https://ik.imagekit.io/b5qewhvhb/e%20commers/tach/electronics%20aaitams/4_562255a8-4f3d-4321-88e2-7593ccc14425.webp?updatedAt=1757055316393',
   extraImages: [
@@ -1253,7 +1253,7 @@ export const HOME_PRODUCTS: Product[] = [
   brand: 'ToolMate Pro',
   category: 'Home',
   subcategory: 'Kitchenware',
-  price: { original: 199, discounted: 132, currency: '₹' },
+  price: { original: 199, discounted: 32, currency: '₹' },
   quantity: 100,
   image: 'https://ik.imagekit.io/b5qewhvhb/e%20commers/tach/electronics%20aaitams/01_1da6f851-411e-4a91-b9cd-32f8857c7579.webp?updatedAt=1757056912175',
   extraImages: [
@@ -1277,7 +1277,7 @@ export const HOME_PRODUCTS: Product[] = [
   brand: 'ToolMate Pro',
   category: 'Home',
   subcategory: 'Kitchenware',
-  price: { original: 299, discounted: 199, currency: '₹' },
+  price: { original: 199, discounted: 99, currency: '₹' },
   quantity: 100,
   image: 'https://ik.imagekit.io/b5qewhvhb/e%20commers/tach/electronics%20aaitams/3_768254d2-17c1-4785-8b7b-4ef528426977.webp?updatedAt=1757057059509',
   extraImages: [
@@ -1302,7 +1302,7 @@ export const HOME_PRODUCTS: Product[] = [
     "brand": "Apex",
     "category": "Home",
     "subcategory": "Kitchenware",
-    "price": { "original": 399, "discounted": 275, "currency": "₹" },
+    "price": { "original": 399, "discounted": 145, "currency": "₹" },
     "quantity": 100,
     "image": "https://ik.imagekit.io/b5qewhvhb/e%20commers/tach/electronics%20aaitams/3247db98-64b8-4b60-88a9-8e9a1fc90a3d.avif?updatedAt=1757156843689",
     "extraImages": [
@@ -1326,7 +1326,7 @@ export const HOME_PRODUCTS: Product[] = [
     "brand": "Tidy Table",
     "category": "Home",
     "subcategory": "Food Storage",
-    "price": { "original": 299, "discounted": 266, "currency": "₹" },
+    "price": { "original": 299, "discounted": 126, "currency": "₹" },
     "quantity": 100,
     "image": "https://ik.imagekit.io/b5qewhvhb/e%20commers/tach/electronics%20aaitams/03_57364491-e50c-40c1-a673-91264c302430.webp?updatedAt=1757179473491",
     "extraImages": [
@@ -1350,7 +1350,7 @@ export const HOME_PRODUCTS: Product[] = [
     "brand": "hydrozilla",
     "category": "Home",
     "subcategory": "Drinkware",
-    "price": { "original": 699, "discounted": 455, "currency": "₹" },
+    "price": { "original": 699, "discounted": 355, "currency": "₹" },
     "quantity": 100,
     "image": "https://ik.imagekit.io/b5qewhvhb/e%20commers/tach/electronics%20aaitams/Tumbler-04_8520f518-fd21-4ca9-98f2-149e361dda36.webp?updatedAt=1757179631247",
     "extraImages": [
@@ -1374,7 +1374,7 @@ export const HOME_PRODUCTS: Product[] = [
     "brand": "DeoDap",
     "category": "Home",
     "subcategory": "Drinkware",
-    "price": { "original": 699, "discounted": 456, "currency": "₹" },
+    "price": { "original": 699, "discounted": 356, "currency": "₹" },
     "quantity": 100,
     "image": "https://ik.imagekit.io/b5qewhvhb/e%20commers/tach/electronics%20aaitams/Tumbler-04.webp?updatedAt=1757179786552",
     "extraImages": [
@@ -1398,7 +1398,7 @@ export const HOME_PRODUCTS: Product[] = [
     "brand": "Supermom",
     "category": "Home",
     "subcategory": "Drinkware",
-    "price": { "original": 399, "discounted": 249, "currency": "₹" },
+    "price": { "original": 399, "discounted": 139, "currency": "₹" },
     "quantity": 100,
     "image": "https://ik.imagekit.io/b5qewhvhb/e%20commers/tach/electronics%20aaitams/Panda-ship-mug-04.webp?updatedAt=1757179935253",
     "extraImages": [
@@ -1422,7 +1422,7 @@ export const HOME_PRODUCTS: Product[] = [
     "brand": "Supermom",
     "category": "Home",
     "subcategory": "Drinkware",
-    "price": { "original": 899, "discounted": 528, "currency": "₹" },
+    "price": { "original": 899, "discounted": 328, "currency": "₹" },
     "quantity": 100,
     "image": "https://ik.imagekit.io/b5qewhvhb/e%20commers/tach/electronics%20aaitams/Coffee-Mug-03.webp?updatedAt=1757180076108",
     "extraImages": [
@@ -1446,7 +1446,7 @@ export const HOME_PRODUCTS: Product[] = [
     "brand": "Supermom",
     "category": "Home",
     "subcategory": "Kitchenware",
-    "price": { "original": 225, "discounted": 179, "currency": "₹" },
+    "price": { "original": 225, "discounted": 79, "currency": "₹" },
     "quantity": 100,
     "image": "https://ik.imagekit.io/b5qewhvhb/e%20commers/tach/electronics%20aaitams/sku_ada24fcc-b312-42c0-8723-595d9f96b36f.webp?updatedAt=1757180349427",
     "extraImages": [
@@ -1470,7 +1470,7 @@ export const HOME_PRODUCTS: Product[] = [
     "brand": "Supermom",
     "category": "Home",
     "subcategory": "Drinkware",
-    "price": { "original": 420, "discounted": 386, "currency": "₹" },
+    "price": { "original": 420, "discounted": 186, "currency": "₹" },
     "quantity": 100,
     "image": "https://ik.imagekit.io/b5qewhvhb/e%20commers/tach/electronics%20aaitams/Matt-glass-01.avif?updatedAt=1757180576347",
     "extraImages": [
@@ -1494,7 +1494,7 @@ export const HOME_PRODUCTS: Product[] = [
     "brand": "Supermom",
     "category": "Home",
     "subcategory": "Drinkware",
-    "price": { "original": 599, "discounted": 365, "currency": "₹" },
+    "price": { "original": 299, "discounted": 165, "currency": "₹" },
     "quantity": 100,
     "image": "https://ik.imagekit.io/b5qewhvhb/e%20commers/tach/electronics%20aaitams/ShakeGlass-Liveimage.webp?updatedAt=1757180945998",
     "extraImages": [
@@ -1518,7 +1518,7 @@ export const HOME_PRODUCTS: Product[] = [
     "brand": "Ganesh",
     "category": "Home",
     "subcategory": "Food Storage",
-    "price": { "original": 399, "discounted": 299, "currency": "₹" },
+    "price": { "original": 299, "discounted": 155, "currency": "₹" },
     "quantity": 100,
     "image": "https://ik.imagekit.io/b5qewhvhb/e%20commers/tach/electronics%20aaitams/05_fa5c12ae-d2d3-4687-9d11-4ba8dbad4d74.webp?updatedAt=1757181728539",
     "extraImages": [
@@ -1542,7 +1542,7 @@ export const HOME_PRODUCTS: Product[] = [
   "brand": "Quickslice",
   "category": "Electronics",
   "subcategory": "Kitchen Appliances",
-  "price": { "original": 599, "discounted": 335, "currency": "₹" },
+  "price": { "original": 599, "discounted": 195, "currency": "₹" },
   "quantity": 100,
   "image": "https://ik.imagekit.io/b5qewhvhb/e%20commers/tach/electronics%20aaitams/2_869434bf-ee0b-489c-9523-f47273b77e69.avif?updatedAt=1757138819966",
   "extraImages": [
@@ -1565,7 +1565,7 @@ export const HOME_PRODUCTS: Product[] = [
   "brand": "Quickslice",
   "category": "Home",
   "subcategory": "Kitchen Tools",
-  "price": { "original": 299, "discounted": 183, "currency": "₹" },
+  "price": { "original": 299, "discounted": 73, "currency": "₹" },
   "quantity": 100,
   "image": "https://ik.imagekit.io/b5qewhvhb/e%20commers/tach/electronics%20aaitams/05_af19803f-0274-4f7b-829b-3974c9c6365d.avif?updatedAt=1757139103515",
   "extraImages": [
@@ -1588,7 +1588,7 @@ export const HOME_PRODUCTS: Product[] = [
   "brand": "VoltDesk",
   "category": "Home",
   "subcategory": "Storage & Organization",
-  "price": { "original": 299, "discounted": 299, "currency": "₹" },
+  "price": { "original": 299, "discounted": 110, "currency": "₹" },
   "quantity": 100,
   "image": "https://ik.imagekit.io/b5qewhvhb/e%20commers/tach/electronics%20aaitams/06_d748bf1f-ff1c-42fe-9c83-826bd1544147.avif?updatedAt=1757139337543",
   "extraImages": [
@@ -1611,7 +1611,7 @@ export const HOME_PRODUCTS: Product[] = [
   "brand": "Quickslice",
   "category": "Home",
   "subcategory": "Kitchen Tools",
-  "price": { "original": 199, "discounted": 190, "currency": "₹" },
+  "price": { "original": 199, "discounted": 90, "currency": "₹" },
   "quantity": 100,
   "image": "https://ik.imagekit.io/b5qewhvhb/e%20commers/tach/electronics%20aaitams/02_bcb0e7cb-e52c-4233-b3dc-4c4a6d2e139a.avif?updatedAt=1757139553969",
   "extraImages": [
@@ -1635,7 +1635,7 @@ export const HOME_PRODUCTS: Product[] = [
     "brand": "Quickslice",
     "category": "Electronics",
     "subcategory": "Kitchen Appliances",
-    "price": { "original": 599, "discounted": 395, "currency": "₹" },
+    "price": { "original": 599, "discounted": 195, "currency": "₹" },
     "quantity": 100,
     "image": "https://ik.imagekit.io/b5qewhvhb/e%20commers/tach/electronics%20aaitams/2_869434bf-ee0b-489c-9523-f47273b77e69.avif?updatedAt=1757138819966",
     "extraImages": ["https://ik.imagekit.io/b5qewhvhb/e%20commers/tach/electronics%20aaitams/1_e43bcfe1-4ce2-4cf3-9ed8-a56d8b9013be.webp?updatedAt=1757138819977"],
@@ -1654,7 +1654,7 @@ export const HOME_PRODUCTS: Product[] = [
     "brand": "Quickslice",
     "category": "Home",
     "subcategory": "Kitchen Tools",
-    "price": { "original": 299, "discounted": 213, "currency": "₹" },
+    "price": { "original": 299, "discounted": 73, "currency": "₹" },
     "quantity": 100,
     "image": "https://ik.imagekit.io/b5qewhvhb/e%20commers/tach/electronics%20aaitams/05_af19803f-0274-4f7b-829b-3974c9c6365d.avif?updatedAt=1757139103515",
     "extraImages": ["https://ik.imagekit.io/b5qewhvhb/e%20commers/tach/electronics%20aaitams/02_372861f3-47ac-40de-b185-1f39a8cf5abf.avif?updatedAt=1757139103833"],
@@ -1673,7 +1673,7 @@ export const HOME_PRODUCTS: Product[] = [
     "brand": "VoltDesk",
     "category": "Home",
     "subcategory": "Storage & Organization",
-    "price": { "original": 299, "discounted": 180, "currency": "₹" },
+    "price": { "original": 299, "discounted": 110, "currency": "₹" },
     "quantity": 100,
     "image": "https://ik.imagekit.io/b5qewhvhb/e%20commers/tach/electronics%20aaitams/06_d748bf1f-ff1c-42fe-9c83-826bd1544147.avif?updatedAt=1757139337543",
     "extraImages": ["https://ik.imagekit.io/b5qewhvhb/e%20commers/tach/electronics%20aaitams/01_0d6cad72-48f6-4147-a577-18144bf093aa.avif?updatedAt=1757139337614"],
@@ -1692,7 +1692,7 @@ export const HOME_PRODUCTS: Product[] = [
     "brand": "Quickslice",
     "category": "Home",
     "subcategory": "Kitchen Tools",
-    "price": { "original": 199, "discounted": 190, "currency": "₹" },
+    "price": { "original": 199, "discounted": 90, "currency": "₹" },
     "quantity": 100,
     "image": "https://ik.imagekit.io/b5qewhvhb/e%20commers/tach/electronics%20aaitams/02_bcb0e7cb-e52c-4233-b3dc-4c4a6d2e139a.avif?updatedAt=1757139553969",
     "extraImages": ["https://ik.imagekit.io/b5qewhvhb/e%20commers/tach/electronics%20aaitams/03_e60ddcb7-6794-48be-892f-052e503c5f0b.webp?updatedAt=1757139554343"],
@@ -1711,7 +1711,7 @@ export const HOME_PRODUCTS: Product[] = [
     "brand": "Quickslice",
     "category": "Home",
     "subcategory": "Kitchen Tools",
-    "price": { "original": 499, "discounted": 222, "currency": "₹" },
+    "price": { "original": 199, "discounted": 112, "currency": "₹" },
     "quantity": 100,
     "image": "https://ik.imagekit.io/b5qewhvhb/e%20commers/tach/electronics%20aaitams/4image_91a757cb-7e0a-4bfb-901e-779bc29199c4.webp?updatedAt=1757139682940",
     "extraImages": ["https://ik.imagekit.io/b5qewhvhb/e%20commers/tach/electronics%20aaitams/1image_1061d2a9-f6b5-43e3-b48c-1b0a27a4e46d.webp?updatedAt=1757139683043"],
@@ -1730,7 +1730,7 @@ export const HOME_PRODUCTS: Product[] = [
     "brand": "Apex",
     "category": "Home",
     "subcategory": "Kitchen Tools",
-    "price": { "original": 499, "discounted": 259, "currency": "₹" },
+    "price": { "original": 499, "discounted": 159, "currency": "₹" },
     "quantity": 100,
     "image": "https://ik.imagekit.io/b5qewhvhb/e%20commers/tach/electronics%20aaitams/sku_872ac7b8-0efd-405f-98f0-9872105ddb09.webp?updatedAt=1757150467988",
     "extraImages": ["https://ik.imagekit.io/b5qewhvhb/e%20commers/tach/electronics%20aaitams/02_73e9d212-8c24-4565-abf9-5d65745f4425.webp?updatedAt=1757150467776"],
@@ -1749,7 +1749,7 @@ export const HOME_PRODUCTS: Product[] = [
     "brand": "Bake & Dwell",
     "category": "Home",
     "subcategory": "Baking Tools",
-    "price": { "original": 199, "discounted": 119, "currency": "₹" },
+    "price": { "original": 99, "discounted": 19, "currency": "₹" },
     "quantity": 100,
     "image": "https://ik.imagekit.io/b5qewhvhb/e%20commers/tach/electronics%20aaitams/7636fc2e-a31a-4ba5-bd9a-d985e02e1f0f_f44e78eb-ccad-4b77-9eb4-3ef45c19b93d.webp",
     "extraImages": ["https://ik.imagekit.io/b5qewhvhb/e%20commers/tach/electronics%20aaitams/silicone-spatula-04_6779d59d-2128-4b80-8318-909101fa1874.webp"],
@@ -1768,7 +1768,7 @@ export const HOME_PRODUCTS: Product[] = [
     "brand": "Home Chef",
     "category": "Home",
     "subcategory": "Storage & Organization",
-    "price": { "original": 699, "discounted": 400, "currency": "₹" },
+    "price": { "original": 699, "discounted": 300, "currency": "₹" },
     "quantity": 100,
     "image": "https://ik.imagekit.io/b5qewhvhb/e%20commers/tach/electronics%20aaitams/01_0e7bc18b-a0d7-4761-a6f6-9becbc4344cc.avif",
     "extraImages": ["https://ik.imagekit.io/b5qewhvhb/e%20commers/tach/electronics%20aaitams/06_2af7e97a-b388-4f89-8acb-452c5a6751fe.webp"],
@@ -1787,7 +1787,7 @@ export const HOME_PRODUCTS: Product[] = [
     "brand": "Quickslice",
     "category": "Home",
     "subcategory": "Kitchen Tools",
-    "price": { "original": 399, "discounted": 325, "currency": "₹" },
+    "price": { "original": 399, "discounted": 155, "currency": "₹" },
     "quantity": 100,
     "image": "https://ik.imagekit.io/b5qewhvhb/e%20commers/tach/electronics%20aaitams/01_0693f05b-0418-49ea-8478-b24a001f33e9.avif",
     "extraImages": ["https://ik.imagekit.io/b5qewhvhb/e%20commers/tach/electronics%20aaitams/05_8b81c560-360b-40f7-b9f4-bf797ba5817f.webp"],
@@ -1806,7 +1806,7 @@ export const HOME_PRODUCTS: Product[] = [
     "brand": "Quickslice",
     "category": "Home",
     "subcategory": "Kitchen Tools",
-    "price": { "original": 599, "discounted": 485, "currency": "₹" },
+    "price": { "original": 599, "discounted": 275, "currency": "₹" },
     "quantity": 100,
     "image": "https://ik.imagekit.io/b5qewhvhb/e%20commers/tach/electronics%20aaitams/5.webp",
     "extraImages": ["https://ik.imagekit.io/b5qewhvhb/e%20commers/tach/electronics%20aaitams/f3608c44-e43d-427f-aa4e-e8224381bc2b.webp"],
@@ -1825,7 +1825,7 @@ export const HOME_PRODUCTS: Product[] = [
     "brand": "hydrozilla",
     "category": "Home",
     "subcategory": "Drinkware",
-    "price": { "original": 399, "discounted": 252, "currency": "₹" },
+    "price": { "original": 399, "discounted": 152, "currency": "₹" },
     "quantity": 100,
     "image": "https://ik.imagekit.io/b5qewhvhb/e%20commers/tach/electronics%20aaitams/mix-bottle02.webp",
     "extraImages": ["https://ik.imagekit.io/b5qewhvhb/e%20commers/tach/electronics%20aaitams/ColorfulTumblersonWoodSurface.avif"],
@@ -1844,7 +1844,7 @@ export const HOME_PRODUCTS: Product[] = [
     "brand": "hydrozilla",
     "category": "Home",
     "subcategory": "Drinkware",
-    "price": { "original": 399, "discounted": 226, "currency": "₹" },
+    "price": { "original": 399, "discounted": 166, "currency": "₹" },
     "quantity": 100,
     "image": "https://ik.imagekit.io/b5qewhvhb/e%20commers/tach/electronics%20aaitams/WhatsAppImage2025-08-06at14.33.02_f953818e.webp",
     "extraImages": ["https://ik.imagekit.io/b5qewhvhb/e%20commers/tach/electronics%20aaitams/bottle-05_4318c5a9-12ff-49f4-ac1e-61bddd38a3b8.webp"],

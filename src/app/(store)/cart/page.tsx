@@ -18,13 +18,9 @@ import {
 } from "@/components/ui/dialog";
 import { Minus, Plus } from "lucide-react";
 import type { Order } from "@/lib/types";
-import { useUser } from "@/firebase/use-user";
-import { useFirestore } from "@/firebase/provider";
-import { addDoc, collection, serverTimestamp, doc, setDoc } from "firebase/firestore";
 import { useToast } from "@/components/ui/use-toast";
-import { errorEmitter } from "@/firebase/error-emitter";
-import { FirestorePermissionError } from "@/firebase/errors";
 import { useCart } from "@/lib/CartContext";
+import { useAuth } from "@/lib/AuthContext";
 
 interface ShippingInfo {
   customerName: string;
@@ -33,9 +29,8 @@ interface ShippingInfo {
 }
 
 export default function CartPage() {
-  const { cart, removeFromCart, increaseQuantity, decreaseQuantity, clearCart } = useCart();
-  const { user } = useUser();
-  const firestore = useFirestore();
+  const { cart, removeFromCart, increaseQuantity, decreaseQuantity, clearCart, placeOrder, getTotalPrice } = useCart();
+  const { user } = useAuth();
   const { toast } = useToast();
   const [paymentMethod, setPaymentMethod] = React.useState("prepaid");
   const [sellingPrice, setSellingPrice] = React.useState('');
@@ -47,10 +42,7 @@ export default function CartPage() {
   const [formPhone, setFormPhone] = React.useState("");
   const [formAddress, setFormAddress] = React.useState("");
 
-  const totalCartPrice = cart.reduce(
-    (total, item) => total + (item.price.discounted || item.price.original) * item.quantity,
-    0
-  );
+  const totalCartPrice = getTotalPrice();
 
   const profit = sellingPrice ? parseFloat(sellingPrice) - totalCartPrice : 0;
 

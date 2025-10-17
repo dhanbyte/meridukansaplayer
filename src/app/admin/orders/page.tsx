@@ -1,5 +1,7 @@
 "use client";
-
+import React, { useState, useEffect } from 'react';
+import { OrderService } from '@/lib/orderService';
+import { Order } from '@/lib/orderTypes';
 import {
   Card,
   CardContent,
@@ -18,22 +20,38 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { CreditCard, Users, Package, IndianRupee } from "lucide-react";
-import { useCollection } from "@/firebase/use-collection";
-import type { Order } from "@/lib/types";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 export default function AdminOrdersPage() {
-  const { data: orders = [], loading: ordersLoading } = useCollection<Order>("orders");
-  const { data: partners = [], loading: partnersLoading } = useCollection("partners");
+  const [orders, setOrders] = useState<Order[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    loadOrders();
+  }, []);
+
+  const loadOrders = () => {
+    const ordersList = OrderService.getOrders();
+    setOrders(ordersList);
+    setLoading(false);
+  };
+
+  const handleStatusUpdate = async (orderId: string, newStatus: Order['status']) => {
+    await OrderService.updateOrderStatus(orderId, newStatus);
+    loadOrders();
+  };
 
   const totalRevenue = orders
-    .filter(order => order.status !== 'Rejected' && order.status !== 'Pending')
-    .reduce((sum, order) => sum + order.amount, 0);
+    .filter(order => order.status !== 'cancelled' && order.status !== 'pending')
+    .reduce((sum, order) => sum + order.totalAmount, 0);
 
-  const totalPartners = partners.length;
-  const prepaidOrders = orders.filter(o => o.paymentMethod === 'Prepaid').length;
-  const codOrders = orders.filter(o => o.paymentMethod === 'COD').length;
-
-  if (ordersLoading || partnersLoading) {
+  if (loading) {
     return <div>Loading...</div>;
   }
 
@@ -48,43 +66,43 @@ export default function AdminOrdersPage() {
           <CardContent>
             <div className="text-2xl font-bold">₹{totalRevenue.toFixed(2)}</div>
             <p className="text-xs text-muted-foreground">
-              Based on all accepted and shipped orders
+              Based on all confirmed orders
             </p>
           </CardContent>
         </Card>
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Total Partners</CardTitle>
-            <Users className="h-4 w-4 text-muted-foreground" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">{totalPartners}</div>
-            <p className="text-xs text-muted-foreground">
-              Currently active partners
-            </p>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Prepaid Orders</CardTitle>
-            <CreditCard className="h-4 w-4 text-muted-foreground" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">+{prepaidOrders}</div>
-            <p className="text-xs text-muted-foreground">
-              Total number of prepaid transactions
-            </p>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">COD Orders</CardTitle>
+            <CardTitle className="text-sm font-medium">Total Orders</CardTitle>
             <Package className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">+{codOrders}</div>
+            <div className="text-2xl font-bold">{orders.length}</div>
             <p className="text-xs text-muted-foreground">
-              Total number of cash on delivery orders
+              All orders placed
+            </p>
+          </CardContent>
+        </Card>
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">Pending Orders</CardTitle>
+            <CreditCard className="h-4 w-4 text-muted-foreground" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">{orders.filter(o => o.status === 'pending').length}</div>
+            <p className="text-xs text-muted-foreground">
+              Orders awaiting confirmation
+            </p>
+          </CardContent>
+        </Card>
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">Delivered Orders</CardTitle>
+            <Users className="h-4 w-4 text-muted-foreground" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">{orders.filter(o => o.status === 'delivered').length}</div>
+            <p className="text-xs text-muted-foreground">
+              Successfully delivered orders
             </p>
           </CardContent>
         </Card>
@@ -93,60 +111,69 @@ export default function AdminOrdersPage() {
         <CardHeader>
           <CardTitle>All Orders</CardTitle>
           <CardDescription>
-            A list of all orders from all partners.
+            Manage all customer orders from the system.
           </CardDescription>
         </CardHeader>
         <CardContent>
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead>Partner</TableHead>
+                <TableHead>Order ID</TableHead>
                 <TableHead>Customer</TableHead>
+                <TableHead>Items</TableHead>
+                <TableHead>Total Amount</TableHead>
                 <TableHead>Status</TableHead>
-                <TableHead>Tracking ID</TableHead>
-                <TableHead>Amount</TableHead>
+                <TableHead>Date</TableHead>
                 <TableHead>Actions</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
-              {orders.map(order => {
-                const partner = partners.find(p => p.id === order.partnerId);
-                return (
-                  <TableRow key={order.id}>
-                    <TableCell>{partner ? partner.name : 'N/A'}</TableCell>
-                    <TableCell>
-                      <div className="font-medium">{order.customerName}</div>
-                      <div className="text-sm text-muted-foreground">
-                        {order.customerPhone}
-                      </div>
-                      <div className="text-sm text-muted-foreground">
-                        {order.shippingAddress}
-                      </div>
-                    </TableCell>
-                    <TableCell>
-                      <Badge
-                        variant={
-                          order.status === 'Pending' ? 'secondary' :
-                            order.status === 'Rejected' ? 'destructive' :
-                              'default'
-                        }
-                      >
-                        {order.status}
-                      </Badge>
-                    </TableCell>
-                    <TableCell>{order.trackingId || 'N/A'}</TableCell>
-                    <TableCell>₹{order.amount.toFixed(2)}</TableCell>
-                    <TableCell>
-                      {order.status === 'Pending' && (
-                        <div className="flex gap-2">
-                          <Button variant="outline" size="sm">Accept</Button>
-                          <Button variant="destructive" size="sm">Reject</Button>
+              {orders.map(order => (
+                <TableRow key={order.id}>
+                  <TableCell className="font-medium">{order.id}</TableCell>
+                  <TableCell>
+                    <div className="font-medium">{order.userName}</div>
+                    <div className="text-sm text-muted-foreground">
+                      {order.userPhone}
+                    </div>
+                  </TableCell>
+                  <TableCell>
+                    <div className="text-sm">
+                      {order.items.map((item, index) => (
+                        <div key={index}>
+                          {item.productName} x{item.quantity}
                         </div>
-                      )}
-                    </TableCell>
-                  </TableRow>
-                )
-              })}
+                      ))}
+                    </div>
+                  </TableCell>
+                  <TableCell>₹{order.totalAmount.toFixed(2)}</TableCell>
+                  <TableCell>
+                    <Select
+                      value={order.status}
+                      onValueChange={(value: Order['status']) => handleStatusUpdate(order.id, value)}
+                    >
+                      <SelectTrigger className="w-32">
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="pending">Pending</SelectItem>
+                        <SelectItem value="confirmed">Confirmed</SelectItem>
+                        <SelectItem value="shipped">Shipped</SelectItem>
+                        <SelectItem value="delivered">Delivered</SelectItem>
+                        <SelectItem value="cancelled">Cancelled</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </TableCell>
+                  <TableCell>
+                    {new Date(order.createdAt).toLocaleDateString()}
+                  </TableCell>
+                  <TableCell>
+                    <Button variant="outline" size="sm">
+                      View Details
+                    </Button>
+                  </TableCell>
+                </TableRow>
+              ))}
             </TableBody>
           </Table>
         </CardContent>

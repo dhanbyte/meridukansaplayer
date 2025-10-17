@@ -3,6 +3,8 @@
 
 import * as React from "react";
 import type { Product } from "@/lib/types";
+import { OrderService } from "@/lib/orderService";
+import { OrderItem } from "@/lib/orderTypes";
 
 interface CartItem extends Product {
   quantity: number;
@@ -15,6 +17,8 @@ interface CartContextType {
   increaseQuantity: (productId: string) => void;
   decreaseQuantity: (productId: string) => void;
   clearCart: () => void;
+  getTotalPrice: () => number;
+  placeOrder: (userId: string, userName: string, userPhone: string) => Promise<string>;
 }
 
 const CartContext = React.createContext<CartContextType | undefined>(undefined);
@@ -63,7 +67,30 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   
   const clearCart = () => {
     setCart([]);
-  }
+  };
+
+  const getTotalPrice = () => {
+    return cart.reduce((total, item) => {
+      const price = item.price.discounted || item.price.original;
+      return total + (price * item.quantity);
+    }, 0);
+  };
+
+  const placeOrder = async (userId: string, userName: string, userPhone: string): Promise<string> => {
+    if (cart.length === 0) throw new Error('Cart is empty');
+    
+    const orderItems: OrderItem[] = cart.map(item => ({
+      productId: item.id,
+      productName: item.name,
+      price: item.price.discounted || item.price.original,
+      quantity: item.quantity,
+      image: item.image
+    }));
+    
+    const order = await OrderService.createOrder(userId, userName, userPhone, orderItems);
+    clearCart();
+    return order.id;
+  };
 
   const value = {
     cart,
@@ -72,6 +99,8 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     increaseQuantity,
     decreaseQuantity,
     clearCart,
+    getTotalPrice,
+    placeOrder,
   };
 
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>;
