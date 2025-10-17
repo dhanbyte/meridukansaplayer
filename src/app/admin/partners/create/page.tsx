@@ -124,7 +124,7 @@ export default function CreatePartnerPage() {
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <form onSubmit={(e) => e.preventDefault()} className="grid gap-6">
+        <form onSubmit={handleCreatePartner} className="grid gap-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="grid gap-2">
               <Label htmlFor="partner_name">Partner Name</Label>
@@ -166,26 +166,9 @@ export default function CreatePartnerPage() {
               <Input id="ifsc_code" placeholder="Enter IFSC code" value={ifscCode} onChange={(e) => setIfscCode(e.target.value)} />
             </div>
           </div>
-
-           <AlertDialog>
-              <AlertDialogTrigger asChild>
-                <Button type="button" className="w-full md:w-auto">
-                  Create Partner
-                </Button>
-              </AlertDialogTrigger>
-              <AlertDialogContent>
-                <AlertDialogHeader>
-                  <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
-                  <AlertDialogDescription>
-                    This action will create a new partner with the provided details.
-                  </AlertDialogDescription>
-                </AlertDialogHeader>
-                <AlertDialogFooter>
-                  <AlertDialogCancel>Cancel</AlertDialogCancel>
-                  <AlertDialogAction onClick={handleCreatePartner}>Continue</AlertDialogAction>
-                </AlertDialogFooter>
-              </AlertDialogContent>
-            </AlertDialog>
+          <Button type="submit" className="w-full md:w-auto">
+            Create Partner
+          </Button>
         </form>
       </CardContent>
     </Card>
