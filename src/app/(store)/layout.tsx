@@ -15,6 +15,7 @@ import {
   ChevronDown,
   Wallet,
   TrendingUp,
+  X,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -31,6 +32,101 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { CartProvider, useCart } from "@/lib/CartContext";
+import { searchProducts, getSearchSuggestions } from "@/lib/search";
+import type { Product } from "@/lib/types";
+
+const SearchContext = React.createContext<{
+  searchQuery: string;
+  setSearchQuery: (query: string) => void;
+  searchResults: Product[];
+}>({ searchQuery: "", setSearchQuery: () => {}, searchResults: [] });
+
+export const useSearch = () => React.useContext(SearchContext);
+
+function SearchBox() {
+  const { searchQuery, setSearchQuery, searchResults } = useSearch();
+  const [showSuggestions, setShowSuggestions] = React.useState(false);
+  const [suggestions, setSuggestions] = React.useState<Product[]>([]);
+
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setSearchQuery(value);
+    
+    if (value.trim()) {
+      const results = getSearchSuggestions(value, 5);
+      setSuggestions(results);
+      setShowSuggestions(true);
+    } else {
+      setShowSuggestions(false);
+      setSuggestions([]);
+    }
+  };
+
+  const handleSuggestionClick = (product: Product) => {
+    setSearchQuery(product.name);
+    setShowSuggestions(false);
+  };
+
+  const clearSearch = () => {
+    setSearchQuery('');
+    setShowSuggestions(false);
+    setSuggestions([]);
+  };
+
+  return (
+    <div className="relative w-full max-w-md">
+      <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+      <Input
+        type="text"
+        placeholder="Search Products..."
+        className="pl-10 pr-10 w-full"
+        value={searchQuery}
+        onChange={handleSearchChange}
+        onFocus={() => searchQuery.trim() && setShowSuggestions(true)}
+        onBlur={() => setTimeout(() => setShowSuggestions(false), 200)}
+      />
+      {searchQuery && (
+        <button
+          onClick={clearSearch}
+          className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
+        >
+          <X className="h-4 w-4" />
+        </button>
+      )}
+      
+      {showSuggestions && suggestions.length > 0 && (
+        <div className="absolute top-full left-0 right-0 bg-white border border-gray-200 rounded-md shadow-lg z-50 mt-1">
+          {suggestions.map((product) => (
+            <div
+              key={product.id}
+              className="p-3 hover:bg-gray-50 cursor-pointer border-b last:border-b-0 flex items-center gap-3"
+              onClick={() => handleSuggestionClick(product)}
+            >
+              <Image
+                src={product.image || '/placeholder.jpg'}
+                alt={product.name}
+                width={40}
+                height={40}
+                className="rounded object-cover"
+              />
+              <div className="flex-1">
+                <p className="text-sm font-medium truncate">{product.name}</p>
+                <p className="text-xs text-gray-500">
+                  {product.price.currency}{product.price.discounted || product.price.original}
+                  {product.price.discounted && (
+                    <span className="ml-2 line-through text-gray-400">
+                      {product.price.currency}{product.price.original}
+                    </span>
+                  )}
+                </p>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
 
 function Header() {
   const { cart } = useCart();
@@ -152,14 +248,7 @@ function Header() {
           </Link>
         </div>
         <div className="w-full sm:flex-1 flex justify-center">
-          <div className="relative w-full max-w-md">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
-            <Input
-              type="text"
-              placeholder="Search Products..."
-              className="pl-10 w-full"
-            />
-          </div>
+          <SearchBox />
         </div>
         <div className="w-full sm:w-auto flex items-center justify-center sm:justify-end space-x-2 sm:space-x-4">
           <span className="hidden md:inline">+91 93115-25609</span>
@@ -189,15 +278,20 @@ function Header() {
 }
 
 function StoreLayoutContent({ children }: { children: React.ReactNode }) {
+  const [searchQuery, setSearchQuery] = React.useState("");
+  const searchResults = React.useMemo(() => searchProducts(searchQuery), [searchQuery]);
+
   return (
-    <div className="flex min-h-screen bg-gray-100">
-      <div className="flex flex-col flex-1 sm:pl-16">
-        <Header />
-        <main className="flex-1 p-6">
-           {children}
-        </main>
+    <SearchContext.Provider value={{ searchQuery, setSearchQuery, searchResults }}>
+      <div className="flex min-h-screen bg-gray-100">
+        <div className="flex flex-col flex-1 sm:pl-16">
+          <Header />
+          <main className="flex-1 p-6">
+             {children}
+          </main>
+        </div>
       </div>
-    </div>
+    </SearchContext.Provider>
   );
 }
 

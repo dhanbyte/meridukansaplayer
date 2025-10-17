@@ -3,7 +3,7 @@
 import * as React from "react";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
-import { ALL_PRODUCTS } from "@/lib/products";
+import { UNIQUE_PRODUCTS } from "@/lib/search";
 import type { Product } from "@/lib/types";
 import {
   Select,
@@ -14,11 +14,13 @@ import {
 } from "@/components/ui/select";
 import { useToast } from "@/components/ui/use-toast";
 import { useCart } from "@/lib/CartContext";
+import { useSearch } from "./layout";
 
 export default function StoreHome() {
   const { toast } = useToast();
   const { addToCart } = useCart();
-  const allProducts = ALL_PRODUCTS;
+  const { searchQuery, searchResults } = useSearch();
+  const allProducts = UNIQUE_PRODUCTS;
   const [filter, setFilter] = React.useState("all");
 
   const handleAddToCart = (product: Product) => {
@@ -47,6 +49,17 @@ export default function StoreHome() {
   };
 
   const filteredProducts = React.useMemo(() => {
+    // If there's a search query, show search results
+    if (searchQuery.trim()) {
+      if (filter === "all") {
+        return searchResults;
+      }
+      return searchResults.filter(
+        (p) => p.subcategory.toLowerCase() === filter.toLowerCase()
+      );
+    }
+    
+    // Otherwise show all products with filter
     if (!allProducts) return [];
     if (filter === "all") {
       return allProducts;
@@ -54,13 +67,15 @@ export default function StoreHome() {
     return allProducts.filter(
       (p) => p.subcategory.toLowerCase() === filter.toLowerCase()
     );
-  }, [allProducts, filter]);
+  }, [allProducts, filter, searchQuery, searchResults]);
   
   return (
     <>
     <div className="flex-1">
       <div className="flex justify-between items-center mb-4">
-        <h2 className="text-xl font-bold">Products</h2>
+        <h2 className="text-xl font-bold">
+          {searchQuery.trim() ? `Search Results (${filteredProducts.length})` : "Products"}
+        </h2>
          <div className="flex items-center gap-4">
           <Select onValueChange={handleFilterChange} defaultValue="all">
             <SelectTrigger className="w-[180px]">
@@ -78,8 +93,13 @@ export default function StoreHome() {
           <Button variant="link">VIEW ALL</Button>
         </div>
       </div>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
-        {filteredProducts.map((product) => (
+      {searchQuery.trim() && filteredProducts.length === 0 ? (
+        <div className="text-center py-12">
+          <p className="text-gray-500 text-lg">No products found for "{searchQuery}"</p>
+        </div>
+      ) : (
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
+          {filteredProducts.map((product) => (
           <div
             key={product.id}
             className="bg-white rounded-lg shadow-md overflow-hidden group"
@@ -117,8 +137,9 @@ export default function StoreHome() {
               </Button>
             </div>
           </div>
-        ))}
-      </div>
+          ))}
+        </div>
+      )}
       </div>
     </>
   );
