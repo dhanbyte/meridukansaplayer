@@ -1,18 +1,6 @@
+
 import type { Product } from "./types";
-import { TECH_PRODUCTS } from "./tech";
-import { HOME_PRODUCTS } from "./home";
-import { NEWARRIVALS_PRODUCTS as NEW_ARRIVALS } from "./newarrivals";
 
-// Combine all products from different categories
-export const ALL_PRODUCTS: Product[] = [
-  ...TECH_PRODUCTS,
-  ...HOME_PRODUCTS,
-  ...NEW_ARRIVALS
-];
-
-// Keep individual exports for specific category filtering
-export const TECH_PRODUCTS_EXPORT = TECH_PRODUCTS;
-export const HOME_PRODUCTS_EXPORT = HOME_PRODUCTS;
 export const NEWARRIVALS_PRODUCTS: Product[] = [
   
     {
@@ -2882,37 +2870,6 @@ specifications: {
       "USB powered",
       "Romantic decor",
     ],
-  },
-  {
-    "id": "na_14113",
-    "slug": "shubhlabh-divine-plate",
-    "name": "ShubhLabh Divine Plate",
-    "brand": "ShubhLabh Collection",
-    "description": "हर घर की दीवार पर लिखा होता है — शुभ लाभ। लेकिन क्या आपने कभी सोचा… ये सिर्फ़ दो शब्द नहीं… ये तो माँ लक्ष्मी को आमंत्रण देने का एक दिव्य माध्यम है।\n\nशास्त्रों में कहा गया है— 'शुभस्य लाभस्य च योजनेन, गृहे सदा लक्ष्मी निवासो भवति।' अर्थात — शुभ और लाभ के संयोग से, किसी भी घर में सदैव माँ लक्ष्मी का वास होता है। और इसी संयोग को साकार करती है — हमारी ShubhLabh Divine Plate।\n\nइस प्लेट पर उकेरे गए हैं — लाल रंग में शुभ-लाभ के पावन शब्द। लाल रंग शक्ति, सौभाग्य और माँ लक्ष्मी का प्रतीक है।\n\nShubhLabh Divine Plate को लगाएं— मुख्य द्वार के दोनों ओर, पूजाघर में, तिजोरी या अलमारी पर, व्यापार स्थल के प्रवेश द्वार पर। यह सजावट नहीं, बल्कि एक ऊर्जा-संवाहक है, जो घर को सौभाग्य, संतुलन और समृद्धि से भर देता है।\n\nयह प्लेट सिर्फ दिवाली तक सीमित नहीं है। नवरात्रि से लेकर अक्षय तृतीया तक, गृह प्रवेश से लेकर व्यापार आरंभ तक, या जब भी आप शुभता और समृद्धि को आमंत्रित करना चाहें — ShubhLabh Divine Plate हर अवसर पर श्रेष्ठ है।\n\nजब एक सामान्य स्टीकर 125 रुपये में मिलता है, तो यह Divine Plate — शुद्ध, सुंदर और शक्तिशाली — मिल रही है सिर्फ ₹30 में, 80% की छूट के साथ, ताकि हर घर में शुभता का प्रकाश फैले।\n\nतो आइए, माँ लक्ष्मी का स्वागत करें इस ShubhLabh Divine Plate के साथ। Order कीजिए आज ही, और इसे बनाइए अपने जीवन का स्थायी शुभ संकेत। शुभ लाभ की दिव्यता आपके जीवन में सदा बनी रहे।",
-    "shortDescription": "माँ लक्ष्मी का स्वागत करें — शुभ लाभ की दिव्यता से अपने घर और व्यापार को समृद्ध बनाएं।",
-    "price": { "original": 125, "discounted": 30, "currency": "₹" },
-    "image": "https://ik.imagekit.io/b5qewhvhb/e%20commers/Labh.png",
-    "extraImages": [
-      "https://ik.imagekit.io/b5qewhvhb/e%20commers/Shubh%20Labh%20Almirah.png",
-      "https://ik.imagekit.io/b5qewhvhb/e%20commers/Shubh%20Labh%20on%20Glass%20Door.png",
-      "https://ik.imagekit.io/b5qewhvhb/e%20commers/Shubh.png"
-    ],
-    "category": "Home",
-    "subcategory": "Puja-Essentials",
-    "quantity": 500,
-    "ratings": { "average": 4.8, "count": 112 },
-    "features": [
-      "लाल रंग में उकेरे गए शुभ-लाभ शब्द",
-      "पूजा घर, मुख्य द्वार, तिजोरी या दुकान में उपयोग योग्य",
-      "सजावट से अधिक — ऊर्जा संवाहक",
-      "घर और व्यापार में सौभाग्य एवं समृद्धि का संचार",
-      "80% की छूट — सिर्फ ₹30 में उपलब्ध"
-    ],
-    "taxPercent": 18,
-    "sku": "na_14113_shubhlabh_divine_plate",
-    "specifications": {
-      "Country of Origin": "India"
-    }
   }
 ];
 

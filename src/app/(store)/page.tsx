@@ -3,7 +3,7 @@
 import * as React from "react";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
-import { NEWARRIVALS_PRODUCTS } from "@/lib/products";
+import { ALL_PRODUCTS } from "@/lib/products";
 import type { Product } from "@/lib/types";
 import {
   Select,
@@ -18,7 +18,7 @@ import { useCart } from "@/lib/CartContext";
 export default function StoreHome() {
   const { toast } = useToast();
   const { addToCart } = useCart();
-  const allProducts = NEWARRIVALS_PRODUCTS;
+  const allProducts = ALL_PRODUCTS;
   const [filter, setFilter] = React.useState("all");
 
   const handleAddToCart = (product: Product) => {
@@ -36,6 +36,15 @@ export default function StoreHome() {
   const subcategories = allProducts 
     ? [...new Set(allProducts.map((p) => p.subcategory))]
     : [];
+
+  const isValidUrl = (url: string) => {
+    try {
+      new URL(url.trim());
+      return true;
+    } catch {
+      return false;
+    }
+  };
 
   const filteredProducts = React.useMemo(() => {
     if (!allProducts) return [];
@@ -77,7 +86,7 @@ export default function StoreHome() {
           >
             <div className="relative">
               <Image
-                src={product.image}
+                src={isValidUrl(product.image || '') ? product.image.trimEnd() : 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjMwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZGRkIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtc2l6ZT0iMTgiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj5ObyBJbWFnZTwvdGV4dD48L3N2Zz4='}
                 alt={product.name}
                 width={300}
                 height={300}
