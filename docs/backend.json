@@ -115,6 +115,20 @@
             "sku": { "type": "string" }
           },
           "required": ["id", "name", "price", "image"]
+        },
+        "RechargeRequest": {
+            "title": "Recharge Request",
+            "description": "A request to recharge a user's wallet",
+            "type": "object",
+            "properties": {
+                "id": { "type": "string" },
+                "userId": { "type": "string" },
+                "amount": { "type": "number" },
+                "screenshotUrl": { "type": "string" },
+                "status": { "type": "string", "enum": ["Pending", "Approved", "Rejected"] },
+                "requestDate": { "type": "string", "format": "date-time" }
+            },
+            "required": ["userId", "amount", "screenshotUrl", "status", "requestDate"]
         }
     },
     "auth": {
@@ -136,6 +150,10 @@
         "/products/{productId}": {
             "schema": { "$ref": "#/entities/Product" },
             "description": "Stores all available products."
+        },
+        "/rechargeRequests/{requestId}": {
+            "schema": { "$ref": "#/entities/RechargeRequest" },
+            "description": "Stores wallet recharge requests from users."
         }
     }
 }

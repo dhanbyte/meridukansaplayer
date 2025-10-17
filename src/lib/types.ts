@@ -55,3 +55,12 @@ export interface Order {
     amount: number;
     orderDate: any; // Using 'any' for Firebase ServerTimestamp
 }
+
+export interface RechargeRequest {
+  id: string;
+  userId: string;
+  amount: number;
+  screenshotUrl: string;
+  status: 'Pending' | 'Approved' | 'Rejected';
+  requestDate: any; // Using 'any' for Firebase ServerTimestamp
+}
