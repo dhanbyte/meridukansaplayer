@@ -20,14 +20,7 @@ interface StoreHomeProps {
 
 export default function StoreHome({ addToCart }: StoreHomeProps) {
   const { data: allProducts, loading } = useCollection<Product>("products");
-  const [filteredProducts, setFilteredProducts] = React.useState<Product[]>([]);
   const [filter, setFilter] = React.useState("all");
-
-  React.useEffect(() => {
-    if (allProducts) {
-      handleFilterChange(filter);
-    }
-  }, [allProducts, filter]);
 
   const handleAddToCart = (product: Product) => {
     if (addToCart) {
@@ -37,20 +30,21 @@ export default function StoreHome({ addToCart }: StoreHomeProps) {
 
   const handleFilterChange = (value: string) => {
     setFilter(value);
-    if (value === "all") {
-      setFilteredProducts(allProducts);
-    } else {
-      setFilteredProducts(
-        allProducts.filter(
-          (p) => p.subcategory.toLowerCase() === value.toLowerCase()
-        )
-      );
-    }
   };
   
   const subcategories = allProducts 
     ? [...new Set(allProducts.map((p) => p.subcategory))]
     : [];
+
+  const filteredProducts = React.useMemo(() => {
+    if (!allProducts) return [];
+    if (filter === "all") {
+      return allProducts;
+    }
+    return allProducts.filter(
+      (p) => p.subcategory.toLowerCase() === filter.toLowerCase()
+    );
+  }, [allProducts, filter]);
   
   if (loading) {
     return <div>Loading products...</div>
