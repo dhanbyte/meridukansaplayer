@@ -6,6 +6,16 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+  DialogFooter,
+  DialogClose,
+} from "@/components/ui/dialog";
 import { Minus, Plus } from "lucide-react";
 import type { Order } from "@/lib/types";
 import { useUser } from "@/firebase/use-user";
@@ -16,6 +26,12 @@ import { errorEmitter } from "@/firebase/error-emitter";
 import { FirestorePermissionError } from "@/firebase/errors";
 import { useCart } from "@/lib/CartContext";
 
+interface ShippingInfo {
+  customerName: string;
+  customerPhone: string;
+  address: string;
+}
+
 export default function CartPage() {
   const { cart, removeFromCart, increaseQuantity, decreaseQuantity, clearCart } = useCart();
   const { user } = useUser();
@@ -23,6 +39,13 @@ export default function CartPage() {
   const { toast } = useToast();
   const [paymentMethod, setPaymentMethod] = React.useState("prepaid");
   const [sellingPrice, setSellingPrice] = React.useState('');
+  const [isAddressDialogOpen, setIsAddressDialogOpen] = React.useState(false);
+  const [shippingInfo, setShippingInfo] = React.useState<ShippingInfo | null>(null);
+
+  // State for the address form fields
+  const [formName, setFormName] = React.useState("");
+  const [formPhone, setFormPhone] = React.useState("");
+  const [formAddress, setFormAddress] = React.useState("");
 
   const totalCartPrice = cart.reduce(
     (total, item) => total + (item.price.discounted || item.price.original) * item.quantity,
@@ -30,6 +53,28 @@ export default function CartPage() {
   );
 
   const profit = sellingPrice ? parseFloat(sellingPrice) - totalCartPrice : 0;
+
+  const handleSaveAddress = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!formName || !formPhone || !formAddress) {
+      toast({
+        variant: "destructive",
+        title: "Missing Information",
+        description: "Please fill out all address fields.",
+      });
+      return;
+    }
+    setShippingInfo({
+      customerName: formName,
+      customerPhone: formPhone,
+      address: formAddress,
+    });
+    setIsAddressDialogOpen(false);
+    toast({
+      title: "Address Saved",
+      description: "Your shipping address has been updated.",
+    });
+  };
 
   const handlePlaceOrder = async () => {
     if (!user || !firestore) {
@@ -48,14 +93,22 @@ export default function CartPage() {
       });
       return;
     }
+    if (!shippingInfo) {
+      toast({
+        variant: "destructive",
+        title: "No Address",
+        description: "Please add a shipping address before placing an order.",
+      });
+      return;
+    }
 
     try {
       for (const item of cart) {
         const orderData: Omit<Order, 'id' | 'orderDate'> = {
           partnerId: user.uid,
-          customerName: "New Customer", 
-          customerPhone: "1234567890", 
-          shippingAddress: "123 Main St", 
+          customerName: shippingInfo.customerName,
+          customerPhone: shippingInfo.customerPhone,
+          shippingAddress: shippingInfo.address,
           productSku: item.sku || 'N/A',
           quantity: item.quantity,
           paymentMethod: paymentMethod,
@@ -83,7 +136,7 @@ export default function CartPage() {
 
       clearCart();
       setSellingPrice('');
-
+      setShippingInfo(null);
 
     } catch (error) {
        console.error("Error placing order:", error);
@@ -148,7 +201,47 @@ export default function CartPage() {
             <div className="space-y-6">
             <div className="border rounded-lg p-4">
                 <h3 className="font-semibold mb-2">Shipping Address</h3>
-                <Button variant="destructive">Add New Address</Button>
+                {shippingInfo ? (
+                    <div className="text-sm">
+                        <p className="font-medium">{shippingInfo.customerName}</p>
+                        <p>{shippingInfo.customerPhone}</p>
+                        <p className="text-muted-foreground">{shippingInfo.address}</p>
+                        <Button variant="link" className="p-0 h-auto mt-2" onClick={() => setIsAddressDialogOpen(true)}>Change Address</Button>
+                    </div>
+                ) : (
+                    <Dialog open={isAddressDialogOpen} onOpenChange={setIsAddressDialogOpen}>
+                        <DialogTrigger asChild>
+                            <Button variant="destructive">Add New Address</Button>
+                        </DialogTrigger>
+                        <DialogContent>
+                            <DialogHeader>
+                                <DialogTitle>Add Shipping Address</DialogTitle>
+                            </DialogHeader>
+                            <form onSubmit={handleSaveAddress}>
+                                <div className="grid gap-4 py-4">
+                                    <div className="grid grid-cols-4 items-center gap-4">
+                                        <Label htmlFor="name" className="text-right">Name</Label>
+                                        <Input id="name" value={formName} onChange={e => setFormName(e.target.value)} className="col-span-3" placeholder="Full Name" required />
+                                    </div>
+                                    <div className="grid grid-cols-4 items-center gap-4">
+                                        <Label htmlFor="phone" className="text-right">Phone</Label>
+                                        <Input id="phone" value={formPhone} onChange={e => setFormPhone(e.target.value)} className="col-span-3" placeholder="Phone Number" required />
+                                    </div>
+                                    <div className="grid grid-cols-4 items-center gap-4">
+                                        <Label htmlFor="address" className="text-right">Address</Label>
+                                        <Textarea id="address" value={formAddress} onChange={e => setFormAddress(e.target.value)} className="col-span-3" placeholder="Full shipping address" required />
+                                    </div>
+                                </div>
+                                <DialogFooter>
+                                    <DialogClose asChild>
+                                        <Button type="button" variant="secondary">Cancel</Button>
+                                    </DialogClose>
+                                    <Button type="submit">Save Address</Button>
+                                </DialogFooter>
+                            </form>
+                        </DialogContent>
+                    </Dialog>
+                )}
             </div>
             <div className="border rounded-lg p-4">
                 <h3 className="font-semibold mb-2">Payment Method</h3>
