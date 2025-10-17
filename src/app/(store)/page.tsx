@@ -3,7 +3,7 @@
 import * as React from "react";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
-import { NEWARRIVALS_PRODUCTS } from "@/lib/products";
+import { useCollection } from "@/firebase";
 import type { Product } from "@/lib/types";
 import {
   Select,
@@ -19,8 +19,15 @@ interface StoreHomeProps {
 }
 
 export default function StoreHome({ addToCart }: StoreHomeProps) {
-  const [products, setProducts] = React.useState(NEWARRIVALS_PRODUCTS);
+  const { data: allProducts, loading } = useCollection<Product>("products");
+  const [filteredProducts, setFilteredProducts] = React.useState<Product[]>([]);
   const [filter, setFilter] = React.useState("all");
+
+  React.useEffect(() => {
+    if (allProducts) {
+      handleFilterChange(filter);
+    }
+  }, [allProducts, filter]);
 
   const handleAddToCart = (product: Product) => {
     if (addToCart) {
@@ -31,19 +38,23 @@ export default function StoreHome({ addToCart }: StoreHomeProps) {
   const handleFilterChange = (value: string) => {
     setFilter(value);
     if (value === "all") {
-      setProducts(NEWARRIVALS_PRODUCTS);
+      setFilteredProducts(allProducts);
     } else {
-      setProducts(
-        NEWARRIVALS_PRODUCTS.filter(
+      setFilteredProducts(
+        allProducts.filter(
           (p) => p.subcategory.toLowerCase() === value.toLowerCase()
         )
       );
     }
   };
   
-  const subcategories = [
-    ...new Set(NEWARRIVALS_PRODUCTS.map((p) => p.subcategory)),
-  ];
+  const subcategories = allProducts 
+    ? [...new Set(allProducts.map((p) => p.subcategory))]
+    : [];
+  
+  if (loading) {
+    return <div>Loading products...</div>
+  }
 
   return (
     <>
@@ -68,7 +79,7 @@ export default function StoreHome({ addToCart }: StoreHomeProps) {
         </div>
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
-        {products.map((product) => (
+        {filteredProducts.map((product) => (
           <div
             key={product.id}
             className="bg-white rounded-lg shadow-md overflow-hidden group"
