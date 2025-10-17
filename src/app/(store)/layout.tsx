@@ -24,6 +24,12 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 import { CartProvider, useCart } from "@/lib/CartContext";
 
 function Header() {
@@ -33,39 +39,104 @@ function Header() {
   return (
     <>
       <aside className="fixed inset-y-0 left-0 z-20 w-16 bg-white flex-col items-center py-4 space-y-6 hidden sm:flex">
-        <Link href="/">
-          <div className="p-2 bg-red-500 rounded-md">
-            <TrendingUp className="h-6 w-6 text-white" />
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Link href="/">
+                <div className="p-2 bg-red-500 rounded-md">
+                  <TrendingUp className="h-6 w-6 text-white" />
+                </div>
+              </Link>
+            </TooltipTrigger>
+            <TooltipContent side="right">
+              <p>Dashboard</p>
+            </TooltipContent>
+          </Tooltip>
+
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Link href="/">
+                <Search className="h-6 w-6 text-gray-500" />
+              </Link>
+            </TooltipTrigger>
+            <TooltipContent side="right">
+              <p>Search</p>
+            </TooltipContent>
+          </Tooltip>
+
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Link href="/orders">
+                <Box className="h-6 w-6 text-gray-500" />
+              </Link>
+            </TooltipTrigger>
+            <TooltipContent side="right">
+              <p>Orders</p>
+            </TooltipContent>
+          </Tooltip>
+
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Link href="/shipping">
+                <Truck className="h-6 w-6 text-gray-500" />
+              </Link>
+            </TooltipTrigger>
+            <TooltipContent side="right">
+              <p>Shipping</p>
+            </TooltipContent>
+          </Tooltip>
+
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Link href="/banking">
+                <Wallet className="h-6 w-6 text-gray-500" />
+              </Link>
+            </TooltipTrigger>
+            <TooltipContent side="right">
+              <p>Banking</p>
+            </TooltipContent>
+          </Tooltip>
+
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Link href="/cart" className="relative">
+                <ShoppingCart className="h-6 w-6 text-gray-500" />
+                {totalItems > 0 && (
+                  <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center font-bold">
+                    {totalItems}
+                  </span>
+                )}
+              </Link>
+            </TooltipTrigger>
+            <TooltipContent side="right">
+              <p>Cart</p>
+            </TooltipContent>
+          </Tooltip>
+
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Link href="/settings">
+                <MoreHorizontal className="h-6 w-6 text-gray-500" />
+              </Link>
+            </TooltipTrigger>
+            <TooltipContent side="right">
+              <p>Settings</p>
+            </TooltipContent>
+          </Tooltip>
+
+          <div className="mt-auto">
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Link href="/login">
+                  <LogOut className="h-6 w-6 text-gray-500" />
+                </Link>
+              </TooltipTrigger>
+              <TooltipContent side="right">
+                <p>Logout</p>
+              </TooltipContent>
+            </Tooltip>
           </div>
-        </Link>
-        <Link href="/">
-            <Search className="h-6 w-6 text-gray-500" />
-        </Link>
-        <Link href="/orders">
-          <Box className="h-6 w-6 text-gray-500" />
-        </Link>
-        <Link href="/shipping">
-          <Truck className="h-6 w-6 text-gray-500" />
-        </Link>
-        <Link href="/banking">
-          <Wallet className="h-6 w-6 text-gray-500" />
-        </Link>
-        <Link href="/cart" className="relative">
-            <ShoppingCart className="h-6 w-6 text-gray-500" />
-            {totalItems > 0 && (
-            <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center font-bold">
-                {totalItems}
-            </span>
-            )}
-        </Link>
-        <Link href="/settings">
-          <MoreHorizontal className="h-6 w-6 text-gray-500" />
-        </Link>
-        <div className="mt-auto">
-          <Link href="/login">
-            <LogOut className="h-6 w-6 text-gray-500" />
-          </Link>
-        </div>
+        </TooltipProvider>
       </aside>
 
       <header className="sticky top-0 z-10 flex flex-col sm:flex-row items-center justify-between mb-6 gap-4 bg-white p-4 border-b">
