@@ -8,6 +8,17 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
@@ -40,6 +51,15 @@ export default function CreatePartnerPage() {
   const handleCreatePartner = async (e: React.FormEvent) => {
     e.preventDefault();
     const auth = getAuth(app);
+
+    if (!partnerName || !email || !password) {
+       toast({
+        variant: "destructive",
+        title: "Missing Information",
+        description: "Please fill in Partner Name, Email, and Password.",
+      });
+      return;
+    }
 
     try {
       // 1. Create user in Firebase Auth
@@ -104,15 +124,15 @@ export default function CreatePartnerPage() {
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <form onSubmit={handleCreatePartner} className="grid gap-6">
+        <form onSubmit={(e) => e.preventDefault()} className="grid gap-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="grid gap-2">
               <Label htmlFor="partner_name">Partner Name</Label>
-              <Input id="partner_name" placeholder="John Doe" value={partnerName} onChange={(e) => setPartnerName(e.target.value)} />
+              <Input id="partner_name" placeholder="John Doe" value={partnerName} onChange={(e) => setPartnerName(e.target.value)} required />
             </div>
             <div className="grid gap-2">
               <Label htmlFor="email">Email</Label>
-              <Input id="email" type="email" placeholder="partner@example.com" value={email} onChange={(e) => setEmail(e.target.value)} />
+              <Input id="email" type="email" placeholder="partner@example.com" value={email} onChange={(e) => setEmail(e.target.value)} required />
             </div>
             <div className="grid gap-2">
               <Label htmlFor="phone">Phone</Label>
@@ -120,7 +140,7 @@ export default function CreatePartnerPage() {
             </div>
             <div className="grid gap-2">
               <Label htmlFor="password">Password</Label>
-              <Input id="password" type="password" placeholder="Set a password" value={password} onChange={(e) => setPassword(e.target.value)} />
+              <Input id="password" type="password" placeholder="Set a password" value={password} onChange={(e) => setPassword(e.target.value)} required />
             </div>
           </div>
 
@@ -147,9 +167,25 @@ export default function CreatePartnerPage() {
             </div>
           </div>
 
-          <Button type="submit" className="w-full md:w-auto">
-            Create Partner
-          </Button>
+           <AlertDialog>
+              <AlertDialogTrigger asChild>
+                <Button type="button" className="w-full md:w-auto">
+                  Create Partner
+                </Button>
+              </AlertDialogTrigger>
+              <AlertDialogContent>
+                <AlertDialogHeader>
+                  <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+                  <AlertDialogDescription>
+                    This action will create a new partner with the provided details.
+                  </AlertDialogDescription>
+                </AlertDialogHeader>
+                <AlertDialogFooter>
+                  <AlertDialogCancel>Cancel</AlertDialogCancel>
+                  <AlertDialogAction onClick={handleCreatePartner}>Continue</AlertDialogAction>
+                </AlertDialogFooter>
+              </AlertDialogContent>
+            </AlertDialog>
         </form>
       </CardContent>
     </Card>
