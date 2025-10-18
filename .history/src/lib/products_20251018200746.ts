@@ -948,49 +948,6 @@ export const ALL_PRODUCTS: Product[] = [
   sku: '0876_usb_neck_fan_1pc',
   specifications: { 'Country of Origin': 'China', 'Dimensions': '22cm x 15cm x 7cm', 'Weight': '286g' }
 },
-  {
-    id: "6633_red_flameless_tealight",
-    slug: "red-led-tealights-smokeless-flameless-candles-24pcs",
-    name: "Red LED Tealights Smokeless Flameless Candles for Home Decor, Diwali (24 Pcs)",
-    brand: "Shopwave",
-    description:
-      "COOL AND ROMANTIC :- Flameless LED Tea Lights are ideal for decorations, It can be used as mood lights night lights with votive holders or other holders like glass cups. You can put the battery tealight on table or other places in restaurants, home and garden wedding, party, festival decorations. EASY TO USE :- On/Off switch for easy & convenient operation. The electronic tea light comes with batteries which have 100+ hours of light-time and can be replaced easily via the tab at the bottom. SAFE For KIDS, PETS, SENIORS :- These LED tea lights can be used without having to worry of flame, absolutely no fire hazards or burning risks, safe for families with pets or young children. SAFE & NO FIRE RISK, NO HASSLE & NO MESS :- The candle can be used in bedrooms, lounges, dens, bathrooms, etc. Can be used for Mother's Day gifts. Absolutely no mess; no dripping wax, no smoke, no matches. CREATE AMBIENCE :-The warm red flameless LED tea light candles flicker and provide the effect of an actual candle, perfect for decorating weddings, parties, gardens, patios, decks, restaurants, lanterns, kids projects, centerpieces etc.",
-    shortDescription:
-      "Red LED flameless tealights with flickering effect - safe for kids and pets (24 pieces)",
-    price: { original: 999, discounted: 349, currency: "₹" },
-    image:
-      "https://Shopwave.b-cdn.net/NEW%20ARIVALS/5_fd9a71e9-b878-46e9-ba8c-b48b1c3ca98b.webp",
-      extraImages: [
-        "https://Shopwave.b-cdn.net/NEW%20ARIVALS/6633_9a43586f-c760-4337-b1d3-09341d8a4a7a.webp",
-        "https://Shopwave.b-cdn.net/NEW%20ARIVALS/4_0400e024-9c5c-4a99-800c-264c4d107142.webp",
-        "https://Shopwave.b-cdn.net/NEW%20ARIVALS/6_d21219f4-5256-4d1e-b79d-44b6e2b732ae.webp",
-      "https://Shopwave.b-cdn.net/NEW%20ARIVALS/5_61fba044-6b31-43ce-a1d9-0f506bc9de84.webp",
-      "https://Shopwave.b-cdn.net/NEW%20ARIVALS/5_fd9a71e9-b878-46e9-ba8c-b48b1c3ca98b.webp",
-    ],
-    category: "New Arrivals",
-    subcategory: "LED Lights",
-    quantity: 20,
-    ratings: { average: 4.5, count: 0 },
-    features: [
-      "Pack of 24 pieces",
-      "Flameless & smokeless",
-      "100+ hours battery life",
-      "Safe for kids and pets",
-      "Flickering effect",
-      "Easy on/off switch",
-    ],
-    
-    sku: "6633_red_flameless_tealight",
-    specifications: {
-      "Country of Origin": "China",
-      "Product Weight (Gm)": "235",
-      "Ship Weight (Gm)": "370",
-      "Length (Cm)": "24",
-      "Breadth (Cm)": "15",
-      "Height (Cm)": "5",
-      "GST": "18%",
-    },
-  },
 {
   id: 'P_TECH_A_27',
   slug: 'foldable-wireless-headphone-calling-function',
@@ -1628,7 +1585,6 @@ export const ALL_PRODUCTS: Product[] = [
       'Dimensions': '11cm x 11cm x 14cm'
     }
   },
-  
   {
     id: 'P_TECH_D_46',
     slug: '3d-crystal-glass-shiva-sculpture-led-night-lamp',
@@ -5907,7 +5863,49 @@ specifications: {
     ratings: { average: 4.0, count: 27 },
     sku: "6994_usb_7port_data_hub",
   },
-
+  {
+    id: "6633_red_flameless_tealight",
+    slug: "red-led-tealights-smokeless-flameless-candles-24pcs",
+    name: "Red LED Tealights Smokeless Flameless Candles for Home Decor, Diwali (24 Pcs)",
+    brand: "Shopwave",
+    description:
+      "COOL AND ROMANTIC :- Flameless LED Tea Lights are ideal for decorations, It can be used as mood lights night lights with votive holders or other holders like glass cups. You can put the battery tealight on table or other places in restaurants, home and garden wedding, party, festival decorations. EASY TO USE :- On/Off switch for easy & convenient operation. The electronic tea light comes with batteries which have 100+ hours of light-time and can be replaced easily via the tab at the bottom. SAFE For KIDS, PETS, SENIORS :- These LED tea lights can be used without having to worry of flame, absolutely no fire hazards or burning risks, safe for families with pets or young children. SAFE & NO FIRE RISK, NO HASSLE & NO MESS :- The candle can be used in bedrooms, lounges, dens, bathrooms, etc. Can be used for Mother's Day gifts. Absolutely no mess; no dripping wax, no smoke, no matches. CREATE AMBIENCE :-The warm red flameless LED tea light candles flicker and provide the effect of an actual candle, perfect for decorating weddings, parties, gardens, patios, decks, restaurants, lanterns, kids projects, centerpieces etc.",
+    shortDescription:
+      "Red LED flameless tealights with flickering effect - safe for kids and pets (24 pieces)",
+    price: { original: 999, discounted: 349, currency: "₹" },
+    image:
+      "https://Shopwave.b-cdn.net/NEW%20ARIVALS/5_fd9a71e9-b878-46e9-ba8c-b48b1c3ca98b.webp",
+      extraImages: [
+        "https://Shopwave.b-cdn.net/NEW%20ARIVALS/6633_9a43586f-c760-4337-b1d3-09341d8a4a7a.webp",
+        "https://Shopwave.b-cdn.net/NEW%20ARIVALS/4_0400e024-9c5c-4a99-800c-264c4d107142.webp",
+        "https://Shopwave.b-cdn.net/NEW%20ARIVALS/6_d21219f4-5256-4d1e-b79d-44b6e2b732ae.webp",
+      "https://Shopwave.b-cdn.net/NEW%20ARIVALS/5_61fba044-6b31-43ce-a1d9-0f506bc9de84.webp",
+      "https://Shopwave.b-cdn.net/NEW%20ARIVALS/5_fd9a71e9-b878-46e9-ba8c-b48b1c3ca98b.webp",
+    ],
+    category: "New Arrivals",
+    subcategory: "LED Lights",
+    quantity: 20,
+    ratings: { average: 4.5, count: 0 },
+    features: [
+      "Pack of 24 pieces",
+      "Flameless & smokeless",
+      "100+ hours battery life",
+      "Safe for kids and pets",
+      "Flickering effect",
+      "Easy on/off switch",
+    ],
+    
+    sku: "6633_red_flameless_tealight",
+    specifications: {
+      "Country of Origin": "China",
+      "Product Weight (Gm)": "235",
+      "Ship Weight (Gm)": "370",
+      "Length (Cm)": "24",
+      "Breadth (Cm)": "15",
+      "Height (Cm)": "5",
+      "GST": "18%",
+    },
+  },
 
    {
     "id": "na_144545113",
