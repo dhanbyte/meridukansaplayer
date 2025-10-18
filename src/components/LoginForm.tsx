@@ -104,9 +104,10 @@ export const LoginForm = () => {
 
           <div className="text-center">
             <div className="text-sm text-gray-600 bg-gray-100 p-3 rounded-md">
-              <p className="font-medium">Demo Credentials:</p>
-              <p>Username: admin</p>
-              <p>Password: admin123</p>
+              <p className="font-medium">Admin Login:</p>
+              <p>Username: admin, Password: admin123</p>
+              <p className="text-xs mt-2">Test Partner:</p>
+              <p>Username: dhan@gmail.com, Password: 123456</p>
             </div>
           </div>
         </form>

@@ -133,7 +133,7 @@ function SearchBox() {
 
 function Header() {
   const { cart } = useCart();
-  const { logout } = useAuth();
+  const { logout, user } = useAuth();
   const totalItems = cart.reduce((acc, item) => acc + item.quantity, 0);
 
   const handleLogout = () => {
@@ -270,11 +270,12 @@ function Header() {
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="ghost">
-                Shopwave <ChevronDown className="h-4 w-4" />
+                {user?.name || 'User'} <ChevronDown className="h-4 w-4" />
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent>
-              <DropdownMenuItem>Select Store</DropdownMenuItem>
+              <DropdownMenuItem>Profile</DropdownMenuItem>
+              <DropdownMenuItem onClick={handleLogout}>Logout</DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
           <Bell className="h-6 w-6" />

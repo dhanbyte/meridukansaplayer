@@ -3,7 +3,7 @@ import type { Product } from "./types";
 
 export const ALL_PRODUCTS: Product[] = [
      {
-    "id": "na_15545544113",
+    "id": "na_14113",
     "slug": "shubhlabh-divine-plate",
     "name": "ShubhLabh Divine Plate",
     "brand": "ShubhLabh Collection",
@@ -106,7 +106,7 @@ export const ALL_PRODUCTS: Product[] = [
 
  
   {
-    id: 'P_TECH6556_A_01',
+    id: 'P_TECH_A_01',
     slug: 'designer-mobile-holder',
     name: 'Designer Mobile Holder (10Pc Only)',
     brand: 'PHOBIA',
@@ -3689,7 +3689,7 @@ specifications: {
   "specifications": { "Country of Origin": "China", "Dimensions": "30cm x 7cm x 4cm", "Weight": "140g" }
 },
 {
-  "id": "2815452",
+  "id": "2812",
   "slug": "triangle-3-tier-plastic-storage-rack",
   "name": "Triangle 3-Tier Plastic Storage Rack for Kitchen, Bathroom & Office",
   "brand": "VoltDesk",
@@ -3712,7 +3712,7 @@ specifications: {
   "specifications": { "Country of Origin": "India", "Dimensions": "39cm x 23cm x 7cm", "Weight": "535g" }
 },
 {
-  "id": "205565",
+  "id": "2065",
   "slug": "6-blade-2in1-manual-food-chopper-1000ml",
   "name": "6 BLADE 2IN1 MANUAL FOOD CHOPPER, COMPACT & POWERFUL HAND HELD VEGETABLE CHOPPER (1000Ml)",
   "brand": "Quickslice",
@@ -3793,7 +3793,7 @@ specifications: {
     "specifications": { "Country of Origin": "India", "Weight": "535g" }
   },
   {
-    "id": "26565065",
+    "id": "2065",
     "slug": "6-blade-manual-food-chopper-1000ml",
     "name": "6 Blade Manual Food Chopper (1000ml)",
     "brand": "Quickslice",
@@ -5688,7 +5688,7 @@ specifications: {
   },
 
    {
-    "id": "na_144545113",
+    "id": "na_14113",
     "slug": "shubhlabh-divine-plate",
     "name": "ShubhLabh Divine Plate",
     "brand": "ShubhLabh Collection",

@@ -13,33 +13,24 @@ const defaultAdmin: AdminUser = {
 };
 
 export class UserService {
-  static getUsers(): User[] {
-    if (typeof window === 'undefined') return [];
-    const users = localStorage.getItem(USERS_KEY);
-    return users ? JSON.parse(users) : [];
+  static async getUsers(): Promise<User[]> {
+    try {
+      const response = await fetch('/api/users');
+      const data = await response.json();
+      return data.users || [];
+    } catch (error) {
+      return [];
+    }
   }
 
-  static saveUsers(users: User[]): void {
-    if (typeof window === 'undefined') return;
-    localStorage.setItem(USERS_KEY, JSON.stringify(users));
-  }
-
-  static getAdmin(): AdminUser {
-    if (typeof window === 'undefined') return defaultAdmin;
-    const admin = localStorage.getItem(ADMIN_KEY);
-    return admin ? JSON.parse(admin) : defaultAdmin;
-  }
-
-  static async createUser(userData: Omit<User, 'id' | 'createdAt'>): Promise<User> {
-    const users = this.getUsers();
-    const newUser: User = {
-      ...userData,
-      id: `user_${Date.now()}`,
-      createdAt: new Date().toISOString(),
-    };
-    users.push(newUser);
-    this.saveUsers(users);
-    return newUser;
+  static async createUser(userData: Omit<User, 'id' | 'createdAt'>): Promise<{ user: User; password: string }> {
+    const response = await fetch('/api/users', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(userData)
+    });
+    const data = await response.json();
+    return data;
   }
 
   static generatePassword(): string {
@@ -51,33 +42,29 @@ export class UserService {
     return password;
   }
 
-  static async authenticateUser(username: string, password: string): Promise<User | AdminUser | null> {
-    // Check admin first
-    const admin = this.getAdmin();
-    if (admin.username === username && admin.password === password) {
-      return admin;
-    }
-
-    // Check users
-    const users = this.getUsers();
-    const user = users.find(u => u.username === username && u.password === password && u.isActive);
-    return user || null;
-  }
-
   static async updateUser(userId: string, updates: Partial<User>): Promise<boolean> {
-    const users = this.getUsers();
-    const index = users.findIndex(u => u.id === userId);
-    if (index === -1) return false;
-    
-    users[index] = { ...users[index], ...updates };
-    this.saveUsers(users);
-    return true;
+    try {
+      const response = await fetch('/api/users', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id: userId, ...updates })
+      });
+      return response.ok;
+    } catch (error) {
+      return false;
+    }
   }
 
   static async deleteUser(userId: string): Promise<boolean> {
-    const users = this.getUsers();
-    const filteredUsers = users.filter(u => u.id !== userId);
-    this.saveUsers(filteredUsers);
-    return true;
+    try {
+      const response = await fetch('/api/users', {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id: userId })
+      });
+      return response.ok;
+    } catch (error) {
+      return false;
+    }
   }
 }

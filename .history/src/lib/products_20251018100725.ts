@@ -3,7 +3,7 @@ import type { Product } from "./types";
 
 export const ALL_PRODUCTS: Product[] = [
      {
-    "id": "na_15545544113",
+    "id": "na_14113",
     "slug": "shubhlabh-divine-plate",
     "name": "ShubhLabh Divine Plate",
     "brand": "ShubhLabh Collection",
@@ -106,7 +106,7 @@ export const ALL_PRODUCTS: Product[] = [
 
  
   {
-    id: 'P_TECH6556_A_01',
+    id: 'P_TECH_A_01',
     slug: 'designer-mobile-holder',
     name: 'Designer Mobile Holder (10Pc Only)',
     brand: 'PHOBIA',
@@ -5688,7 +5688,7 @@ specifications: {
   },
 
    {
-    "id": "na_144545113",
+    "id": "na_14113",
     "slug": "shubhlabh-divine-plate",
     "name": "ShubhLabh Divine Plate",
     "brand": "ShubhLabh Collection",

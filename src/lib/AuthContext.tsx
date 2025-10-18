@@ -18,8 +18,6 @@ export const useAuth = () => {
   return context;
 };
 
-import { UserService } from './userService';
-
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [user, setUser] = useState(null);
@@ -33,14 +31,20 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
   }, []);
 
-  const login = async (username: string, password: string): Promise<boolean> => {
+  const login = async (email: string, password: string): Promise<boolean> => {
     try {
-      const authenticatedUser = await UserService.authenticateUser(username, password);
-      if (authenticatedUser) {
+      const response = await fetch('/api/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password })
+      });
+      
+      if (response.ok) {
+        const data = await response.json();
         setIsLoggedIn(true);
-        setUser(authenticatedUser);
+        setUser(data.user);
         localStorage.setItem('isLoggedIn', 'true');
-        localStorage.setItem('currentUser', JSON.stringify(authenticatedUser));
+        localStorage.setItem('currentUser', JSON.stringify(data.user));
         return true;
       }
       return false;

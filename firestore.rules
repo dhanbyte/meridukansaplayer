@@ -49,13 +49,13 @@ service cloud.firestore {
     /**
      * @description Controls access to partner information.
      * @path /partners/{partnerId}
-     * @allow (get, list) if false
+     * @allow (get, list) if true
      * @allow (create, update, delete) if false
-     * @principle Restricts write access to partner data; manual seeding only.
+     * @principle Allows read access to partner data; restricts write access for manual seeding only.
      */
     match /partners/{partnerId} {
-      allow get: if false;
-      allow list: if false;
+      allow get: if true;
+      allow list: if true;
       allow create: if false;
       allow update: if false;
       allow delete: if false;

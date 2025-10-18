@@ -11,21 +11,11 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/components/ui/use-toast";
-import {
-  getAuth,
-  createUserWithEmailAndPassword,
-} from "firebase/auth";
-import { useFirebaseApp, useFirestore } from "@/firebase/provider";
-import { collection, addDoc, doc, setDoc } from "firebase/firestore";
 import { useRouter } from "next/navigation";
-import { errorEmitter } from "@/firebase/error-emitter";
-import { FirestorePermissionError } from "@/firebase/errors";
 
 
 export default function CreatePartnerPage() {
   const { toast } = useToast();
-  const app = useFirebaseApp();
-  const firestore = useFirestore();
   const router = useRouter();
 
   const [partnerName, setPartnerName] = React.useState("");
@@ -40,8 +30,6 @@ export default function CreatePartnerPage() {
 
   const handleCreatePartner = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!app) return;
-    const auth = getAuth(app);
 
     if (!partnerName || !email || !password) {
        toast({
@@ -53,58 +41,27 @@ export default function CreatePartnerPage() {
     }
 
     try {
-      // 1. Create user in Firebase Auth
-      const userCredential = await createUserWithEmailAndPassword(
-        auth,
-        email,
-        password
-      );
-      const user = userCredential.user;
-
-      // 2. Add partner details to Firestore
-      if (!firestore) throw new Error("Firestore is not available");
       const partnerData = {
         name: partnerName,
         email: email,
+        password: password,
         phone: phone,
         bankName: bankName,
         accountHolderName: accountHolderName,
         accountNumber: accountNumber,
         ifscCode: ifscCode,
         status: "Active",
-        uid: user.uid,
+        role: "partner",
+        createdAt: new Date().toISOString()
       };
       
-      const docRef = await addDoc(collection(firestore, "partners"), partnerData);
-      
-      setDoc(doc(firestore, "partners", docRef.id), { id: docRef.id }, { merge: true })
-      .catch(async (err) => {
-          const permissionError = new FirestorePermissionError({
-            path: `partners/${docRef.id}`,
-            operation: 'update',
-            requestResourceData: { id: docRef.id }
-          });
-          errorEmitter.emit('permission-error', permissionError);
+      const response = await fetch('/api/partners', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(partnerData)
       });
 
-
-      // 3. Add user role to a 'users' collection
-       const userDocData = {
-          uid: user.uid,
-          email: user.email,
-          displayName: partnerName,
-          role: "partner",
-        };
-       setDoc(doc(firestore, "users", user.uid), userDocData)
-        .catch(async (err) => {
-            const permissionError = new FirestorePermissionError({
-              path: `users/${user.uid}`,
-              operation: 'create',
-              requestResourceData: userDocData,
-            });
-            errorEmitter.emit('permission-error', permissionError);
-        });
-
+      if (!response.ok) throw new Error('Failed to create partner');
 
       toast({
         title: "Partner Created",
@@ -112,7 +69,6 @@ export default function CreatePartnerPage() {
       });
 
       router.push("/admin/partners");
-
 
     } catch (error: any) {
       console.error("Error creating partner:", error);

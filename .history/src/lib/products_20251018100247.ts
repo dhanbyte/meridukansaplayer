@@ -3,7 +3,7 @@ import type { Product } from "./types";
 
 export const ALL_PRODUCTS: Product[] = [
      {
-    "id": "na_15545544113",
+    "id": "na_14113",
     "slug": "shubhlabh-divine-plate",
     "name": "ShubhLabh Divine Plate",
     "brand": "ShubhLabh Collection",
@@ -106,7 +106,7 @@ export const ALL_PRODUCTS: Product[] = [
 
  
   {
-    id: 'P_TECH6556_A_01',
+    id: 'P_TECH_A_01',
     slug: 'designer-mobile-holder',
     name: 'Designer Mobile Holder (10Pc Only)',
     brand: 'PHOBIA',
@@ -274,7 +274,7 @@ export const ALL_PRODUCTS: Product[] = [
     specifications: { 'Country of Origin': 'China', 'Dimensions': '16cm x 10cm x 2cm' }
   },
   {
-    id: 'P_2122TECH_A_08',
+    id: 'P_TECH_A_08',
     slug: '5-way-2-pin-multi-plug-socket',
     name: '5-Way 2 Pin Multi-Plug Socket / Converter (1 Pc)',
     brand: 'Tetherix',
@@ -1853,7 +1853,7 @@ specifications: {
   },
  
     {
-      id: 'P_HOM54554E_PE_01',
+      id: 'P_HOME_PE_01',
       slug: 'premium-7-rose-dhoop-sticks',
       name: 'Premium 7 Rose Dhoop Sticks (Jar Pack / 100grams)',
       brand: 'LT',
@@ -2028,7 +2028,7 @@ specifications: {
     specifications: { 'Country of Origin': 'China', 'Dimensions': '16cm x 10cm x 2cm' }
   },
   {
-    id: 'P_TEC54555445H_A_08',
+    id: 'P_TECH_A_08',
     slug: '5-way-2-pin-multi-plug-socket',
     name: '5-Way 2 Pin Multi-Plug Socket / Converter (1 Pc)',
     brand: 'Tetherix',
@@ -2053,7 +2053,7 @@ specifications: {
   },
 
   {
-    id: 'P_HOME54545_PE_01',
+    id: 'P_HOME_PE_01',
     slug: 'premium-7-rose-dhoop-sticks',
     name: 'Premium 7 Rose Dhoop Sticks (Jar Pack / 100grams)',
     brand: 'LT',
@@ -3643,7 +3643,7 @@ specifications: {
     "specifications": { "Country of Origin": "India", "Dimensions": "21cm x 11cm x 11cm", "Weight": "325g" }
   },
   {
-  "id": "23455574",
+  "id": "2374",
   "slug": "electric-mini-garlic-chopper-250ml",
   "name": "Electric Mini Garlic Chopper (250ml)",
   "brand": "Quickslice",
@@ -3662,11 +3662,11 @@ specifications: {
   "features": ["USB rechargeable", "One-touch operation", "Wireless design", "Easy to clean", "Portable and compact"],
   "ratings": { "average": 4.2, "count": 31 },
   "taxPercent": 18,
-  "sku": "23754_usb_garlic_chopper",
+  "sku": "2374_usb_garlic_chopper",
   "specifications": { "Country of Origin": "China", "Capacity": "250ml", "Power": "USB Rechargeable" }
 },
 {
-  "id": "71521260",
+  "id": "7160",
   "slug": "stainless-steel-watermelon-cutter-windmill-slicer",
   "name": "Stainless Steel Washable Watermelon Cutter – Windmill Slicer & Peeler",
   "brand": "Quickslice",
@@ -3689,7 +3689,7 @@ specifications: {
   "specifications": { "Country of Origin": "China", "Dimensions": "30cm x 7cm x 4cm", "Weight": "140g" }
 },
 {
-  "id": "2815452",
+  "id": "2812",
   "slug": "triangle-3-tier-plastic-storage-rack",
   "name": "Triangle 3-Tier Plastic Storage Rack for Kitchen, Bathroom & Office",
   "brand": "VoltDesk",
@@ -3712,7 +3712,7 @@ specifications: {
   "specifications": { "Country of Origin": "India", "Dimensions": "39cm x 23cm x 7cm", "Weight": "535g" }
 },
 {
-  "id": "205565",
+  "id": "2065",
   "slug": "6-blade-2in1-manual-food-chopper-1000ml",
   "name": "6 BLADE 2IN1 MANUAL FOOD CHOPPER, COMPACT & POWERFUL HAND HELD VEGETABLE CHOPPER (1000Ml)",
   "brand": "Quickslice",
@@ -3736,7 +3736,7 @@ specifications: {
 },
 
   {
-    "id": "5455454",
+    "id": "2374",
     "slug": "electric-mini-garlic-chopper-250ml",
     "name": "Electric Mini Garlic Chopper (250ml)",
     "brand": "Quickslice",
@@ -3751,11 +3751,11 @@ specifications: {
     "features": ["USB rechargeable", "One-touch operation", "Portable"],
     "ratings": { "average": 4.2, "count": 31 },
     "taxPercent": 18,
-    "sku": "23574_usb_garlic_chopper",
+    "sku": "2374_usb_garlic_chopper",
     "specifications": { "Country of Origin": "China", "Capacity": "250ml" }
   },
   {
-    "id": "71464660",
+    "id": "7160",
     "slug": "watermelon-cutter-windmill-slicer",
     "name": "Stainless Steel Watermelon Cutter – Windmill Slicer",
     "brand": "Quickslice",
@@ -3793,7 +3793,7 @@ specifications: {
     "specifications": { "Country of Origin": "India", "Weight": "535g" }
   },
   {
-    "id": "26565065",
+    "id": "2065",
     "slug": "6-blade-manual-food-chopper-1000ml",
     "name": "6 Blade Manual Food Chopper (1000ml)",
     "brand": "Quickslice",
@@ -5688,7 +5688,7 @@ specifications: {
   },
 
    {
-    "id": "na_144545113",
+    "id": "na_14113",
     "slug": "shubhlabh-divine-plate",
     "name": "ShubhLabh Divine Plate",
     "brand": "ShubhLabh Collection",
@@ -5959,7 +5959,7 @@ specifications: {
     specifications: { 'Country of Origin': 'China', 'Dimensions': '16cm x 10cm x 2cm' }
   },
   {
-    id: 'P_T555555ECH_A_08',
+    id: 'P_TECH_A_08',
     slug: '5-way-2-pin-multi-plug-socket',
     name: '5-Way 2 Pin Multi-Plug Socket / Converter (1 Pc)',
     brand: 'Tetherix',

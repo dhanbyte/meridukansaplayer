@@ -15,6 +15,7 @@ export default function UsersPage() {
     name: '',
     phone: '',
     address: '',
+    password: '',
     bankDetails: {
       accountNumber: '',
       ifscCode: '',
@@ -28,19 +29,15 @@ export default function UsersPage() {
     loadUsers();
   }, []);
 
-  const loadUsers = () => {
-    const usersList = UserService.getUsers();
+  const loadUsers = async () => {
+    const usersList = await UserService.getUsers();
     setUsers(usersList);
   };
 
   const handleCreateUser = async () => {
-    const password = UserService.generatePassword();
-    const newUser = await UserService.createUser({
-      ...formData,
-      password
-    });
+    const result = await UserService.createUser(formData);
     
-    alert(`User created successfully!\nUsername: ${newUser.username}\nPassword: ${password}`);
+    alert(`User created successfully!\nUsername: ${result.user.username}\nPassword: ${result.password}`);
     loadUsers();
     resetForm();
   };
@@ -66,6 +63,7 @@ export default function UsersPage() {
       name: '',
       phone: '',
       address: '',
+      password: '',
       bankDetails: {
         accountNumber: '',
         ifscCode: '',
@@ -85,6 +83,7 @@ export default function UsersPage() {
       name: user.name,
       phone: user.phone,
       address: user.address,
+      password: user.password || '',
       bankDetails: user.bankDetails,
       isActive: user.isActive
     });
@@ -94,17 +93,17 @@ export default function UsersPage() {
   return (
     <div className="space-y-6">
       <div className="flex justify-between items-center">
-        <h1 className="text-2xl font-bold">User Management</h1>
+        <h1 className="text-2xl font-bold">Partner Management</h1>
         <Button onClick={() => setShowCreateForm(true)}>
           <Plus className="h-4 w-4 mr-2" />
-          Create User
+          Create Partner
         </Button>
       </div>
 
       {showCreateForm && (
         <div className="bg-white p-6 rounded-lg border">
           <h2 className="text-lg font-semibold mb-4">
-            {editingUser ? 'Edit User' : 'Create New User'}
+            {editingUser ? 'Edit Partner' : 'Create New Partner'}
           </h2>
           
           <div className="grid grid-cols-2 gap-4">
@@ -141,6 +140,16 @@ export default function UsersPage() {
                 value={formData.address}
                 onChange={(e) => setFormData({...formData, address: e.target.value})}
                 placeholder="Enter address"
+              />
+            </div>
+            
+            <div>
+              <label className="block text-sm font-medium mb-1">Password</label>
+              <Input
+                value={formData.password}
+                onChange={(e) => setFormData({...formData, password: e.target.value})}
+                placeholder="Enter password"
+                type="password"
               />
             </div>
             
@@ -195,7 +204,7 @@ export default function UsersPage() {
           
           <div className="flex gap-2 mt-4">
             <Button onClick={editingUser ? handleUpdateUser : handleCreateUser}>
-              {editingUser ? 'Update User' : 'Create User'}
+              {editingUser ? 'Update Partner' : 'Create Partner'}
             </Button>
             <Button variant="outline" onClick={resetForm}>
               Cancel
@@ -212,8 +221,8 @@ export default function UsersPage() {
                 <th className="text-left p-4">Username</th>
                 <th className="text-left p-4">Name</th>
                 <th className="text-left p-4">Phone</th>
+                <th className="text-left p-4">Password</th>
                 <th className="text-left p-4">Status</th>
-                <th className="text-left p-4">Created</th>
                 <th className="text-left p-4">Actions</th>
               </tr>
             </thead>
@@ -223,6 +232,7 @@ export default function UsersPage() {
                   <td className="p-4 font-medium">{user.username}</td>
                   <td className="p-4">{user.name}</td>
                   <td className="p-4">{user.phone}</td>
+                  <td className="p-4 font-mono text-sm">{user.password}</td>
                   <td className="p-4">
                     <span className={`px-2 py-1 rounded text-xs ${
                       user.isActive ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
@@ -230,7 +240,6 @@ export default function UsersPage() {
                       {user.isActive ? 'Active' : 'Inactive'}
                     </span>
                   </td>
-                  <td className="p-4">{new Date(user.createdAt).toLocaleDateString()}</td>
                   <td className="p-4">
                     <div className="flex gap-2">
                       <Button size="sm" variant="outline" onClick={() => startEdit(user)}>

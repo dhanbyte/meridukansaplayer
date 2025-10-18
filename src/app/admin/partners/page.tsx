@@ -19,7 +19,7 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { PlusCircle } from "lucide-react";
 import Link from "next/link";
-import { useCollection } from "@/firebase/use-collection";
+import { useCollection } from "@/hooks/use-collection";
 import type { Partner } from "@/lib/types";
 
 export default function AdminPartnersPage() {
@@ -65,8 +65,8 @@ export default function AdminPartnersPage() {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {partners.map(partner => (
-                <TableRow key={partner.id}>
+              {partners.map((partner, index) => (
+                <TableRow key={partner.id || partner._id || index}>
                   <TableCell>
                     <div className="font-medium">{partner.name}</div>
                   </TableCell>

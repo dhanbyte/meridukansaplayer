@@ -106,7 +106,7 @@ export const ALL_PRODUCTS: Product[] = [
 
  
   {
-    id: 'P_TECH6556_A_01',
+    id: 'P_TECH_A_01',
     slug: 'designer-mobile-holder',
     name: 'Designer Mobile Holder (10Pc Only)',
     brand: 'PHOBIA',
