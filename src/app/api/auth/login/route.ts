@@ -18,27 +18,6 @@ export async function POST(request: Request) {
       });
     }
     
-    // Test partner for demo
-    if (email === 'dhan@gmail.com' && password === '123456') {
-      return NextResponse.json({ 
-        success: true, 
-        user: { 
-          id: 'test-partner', 
-          username: 'dhan@gmail.com',
-          name: 'Dhan Kumar', 
-          phone: '9876543210',
-          address: 'Test Address, Delhi',
-          bankDetails: {
-            accountNumber: '1234567890',
-            ifscCode: 'SBIN0001234',
-            bankName: 'State Bank of India',
-            accountHolderName: 'Dhan Kumar'
-          },
-          role: 'partner' 
-        } 
-      });
-    }
-    
     const client = await clientPromise;
     const db = client.db();
     
