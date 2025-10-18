@@ -1,9 +1,9 @@
 import { MongoClient } from 'mongodb';
+
 // Production MongoDB Atlas URI or fallback to localhost
-const MONGODB_URL = "mongodb+srv://ffaddssf_db_user:6mD6iblZjjGdTNep@saplyerforshopwave.qh4iadc.mongodb.net/dropship"
-const DATABASE_URL = "mongodb+srv://ffaddssf_db_user:6mD6iblZjjGdTNep@saplyerforshopwave.qh4iadc.mongodb.net/dropship"
-const uri = MONGODB_URL || DATABASE_URL || 'mongodb+srv://ffaddssf_db_user:6mD6iblZjjGdTNep@saplyerforshopwave.qh4iadc.mongodb.net/dropship';
-if (!MONGODB_URL && !DATABASE_URL) {
+const uri = process.env.MONGODB_URI || process.env.DATABASE_URL || 'mongodb+srv://ffaddssf_db_user:6mD6iblZjjGdTNep@saplyerforshopwave.qh4iadc.mongodb.net/dropship';
+
+if (!process.env.MONGODB_URI && !process.env.DATABASE_URL) {
   console.warn('No MongoDB URI found in environment variables, using localhost fallback');
 }
 
