@@ -1,7 +1,7 @@
 import type { Product } from "./types";
 
 
-export const ALL_PRODUCTS: Product[] = [
+export const NEWARRIVALS_PRODUCTS: Product[] = [
      {
     "id": "na_14113",
     "slug": "shubhlabh-divine-plate",

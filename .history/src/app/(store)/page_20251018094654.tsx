@@ -14,7 +14,6 @@ import {
 import { useToast } from "@/components/ui/use-toast";
 import { useCart } from "@/lib/CartContext";
 import { useSearch } from "./layout";
-import { ALL_PRODUCTS } from "@/lib/products";
 
 export default function StoreHome() {
   const { toast } = useToast();
@@ -36,7 +35,7 @@ export default function StoreHome() {
   };
   
   const subcategories = allProducts 
-    ? [...new Set(allProducts.map((p: Product) => p.subcategory))]
+    ? [...new Set(allProducts.map((p) => p.subcategory))]
     : [];
 
   const isValidUrl = (url: string) => {
@@ -55,7 +54,7 @@ export default function StoreHome() {
         return searchResults;
       }
       return searchResults.filter(
-        (p: Product) => p.subcategory.toLowerCase() === filter.toLowerCase()
+        (p) => p.subcategory.toLowerCase() === filter.toLowerCase()
       );
     }
     
@@ -65,7 +64,7 @@ export default function StoreHome() {
       return allProducts;
     }
     return allProducts.filter(
-      (p: Product) => p.subcategory.toLowerCase() === filter.toLowerCase()
+      (p) => p.subcategory.toLowerCase() === filter.toLowerCase()
     );
   }, [allProducts, filter, searchQuery, searchResults]);
   
@@ -83,7 +82,7 @@ export default function StoreHome() {
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="all">All</SelectItem>
-              {subcategories.map((sub: string) => (
+              {subcategories.map((sub) => (
                 <SelectItem key={sub} value={sub}>
                   {sub}
                 </SelectItem>
@@ -99,7 +98,7 @@ export default function StoreHome() {
         </div>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
-          {filteredProducts.map((product: Product) => (
+          {filteredProducts.map((product) => (
           <div
             key={product.id}
             className="bg-white rounded-lg shadow-md overflow-hidden group"

@@ -1,8 +1,208 @@
 import type { Product } from './types';
 
-export const HOME_PRODUCTS: Product[] = [
-
+export const TECH_PRODUCTS: Product[] = [
+  
  
+
+  {
+    id: 'P_TECH_A_02',
+    slug: 'mobile-phone-screen-magnifier-8inch',
+    name: '5D HD Mobile Phone Screen Magnifier Amplifier (1 Pc / 8 Inch)',
+    brand: 'PHOBIA',
+    category: 'Tech',
+    subcategory: 'Accessories',
+    price: { original: 199, discounted: 149, currency: '₹' },
+    quantity: 100,
+    image: 'https://ik.imagekit.io/b5qewhvhb/e%20commers/tach/electronics%20aaitams/01_53521c05-9caa-4905-9410-e18e9ee19322.webp?updatedAt=1756627475239',
+    extraImages: [
+      'https://ik.imagekit.io/b5qewhvhb/e%20commers/tach/electronics%20aaitams/05_f5421b43-df63-41a7-bcee-40b29d7ef39a.webp?updatedAt=1756627475380',
+      'https://ik.imagekit.io/b5qewhvhb/e%20commers/tach/electronics%20aaitams/02_03edac70-0bba-4e20-af59-12de5da20a9a.webp?updatedAt=1756627475341',
+      'https://ik.imagekit.io/b5qewhvhb/e%20commers/tach/electronics%20aaitams/03_d93a9802-5890-4841-9a3a-e56c35074247.webp?updatedAt=1756627475347',
+      'https://ik.imagekit.io/b5qewhvhb/e%20commers/tach/electronics%20aaitams/42659e71-c731-4b5a-a2b0-6b2d0b12764f.webp?updatedAt=1756627475424'
+    ],
+    description: 'Full screen display, through high-definition optical technology, can multiply the picture multiple times, the picture is clear. Open the screen of your smartphone to make it easier to watch movies or news on your phone.',
+    shortDescription: 'Enlarged 5D HD Mobile Phone Screen Magnifier Amplifier Movie Video Enlarger.',
+    features: ['HD optical technology', 'Comfortable and stylish', 'Foldable and portable', 'Simple and elegant design'],
+    ratings: { average: 4.6, count: 22 },
+    taxPercent: 1.8,
+    sku: '13959_mobile_video_amplifier_8inch_no10',
+    specifications: { 'Country of Origin': 'China', 'Dimensions': '20cm x 14cm x 2cm' }
+  },
+  {
+    id: 'P_TECH_A_03',
+    slug: 'micro-usb-otg-adapter',
+    name: 'Micro USB OTG to USB 2.0 (Android supported) (10 Pic)',
+    brand: 'PHOBIA',
+    category: 'New Arrivals',
+    subcategory: 'Accessories',
+    price: { original: 125, discounted: 129, currency: '₹' },
+    quantity: 100,
+    image: 'https://ik.imagekit.io/b5qewhvhb/e%20commers/tach/electronics%20aaitams/0260_otg_1.webp?updatedAt=1756627844923',
+    extraImages: [
+      'https://ik.imagekit.io/b5qewhvhb/e%20commers/tach/electronics%20aaitams/2_7d7f56d2-9b98-4d62-892e-8b446a7d11f0.jpg?updatedAt=1756627844823',
+      'https://ik.imagekit.io/b5qewhvhb/e%20commers/tach/electronics%20aaitams/3_580fa4c1-88b3-400b-8a6e-b7593fdf1363.webp?updatedAt=1756627845036',
+      'https://ik.imagekit.io/b5qewhvhb/e%20commers/tach/electronics%20aaitams/41c34d52-f694-4b20-b7a7-0093fd1d9f4c.webp?updatedAt=1756627845027',
+      'https://ik.imagekit.io/b5qewhvhb/e%20commers/tach/electronics%20aaitams/41gkmgoK-YL_4daa07eb-0013-4945-b629-5f58eb54890b.webp?updatedAt=1756627844893'
+    ],
+    description: 'Unique OTG allows your device to act as a host for other USB devices like keyboards, mouse, digital camera, USB flash drive, external storage, micro SD card reader and other USB devices. Work more efficiently Connects USB-A (flash drives, keyboards, mice) to smartphones and tablets with Micro USB port.',
+    shortDescription: 'Stylist Little Adapter Micro USB OTG pendrive.',
+    features: ['Connect USB devices to your phone', 'Plug and play design', 'Durable Aluminum Body', 'Compact and lightweight'],
+    ratings: { average: 4.8, count: 29 },
+    taxPercent: 1.8,
+    sku: '0260_otg_1',
+    specifications: { 'Country of Origin': 'China' }
+  },
+  {
+    id: 'P_TECH_A_04',
+    slug: 'mini-chair-cell-phone-stand',
+    name: 'Mobile Phone Holder, Mini Chair Cell Phone Stand, Portable Smartphone Dock',
+    brand: 'PHOBIA',
+    category: 'Tech',
+    subcategory: 'Accessories',
+    price: { original: 199, discounted: 139, currency: '₹' },
+    quantity: 100,
+    image: 'https://ik.imagekit.io/b5qewhvhb/e%20commers/tach/electronics%20aaitams/2_02c0cd1d-c796-4ac8-9c62-319e79da4bd8.webp?updatedAt=1756627985921',
+    extraImages: [
+      'https://ik.imagekit.io/b5qewhvhb/e%20commers/tach/electronics%20aaitams/1_a256004f-1152-4f17-b1f6-cba721fd1477.webp?updatedAt=1756627986019',
+      'https://ik.imagekit.io/b5qewhvhb/e%20commers/tach/electronics%20aaitams/6_33c2b104-5ff6-4e2c-834e-fa735f0bb2af.webp?updatedAt=1756627986003',
+      'https://ik.imagekit.io/b5qewhvhb/e%20commers/tach/electronics%20aaitams/4_fedfd622-d76b-4f8c-b04f-d75fe582ac84.webp?updatedAt=1756627986056',
+      'https://ik.imagekit.io/b5qewhvhb/e%20commers/tach/electronics%20aaitams/3_e293d19d-c198-4e67-866f-f858d9e3ed35.webp?updatedAt=1756627986122'
+    ],
+    description: 'This cute mini chair phone holder is fully assembled and ready to use right away. Made from carefully selected premium beech wood, smooth surface, reusable, durable, Eco-friendly, and trend.',
+    shortDescription: 'Cute mini chair phone stand, compatible with all mobile phones.',
+    features: ['Cute desk ornament', '3 adjustable grooves for comfortable angle', 'Premium beech wood', 'Place phone vertically or horizontally'],
+    ratings: { average: 4.2, count: 4 },
+    taxPercent: 1.8,
+    sku: '8854_chair_phone_stand_1pc',
+    specifications: { 'Country of Origin': 'INDIA', 'Dimensions': '10cm x 10cm x 3cm' }
+  },
+  {
+    id: 'P_TECH_A_05',
+    slug: 'usb-c-to-headphone-jack-adapter',
+    name: 'USB Type C to Headphone Jack Audio Connector (1 Pc)',
+    brand: 'Phonixio',
+    category: 'Tech',
+    subcategory: 'Accessories',
+    price: { original: 199, discounted: 139, currency: '₹' },
+    quantity: 100,
+    image: 'https://ik.imagekit.io/b5qewhvhb/e%20commers/tach/electronics%20aaitams/01_0748acd3-4797-400f-997d-6cecf6b22f5a.webp?updatedAt=1756628128432',
+    extraImages: [
+      'https://ik.imagekit.io/b5qewhvhb/e%20commers/tach/electronics%20aaitams/02_aa0ba308-4cf6-4669-87c2-50c59a6a7aa0.webp?updatedAt=1756628128435',
+      'https://ik.imagekit.io/b5qewhvhb/e%20commers/tach/electronics%20aaitams/e60de139-7cb5-4a85-9519-a74aad4c2aa7.webp?updatedAt=1756628128492',
+      'https://ik.imagekit.io/b5qewhvhb/e%20commers/tach/electronics%20aaitams/04_6560093a-e731-4d93-8427-4ab82770ea33.webp?updatedAt=1756628128496',
+      'https://ik.imagekit.io/b5qewhvhb/e%20commers/tach/electronics%20aaitams/03_46797962-2920-42c4-9543-ef648fe4e1fb.webp?updatedAt=1756628128517'
+    ],
+    description: 'With Type C to Headphone jack adapter, you can pick up the phone call and listen to music. You can adjust the volume of the music or your call. It provides easy access for you even if you want to connect your phone.',
+    shortDescription: 'Noise cancelling headphones jack converter splitter audio adapter.',
+    features: ['Music and Phone Call support', 'Noise Reduction with built-in DAC chip', 'Keep your existing headphones', 'Plug and play'],
+    ratings: { average: 4.7, count: 27 },
+    taxPercent: 1.8,
+    sku: '13248_usb_headphone_jack_adapter',
+    specifications: { 'Country of Origin': 'China', 'Dimensions': '7cm x 7cm x 2cm' }
+  },
+  {
+    id: 'P_TECH_A_06',
+    slug: 'cable-cord-protector-saver',
+    name: 'Cable Cord Protector Saver with Suction end (Suction Winder / 4 Pcs Set)',
+    brand: 'Dustiva',
+    category: 'Tech',
+    subcategory: 'Accessories',
+    price: { original: 199, discounted: 157, currency: '₹' },
+    quantity: 100,
+    image: 'https://ik.imagekit.io/b5qewhvhb/e%20commers/tach/electronics%20aaitams/spring3.jpg?updatedAt=1756628450335',
+    extraImages: [
+      'https://ik.imagekit.io/b5qewhvhb/e%20commers/tach/electronics%20aaitams/spring1.jpg?updatedAt=1756628450255',
+      'https://ik.imagekit.io/b5qewhvhb/e%20commers/tach/electronics%20aaitams/spring4.webp?updatedAt=1756628450518',
+      'https://ik.imagekit.io/b5qewhvhb/e%20commers/tach/electronics%20aaitams/spring5.webp?updatedAt=1756628450536',
+      'https://ik.imagekit.io/b5qewhvhb/e%20commers/tach/electronics%20aaitams/spring.webp?updatedAt=1756628450532'
+    ],
+    description: 'Stop replacing expensive iPhone and Android charger data cables. Cable Protector covers the sensitive area where the charging cable meets the charging plug preventing the cable from bending at its weakest point.',
+    shortDescription: 'Cable Protector Saver for Any Data Cable Wire for USB Micro USB-C Type Cables.',
+    features: ['Increases cable life', 'Cost saving', 'Complete protection with inner rubber layer', 'Compatible with all cable types'],
+    ratings: { average: 4.5, count: 18 },
+    taxPercent: 1.8,
+    sku: '13815_cable_protector_cord_4pc',
+    specifications: { 'Country of Origin': 'China', 'Dimensions': '14cm x 9cm x 2cm' }
+  },
+  {
+    id: 'P_TECH_A_07',
+    slug: '3-in-1-foldable-wall-plug-adapter',
+    name: 'Wireless 3 in 1 Foldable Wall Plug Adapter / Socket / Converter (1 Pc)',
+    brand: 'Tetherix',
+    category: 'Tech',
+    subcategory: 'Accessories',
+    price: { original: 199, discounted: 179, currency: '₹' },
+    quantity: 100,
+    image: 'https://ik.imagekit.io/b5qewhvhb/e%20commers/tach/electronics%20aaitams/07_4a3ac08b-5f90-4f47-9c6f-a48d0999f3e7.webp?updatedAt=1756628649421',
+    extraImages: [
+      'https://ik.imagekit.io/b5qewhvhb/e%20commers/tach/electronics%20aaitams/0ff11693-c603-487d-a02b-eaee25145791.webp?updatedAt=1756628649399',
+      'https://ik.imagekit.io/b5qewhvhb/e%20commers/tach/electronics%20aaitams/08_158a3f0c-eff1-4984-a50e-6d4e0c9ffa07.webp?updatedAt=1756628649488',
+      'https://ik.imagekit.io/b5qewhvhb/e%20commers/tach/electronics%20aaitams/03_d5c96294-4958-4db8-8c2c-e6178266939d.webp?updatedAt=1756628649455',
+      'https://ik.imagekit.io/b5qewhvhb/e%20commers/tach/electronics%20aaitams/7219_3in1_foldable_wall_plug_adapter.webp?updatedAt=1756628650931'
+    ],
+    description: 'Easily convert one indoor ungrounded wall tap outlet into three with this 3 in 1 rotatable socket converter. This 3 outlet wall adapter is rated for a maximum of 250V~; Use in your home or office, Perfect match for most household appliances.',
+    shortDescription: 'Universal Adapter | Mini Slim Wireless Outlet Adapter | Multi Foldable Adapter Plug.',
+    features: ['3 Way Outlet Splitter', 'Fireproof and Durable', 'Space Saving and Easy Access', 'Widely Used'],
+    ratings: { average: 4.8, count: 27 },
+    taxPercent: 1.8,
+    sku: '7219_3in1_foldable_wall_plug_adapter',
+    specifications: { 'Country of Origin': 'China', 'Dimensions': '16cm x 10cm x 2cm' }
+  },
+  {
+    id: 'P_TECH_A_08',
+    slug: '5-way-2-pin-multi-plug-socket',
+    name: '5-Way 2 Pin Multi-Plug Socket / Converter (1 Pc)',
+    brand: 'Tetherix',
+    category: 'Tech',
+    subcategory: 'Accessories',
+    price: { original: 99, discounted: 134, currency: '₹' },
+    quantity: 100,
+    image: 'https://ik.imagekit.io/b5qewhvhb/e%20commers/tach/electronics%20aaitams/7259_5_way_2pin_multi_plug_socket_1pc.webp?updatedAt=1756628819783',
+    extraImages: [
+      'https://ik.imagekit.io/b5qewhvhb/e%20commers/tach/electronics%20aaitams/01_03950303-150c-4866-8e0c-379c025f9b02.webp?updatedAt=1756628819940',
+      'https://ik.imagekit.io/b5qewhvhb/e%20commers/tach/electronics%20aaitams/fb5b0879-3242-4068-8c07-3f00c130ff8e.webp?updatedAt=1756628819988',
+      'https://ik.imagekit.io/b5qewhvhb/e%20commers/tach/electronics%20aaitams/03_3d56dcf3-3e42-463e-b60a-3e0bcae4b9da.webp?updatedAt=1756628820059',
+      'https://ik.imagekit.io/b5qewhvhb/e%20commers/tach/electronics%20aaitams/02_4404497a-6fc9-4b8f-8289-f3e468d210cc.webp?updatedAt=1756628820086'
+    ],
+    description: 'Versatile 5-way multi-plug socket in white, perfect for both home and office environments. Features safe and easy operation with reliable 2-pin connectors for hassle-free electrical connections.',
+    shortDescription: 'Ideal for Domestic for Safe & Easy Operation, Electrical Accessories.',
+    features: ['5-way multi-plug socket', 'Safe and easy operation', 'Domestic and commercial use', 'Compact and space-saving design'],
+    ratings: { average: 4.7, count: 26 },
+    taxPercent: 1.8,
+    sku: '7259_5_way_2pin_multi_plug_socket_1pc',
+    specifications: { 'Country of Origin': 'China', 'Dimensions': '6cm x 5cm x 5cm' }
+  },
+
+  {
+    id: 'P_HOME_PE_01',
+    slug: 'premium-7-rose-dhoop-sticks',
+    name: 'Premium 7 Rose Dhoop Sticks (Jar Pack / 100grams)',
+    brand: 'LT',
+    category: 'Home',
+    subcategory: 'Puja-Essentials',
+    price: { original: 290, discounted: 197, currency: '₹' },
+    quantity: 100,
+    image: 'https://ik.imagekit.io/b5qewhvhb/e%20commers/tach/Pooja%20Essential%20Pooja%20Essentials/1/1.webp?updatedAt=1756551012208',
+    extraImages: [
+      'https://ik.imagekit.io/b5qewhvhb/e%20commers/tach/Pooja%20Essential%20Pooja%20Essentials/1/3.webp?updatedAt=1756551077168',
+      'https://ik.imagekit.io/b5qewhvhb/e%20commers/tach/Pooja%20Essential%20Pooja%20Essentials/1/2.webp?updatedAt=1756551077346',
+      'https://ik.imagekit.io/b5qewhvhb/e%20commers/tach/Pooja%20Essential%20Pooja%20Essentials/1/4.webp?updatedAt=1756551077442',
+      'https://ik.imagekit.io/b5qewhvhb/e%20commers/tach/Pooja%20Essential%20Pooja%20Essentials/1/cUllWiugL8.webp?updatedAt=1756551077429'
+    ],
+    description: 'A premium blend of Rose fragrances for a delightful aroma. Crafted from natural, plant-based ingredients for a refreshing and long-lasting scent. The soothing and uplifting aroma can help create a relaxing and inviting ambience.',
+    shortDescription: 'Premium blend of Rose fragrances for a delightful aroma.',
+    features: [
+      'Fragrant Blend',
+      'Natural Ingredients',
+      'Versatile Usage',
+      'Mood-Enhancing',
+      'Concentrated Formula'
+    ],
+    ratings: { average: 4.8, count: 47 },
+    taxPercent: 18,
+    sku: 'DSIN 48535',
+    specifications: { 'Country of Origin': 'India' }
+  },
   {
     id: 'P_HOME_PE_02',
     slug: 'premium-7-kesar-chandan-dhoop-sticks',
@@ -10,7 +210,7 @@ export const HOME_PRODUCTS: Product[] = [
     brand: 'LT',
     category: 'Home',
     subcategory: 'Puja-Essentials',
-    price: { original: 190, discounted: 145, currency: '₹' },
+    price: { original: 190, discounted: 171, currency: '₹' },
     quantity: 100,
     image: 'https://ik.imagekit.io/b5qewhvhb/e%20commers/tach/Pooja%20Essential%20Pooja%20Essentials/1/CungRgcJXa.webp?updatedAt=1756551868645',
     extraImages: [
@@ -39,7 +239,7 @@ export const HOME_PRODUCTS: Product[] = [
     brand: 'LT',
     category: 'Home',
     subcategory: 'Puja-Essentials',
-    price: { original: 540, discounted: 542, currency: '₹' },
+    price: { original: 590, discounted: 572, currency: '₹' },
     quantity: 100,
     image: 'https://ik.imagekit.io/b5qewhvhb/e%20commers/tach/Pooja%20Essential%20Pooja%20Essentials/1/6CMjJcPE2R.webp?updatedAt=1756551868700',
     extraImages: [
@@ -70,7 +270,7 @@ export const HOME_PRODUCTS: Product[] = [
     brand: 'LT',
     category: 'Home',
     subcategory: 'Puja-Essentials',
-    price: { original: 540, discounted: 570, currency: '₹' },
+    price: { original: 590, discounted: 560, currency: '₹' },
     quantity: 100,
     image: 'https://ik.imagekit.io/b5qewhvhb/e%20commers/tach/Pooja%20Essential%20Pooja%20Essentials/1/7W4Dam1Bue.webp?updatedAt=1756551876948',
     extraImages: [
@@ -100,7 +300,7 @@ export const HOME_PRODUCTS: Product[] = [
     brand: 'LT',
     category: 'Home',
     subcategory: 'Puja-Essentials',
-    price: { original: 249, discounted: 170, currency: '₹' },
+    price: { original: 249, discounted: 198, currency: '₹' },
     quantity: 100,
     image: 'https://Shopwave.b-cdn.net/puja%20photos/04_ee191f2c-8c3a-4235-816c-d57bbf560de7.webp ',
     extraImages: [
@@ -131,7 +331,7 @@ export const HOME_PRODUCTS: Product[] = [
     brand: 'LT',
     category: 'Home',
     subcategory: 'Puja-Essentials',
-    price: { original: 110, discounted: 160, currency: '₹' },
+    price: { original: 290, discounted: 199, currency: '₹' },
     quantity: 100,
     image: 'https://Shopwave.b-cdn.net/puja%20photos/L9PhUAQPgV.webp ',
     extraImages: [
@@ -159,7 +359,7 @@ export const HOME_PRODUCTS: Product[] = [
     brand: 'LT',
     category: 'Home',
     subcategory: 'Puja-Essentials',
-    price: { original: 350, discounted: 274, currency: '₹' },
+    price: { original: 390, discounted: 299, currency: '₹' },
     quantity: 100,
     image: 'https://Shopwave.b-cdn.net/puja%20photos/t0HKeEmbsv.webp ',
     extraImages: [
@@ -187,7 +387,7 @@ export const HOME_PRODUCTS: Product[] = [
     brand: 'LT',
     category: 'Home',
     subcategory: 'Puja-Essentials',
-    price: { original: 170, discounted: 134, currency: '₹' },
+    price: { original: 220, discounted: 186, currency: '₹' },
     quantity: 100,
     image: 'https://Shopwave.b-cdn.net/puja%20photos/si4s2RMRYF.webp ',
     extraImages: [
@@ -215,7 +415,7 @@ export const HOME_PRODUCTS: Product[] = [
     brand: 'LT',
     category: 'Home',
     subcategory: 'Puja-Essentials',
-    price: { original: 190, discounted: 160, currency: '₹' },
+    price: { original: 290, discounted: 199, currency: '₹' },
     quantity: 100,
     image: 'https://Shopwave.b-cdn.net/puja%20photos/26vfq3hj5V.webp ',
     extraImages: [
@@ -234,7 +434,35 @@ export const HOME_PRODUCTS: Product[] = [
     sku: 'DSIN 48549',
     specifications: { 'Country of Origin': 'India', 'Weight': '80 Grams' }
   },
- 
+  {
+    id: 'P_HOME_BA_01',
+    slug: 'dental-floss-toothpick',
+    name: 'Oral Care Dental Floss Toothpick Sticks',
+    brand: 'MintGuard',
+    category: 'Home',
+    subcategory: 'Bathroom-Accessories',
+    price: { original: 149, discounted: 142, currency: '₹' },
+    quantity: 100,
+    image: 'https://Shopwave.b-cdn.net/puja%20photos/e7f464c4-3c4f-4b07-82f4-e4d1eee94930_1.b3569a78f0f854174520dbe2b1ef52d8.webp ',
+    extraImages: [
+      'https://Shopwave.b-cdn.net/puja%20photos/H051864cad31d42b3b3f3510b458b48f8w.webp ',
+      'https://Shopwave.b-cdn.net/puja%20photos/Ha6a249f3b8be49a79890d48c84a42ce09.webp',
+      'https://Shopwave.b-cdn.net/puja%20photos/Hf6f8c217df6842959b00a2655f724689z.webp',
+      'https://Shopwave.b-cdn.net/puja%20photos/380819_9.webp',
+
+      ],
+    description: 'Dental Flosser toothpicks are designed to help remove plaque from areas between your teeth that are not cleaned by a toothbrush. Daily use helps fight unpleasant breath and gingivitis. Helps reduce plaque build up, slides easily between teeth, stimulates gums.',
+    shortDescription: 'Helps remove plaque and fight bad breath.',
+    features: [
+      'Removes residues between teeth',
+      'Prevents Periodontitis and dental caries',
+      'Environment-Friendly material'
+    ],
+    ratings: { average: 4.6, count: 31 },
+    taxPercent: 18,
+    sku: '1096_dental_floss',
+    specifications: { 'Country of Origin': 'China' }
+  },
   {
     id: 'P_HOME_KW_01',
     slug: 'glass-water-bottle-400ml',
@@ -242,7 +470,7 @@ export const HOME_PRODUCTS: Product[] = [
     brand: 'hydrozilla',
     category: 'Home',
     subcategory: 'Kitchenware',
-    price: { original: 199, discounted: 150, currency: '₹' },
+    price: { original: 199, discounted: 158, currency: '₹' },
     quantity: 100,
     image: 'https://Shopwave.b-cdn.net/puja%20photos/6955_glass_water_bottle_400ml%20(1).webp ',
     extraImages: [
@@ -272,7 +500,7 @@ export const HOME_PRODUCTS: Product[] = [
     brand: 'hydrozilla',
     category: 'Home',
     subcategory: 'Kitchenware',
-    price: { original: 299, discounted: 179, currency: '₹' },
+    price: { original: 299, discounted: 249, currency: '₹' },
     quantity: 100,
     image: 'https://Shopwave.b-cdn.net/puja%20photos/1_31242c97-2033-47e7-94cf-fd24e03fd330.webp ',
     extraImages: [
@@ -301,7 +529,7 @@ export const HOME_PRODUCTS: Product[] = [
     brand: 'Serve Stellar',
     category: 'Home',
     subcategory: 'Kitchenware',
-    price: { original: 899, discounted: 419, currency: '₹' },
+    price: { original: 499, discounted: 399, currency: '₹' },
     quantity: 100,
     image: 'https://Shopwave.b-cdn.net/puja%20photos/01_a5e6a8dd-fdcb-42f7-a562-cd82e87fe406.webp ',
     extraImages: [
@@ -329,9 +557,9 @@ export const HOME_PRODUCTS: Product[] = [
     slug: 'vegetable-slicer-cutter-6-blades',
     name: 'Vegetable Slicer Cutter - 6 Blades Kitchen Accessories, Tools &amp; Appliances with Container &amp; Handle (1 Set)',
     brand: 'Quickslice',
-    category: 'New Arrivals',
+    category: 'Home',
     subcategory: 'Kitchenware',
-    price: { original:899, discounted: 499, currency: '₹' },
+    price: { original: 399, discounted: 251, currency: '₹' },
     quantity: 100,
     image: 'https://Shopwave.b-cdn.net/Homekichan/01_a4e3c239-73ae-4939-8b28-aa03ed6f760f.webp',
     extraImages: [
@@ -356,7 +584,7 @@ export const HOME_PRODUCTS: Product[] = [
     brand: 'Quickslice',
     category: 'Home',
     subcategory: 'Kitchenware',
-    price: { original: 199, discounted: 130, currency: '₹' },
+    price: { original: 99, discounted: 149, currency: '₹' },
     quantity: 100,
     image: 'https://Shopwave.b-cdn.net/Homekichan/Wisk-04_95e5789d-9382-4050-ace7-b8fd7b8148e6.webp ',
     extraImages: [
@@ -381,7 +609,7 @@ export const HOME_PRODUCTS: Product[] = [
     brand: 'Quickslice',
     category: 'Home',
     subcategory: 'Kitchenware',
-    price: { original: 249, discounted: 179, currency: '₹' },
+    price: { original: 149, discounted: 159, currency: '₹' },
     quantity: 100,
     image: 'https://Shopwave.b-cdn.net/Homekichan/Masher-01_6617d7b1-5000-4af1-bf8b-e9aa25a5ff40.webp ',
     extraImages: [
@@ -405,7 +633,7 @@ export const HOME_PRODUCTS: Product[] = [
     brand: 'ToolMate Pro',
     category: 'Home',
     subcategory: 'Kitchenware',
-    price: { original: 199, discounted: 168, currency: '₹' },
+    price: { original: 199, discounted: 178, currency: '₹' },
     quantity: 100,
     image: 'https://Shopwave.b-cdn.net/Homekichan/02_76c58758-d248-41d7-8ab1-ec841eec541b.jpg ',
     extraImages: [
@@ -429,7 +657,7 @@ export const HOME_PRODUCTS: Product[] = [
     brand: 'Cisora',
     category: 'Home',
     subcategory: 'Kitchenware',
-    price: { original: 199, discounted: 120, currency: '₹' },
+    price: { original: 199, discounted: 136, currency: '₹' },
     quantity: 100,
     image: 'https://Shopwave.b-cdn.net/Homekichan/02_2cd55a9e-248e-42d1-a0d0-6d3df191f5a9.webp ',
     extraImages: [
@@ -453,7 +681,7 @@ export const HOME_PRODUCTS: Product[] = [
     brand: 'Liger',
     category: 'Home',
     subcategory: 'Kitchenware',
-    price: { original: 130, discounted: 105, currency: '₹' },
+    price: { original: 150, discounted: 116, currency: '₹' },
     quantity: 100,
     image: 'https://Shopwave.b-cdn.net/Homekichan/Dry-Fruit-Slicer-01.webp ',
     extraImages: [
@@ -501,7 +729,7 @@ export const HOME_PRODUCTS: Product[] = [
     brand: 'Quickslice',
     category: 'Home',
     subcategory: 'Kitchenware',
-    price: { original: 149, discounted: 112, currency: '₹' },
+    price: { original: 199, discounted: 115, currency: '₹' },
     quantity: 100,
     image: 'https://Shopwave.b-cdn.net/Homekichan/6image_1b90ee0f-e169-4913-a580-3bf80b509cc0.webp ',
     extraImages: [
@@ -525,7 +753,7 @@ export const HOME_PRODUCTS: Product[] = [
     brand: 'Quickslice',
     category: 'Home',
     subcategory: 'Kitchenware',
-    price: { original: 399, discounted: 230, currency: '₹' },
+    price: { original: 399, discounted: 155, currency: '₹' },
     quantity: 100,
     image: 'https://Shopwave.b-cdn.net/Homekichan/Chopping-Board-01.webp ',
     extraImages: [
@@ -549,7 +777,7 @@ export const HOME_PRODUCTS: Product[] = [
     brand: 'XcelCraft',
     category: 'Home',
     subcategory: 'Household-Appliances',
-    price: { original: 199, discounted: 183, currency: '₹' },
+    price: { original: 199, discounted: 189, currency: '₹' },
     quantity: 100,
     image: 'https://Shopwave.b-cdn.net/Homekichan/02_13a215dc-07e6-4d05-98bc-dd30f55e92dc.webp ',
     extraImages: [
@@ -571,7 +799,7 @@ export const HOME_PRODUCTS: Product[] = [
     brand: 'DeoDap',
     category: 'Home',
     subcategory: 'Kitchenware',
-    price: { original: 149, discounted: 149, currency: '₹' },
+    price: { original: 249, discounted: 159, currency: '₹' },
     quantity: 100,
     image: 'https://Shopwave.b-cdn.net/Homekichan/03_5e3e4bf7-5c97-44a7-9a25-3796a48644e2.webp ',
     extraImages: [
@@ -594,7 +822,7 @@ export const HOME_PRODUCTS: Product[] = [
     brand: 'Dabster',
     category: 'Home',
     subcategory: 'Household-Appliances',
-    price: { original: 295, discounted: 239, currency: '₹' },
+    price: { original: 245, discounted: 249, currency: '₹' },
     quantity: 100,
     image: 'ht tps://Shopwave.b-cdn.net/homekichan-2/0060_power_free_blender.webp',
     extraImages: [
@@ -618,7 +846,7 @@ export const HOME_PRODUCTS: Product[] = [
     brand: 'Apex',
     category: 'Home',
     subcategory: 'Household-Appliances',
-    price: { original: 399, discounted: 216, currency: '₹' },
+    price: { original: 399, discounted: 186, currency: '₹' },
     quantity: 100,
     image: 'https://Shopwave.b-cdn.net/homekichan-2/01_605b09bc-2596-43ba-879e-cb674ebb53fc.webp ',
     extraImages: [
@@ -642,7 +870,7 @@ export const HOME_PRODUCTS: Product[] = [
     brand: 'Quickslice',
     category: 'Home',
     subcategory: 'Kitchenware',
-    price: { original: 190, discounted: 144, currency: '₹' },
+    price: { original: 190, discounted: 134, currency: '₹' },
     quantity: 100,
     image: 'https://Shopwave.b-cdn.net/homekichan-2/0087_apple_cutter%20(1).webp',
     extraImages: [
@@ -666,7 +894,7 @@ export const HOME_PRODUCTS: Product[] = [
     brand: 'Quickslice',
     category: 'Home',
     subcategory: 'Kitchenware',
-    price: { original: 199, discounted: 189, currency: '₹' },
+    price: { original: 199, discounted: 169, currency: '₹' },
     quantity: 100,
     image: 'https://Shopwave.b-cdn.net/homekichan-2/06_3ee6aae0-986a-4635-9ba4-ad1a724bbba1.webp ',
     extraImages: [
@@ -690,7 +918,7 @@ export const HOME_PRODUCTS: Product[] = [
     brand: 'Quickslice',
     category: 'Home',
     subcategory: 'Kitchenware',
-    price: { original: 199, discounted: 134, currency: '₹' },
+    price: { original: 99, discounted: 134, currency: '₹' },
     quantity: 100,
     image: 'https://Shopwave.b-cdn.net/homekichan-2/02_01442f2e-c767-42c1-b760-bfcb8474520c%20(1).webp ',
     extraImages: [
@@ -714,7 +942,7 @@ export const HOME_PRODUCTS: Product[] = [
     brand: 'Quickslice',
     category: 'Home',
     subcategory: 'Kitchenware',
-    price: { original: 499, discounted: 468, currency: '₹' },
+    price: { original: 499, discounted: 449, currency: '₹' },
     quantity: 100,
     image: 'https://Shopwave.b-cdn.net/homekichan-2/01_77cdefb0-c1c5-4f13-a75e-17d6e32347dd.webp',
     extraImages: [
@@ -738,7 +966,7 @@ export const HOME_PRODUCTS: Product[] = [
     brand: 'Quickslice',
     category: 'Home',
     subcategory: 'Kitchenware',
-    price: { original: 299, discounted: 218, currency: '₹' },
+    price: { original: 399, discounted: 227, currency: '₹' },
     quantity: 100,
     image: 'https://Shopwave.b-cdn.net/homekichan-2/4_16ad88c6-dc34-4e48-a418-ee763234ca32.webp ',
     extraImages: [
@@ -762,7 +990,7 @@ export const HOME_PRODUCTS: Product[] = [
     brand: 'Quickslice',
     category: 'Home',
     subcategory: 'Kitchenware',
-    price: { original: 299, discounted: 207, currency: '₹' },
+    price: { original: 299, discounted: 199, currency: '₹' },
     quantity: 100,
     image: 'https://Shopwave.b-cdn.net/homekichan-2/01_cc5a92dd-0a00-4c39-96ae-9b2712800de5%20(1).webp ',
     extraImages: [
@@ -786,7 +1014,7 @@ export const HOME_PRODUCTS: Product[] = [
     brand: 'Quickslice',
     category: 'Home',
     subcategory: 'Kitchenware',
-    price: { original: 499, discounted: 340, currency: '₹' },
+    price: { original: 199, discounted: 357, currency: '₹' },
     quantity: 100,
     image: 'https://Shopwave.b-cdn.net/homekichan-2/6112kAbw9SL._SL1000__1.webp',
     extraImages: [
@@ -809,7 +1037,7 @@ export const HOME_PRODUCTS: Product[] = [
     brand: 'ToolMate Pro',
     category: 'Home',
     subcategory: 'Kitchenware',
-    price: { original: 299, discounted: 199, currency: '₹' },
+    price: { original: 199, discounted: 189, currency: '₹' },
     quantity: 100,
     image: 'https://Shopwave.b-cdn.net/homekichan-2/01_952049f0-20df-409f-a704-9289bad95347.webp ',
     extraImages: [
@@ -834,8 +1062,8 @@ export const HOME_PRODUCTS: Product[] = [
     "category": "Home",
     "subcategory": "Kitchenware",
     "price": {
-      "original": 399,
-      "discounted": 260,
+      "original": 199,
+      "discounted": 179,
       "currency": "₹"
     },
     "quantity": 100,
@@ -876,8 +1104,8 @@ export const HOME_PRODUCTS: Product[] = [
     "category": "Home",
     "subcategory": "Kitchenware",
     "price": {
-      "original": 179,
-      "discounted": 134,
+      "original": 79,
+      "discounted": 116,
       "currency": "₹"
     },
     "quantity": 100,
@@ -917,7 +1145,7 @@ export const HOME_PRODUCTS: Product[] = [
     "subcategory": "Kitchenware",
     "price": {
       "original": 249,
-      "discounted": 219,
+      "discounted": 199,
       "currency": "₹"
     },
     "quantity": 100,
@@ -1001,8 +1229,8 @@ export const HOME_PRODUCTS: Product[] = [
     "category": "Home",
     "subcategory": "Kitchenware",
     "price": {
-      "original": 249,
-      "discounted": 184,
+      "original": 149,
+      "discounted": 174,
       "currency": "₹"
     },
     "quantity": 100,
@@ -1043,8 +1271,8 @@ export const HOME_PRODUCTS: Product[] = [
     "category": "Home",
     "subcategory": "Kitchenware",
     "price": {
-      "original": 199,
-      "discounted": 171,
+      "original": 399,
+      "discounted": 249,
       "currency": "₹"
     },
     "quantity": 100,
@@ -1109,7 +1337,7 @@ export const HOME_PRODUCTS: Product[] = [
   brand: 'Vastate',
   category: 'Home',
   subcategory: 'Kitchenware',
-  price: { original: 652, discounted: 267, currency: '₹' },
+  price: { original: 652, discounted: 257, currency: '₹' },
   quantity: 100,
   image: 'https://ik.imagekit.io/b5qewhvhb/e%20commers/tach/electronics%20aaitams/300-30003_b3f1da46-5f4f-49e5-bf52-cbfd371c59d8.webp?updatedAt=1757053396031',
   extraImages: [
@@ -1133,7 +1361,7 @@ export const HOME_PRODUCTS: Product[] = [
   brand: 'Vastate',
   category: 'Home',
   subcategory: 'Kitchenware',
-  price: { original: 399, discounted: 354, currency: '₹' },
+  price: { original: 499, discounted: 350, currency: '₹' },
   quantity: 100,
   image: 'https://ik.imagekit.io/b5qewhvhb/e%20commers/tach/electronics%20aaitams/03_85a51842-069a-4f87-8ef2-002254a476e5.webp?updatedAt=1757053645972',
   extraImages: [
@@ -1157,7 +1385,7 @@ export const HOME_PRODUCTS: Product[] = [
   brand: 'Vastate',
   category: 'Home',
   subcategory: 'Kitchenware',
-  price: { original: 399, discounted: 264, currency: '₹' },
+  price: { original: 399, discounted: 224, currency: '₹' },
   quantity: 100,
   image: 'https://ik.imagekit.io/b5qewhvhb/e%20commers/tach/electronics%20aaitams/06_dfa960fe-ef63-4d01-a06a-058b1dbc331f.webp?updatedAt=1757054285274',
   extraImages: [
@@ -1205,7 +1433,7 @@ export const HOME_PRODUCTS: Product[] = [
   brand: 'Quickslice',
   category: 'Home',
   subcategory: 'Kitchenware',
-  price: { original: 199, discounted: 168, currency: '₹' },
+  price: { original: 199, discounted: 178, currency: '₹' },
   quantity: 100,
   image: 'https://ik.imagekit.io/b5qewhvhb/e%20commers/tach/electronics%20aaitams/18_8df6458f-f740-4387-94c7-1ac040e8505d.webp?updatedAt=1757055016937',
   extraImages: [
@@ -1229,7 +1457,7 @@ export const HOME_PRODUCTS: Product[] = [
   brand: 'Quickslice',
   category: 'Home',
   subcategory: 'Kitchenware',
-  price: { original: 240, discounted: 174, currency: '₹' },
+  price: { original: 240, discounted: 159, currency: '₹' },
   quantity: 100,
   image: 'https://ik.imagekit.io/b5qewhvhb/e%20commers/tach/electronics%20aaitams/4_562255a8-4f3d-4321-88e2-7593ccc14425.webp?updatedAt=1757055316393',
   extraImages: [
@@ -1277,7 +1505,7 @@ export const HOME_PRODUCTS: Product[] = [
   brand: 'ToolMate Pro',
   category: 'Home',
   subcategory: 'Kitchenware',
-  price: { original: 299, discounted: 199, currency: '₹' },
+  price: { original: 199, discounted: 180, currency: '₹' },
   quantity: 100,
   image: 'https://ik.imagekit.io/b5qewhvhb/e%20commers/tach/electronics%20aaitams/3_768254d2-17c1-4785-8b7b-4ef528426977.webp?updatedAt=1757057059509',
   extraImages: [
@@ -1302,7 +1530,7 @@ export const HOME_PRODUCTS: Product[] = [
     "brand": "Apex",
     "category": "Home",
     "subcategory": "Kitchenware",
-    "price": { "original": 399, "discounted": 275, "currency": "₹" },
+    "price": { "original": 399, "discounted": 299, "currency": "₹" },
     "quantity": 100,
     "image": "https://ik.imagekit.io/b5qewhvhb/e%20commers/tach/electronics%20aaitams/3247db98-64b8-4b60-88a9-8e9a1fc90a3d.avif?updatedAt=1757156843689",
     "extraImages": [
@@ -1350,7 +1578,7 @@ export const HOME_PRODUCTS: Product[] = [
     "brand": "hydrozilla",
     "category": "Home",
     "subcategory": "Drinkware",
-    "price": { "original": 699, "discounted": 455, "currency": "₹" },
+    "price": { "original": 699, "discounted": 485, "currency": "₹" },
     "quantity": 100,
     "image": "https://ik.imagekit.io/b5qewhvhb/e%20commers/tach/electronics%20aaitams/Tumbler-04_8520f518-fd21-4ca9-98f2-149e361dda36.webp?updatedAt=1757179631247",
     "extraImages": [
@@ -1374,7 +1602,7 @@ export const HOME_PRODUCTS: Product[] = [
     "brand": "DeoDap",
     "category": "Home",
     "subcategory": "Drinkware",
-    "price": { "original": 699, "discounted": 456, "currency": "₹" },
+    "price": { "original": 699, "discounted": 486, "currency": "₹" },
     "quantity": 100,
     "image": "https://ik.imagekit.io/b5qewhvhb/e%20commers/tach/electronics%20aaitams/Tumbler-04.webp?updatedAt=1757179786552",
     "extraImages": [
@@ -1398,7 +1626,7 @@ export const HOME_PRODUCTS: Product[] = [
     "brand": "Supermom",
     "category": "Home",
     "subcategory": "Drinkware",
-    "price": { "original": 399, "discounted": 249, "currency": "₹" },
+    "price": { "original": 399, "discounted": 259, "currency": "₹" },
     "quantity": 100,
     "image": "https://ik.imagekit.io/b5qewhvhb/e%20commers/tach/electronics%20aaitams/Panda-ship-mug-04.webp?updatedAt=1757179935253",
     "extraImages": [
@@ -1422,7 +1650,7 @@ export const HOME_PRODUCTS: Product[] = [
     "brand": "Supermom",
     "category": "Home",
     "subcategory": "Drinkware",
-    "price": { "original": 899, "discounted": 528, "currency": "₹" },
+    "price": { "original": 899, "discounted": 539, "currency": "₹" },
     "quantity": 100,
     "image": "https://ik.imagekit.io/b5qewhvhb/e%20commers/tach/electronics%20aaitams/Coffee-Mug-03.webp?updatedAt=1757180076108",
     "extraImages": [
@@ -1446,7 +1674,7 @@ export const HOME_PRODUCTS: Product[] = [
     "brand": "Supermom",
     "category": "Home",
     "subcategory": "Kitchenware",
-    "price": { "original": 225, "discounted": 179, "currency": "₹" },
+    "price": { "original": 225, "discounted": 199, "currency": "₹" },
     "quantity": 100,
     "image": "https://ik.imagekit.io/b5qewhvhb/e%20commers/tach/electronics%20aaitams/sku_ada24fcc-b312-42c0-8723-595d9f96b36f.webp?updatedAt=1757180349427",
     "extraImages": [
@@ -1494,7 +1722,7 @@ export const HOME_PRODUCTS: Product[] = [
     "brand": "Supermom",
     "category": "Home",
     "subcategory": "Drinkware",
-    "price": { "original": 599, "discounted": 365, "currency": "₹" },
+    "price": { "original": 299, "discounted": 365, "currency": "₹" },
     "quantity": 100,
     "image": "https://ik.imagekit.io/b5qewhvhb/e%20commers/tach/electronics%20aaitams/ShakeGlass-Liveimage.webp?updatedAt=1757180945998",
     "extraImages": [
@@ -1536,7 +1764,7 @@ export const HOME_PRODUCTS: Product[] = [
     "specifications": { "Country of Origin": "India", "Dimensions": "21cm x 11cm x 11cm", "Weight": "325g" }
   },
   {
-  "id": "2374333",
+  "id": "2374",
   "slug": "electric-mini-garlic-chopper-250ml",
   "name": "Electric Mini Garlic Chopper (250ml)",
   "brand": "Quickslice",
@@ -1559,13 +1787,13 @@ export const HOME_PRODUCTS: Product[] = [
   "specifications": { "Country of Origin": "China", "Capacity": "250ml", "Power": "USB Rechargeable" }
 },
 {
-  "id": "71609876",
+  "id": "7160",
   "slug": "stainless-steel-watermelon-cutter-windmill-slicer",
   "name": "Stainless Steel Washable Watermelon Cutter – Windmill Slicer & Peeler",
   "brand": "Quickslice",
   "category": "Home",
   "subcategory": "Kitchen Tools",
-  "price": { "original": 299, "discounted": 183, "currency": "₹" },
+  "price": { "original": 299, "discounted": 193, "currency": "₹" },
   "quantity": 100,
   "image": "https://ik.imagekit.io/b5qewhvhb/e%20commers/tach/electronics%20aaitams/05_af19803f-0274-4f7b-829b-3974c9c6365d.avif?updatedAt=1757139103515",
   "extraImages": [
@@ -1578,17 +1806,17 @@ export const HOME_PRODUCTS: Product[] = [
   "features": ["Windmill automatic cutter", "One-push cut", "Safe for kids", "Easy to clean", "Stainless steel construction"],
   "ratings": { "average": 4.1, "count": 25 },
   "taxPercent": 18,
-  "sku": "7160342_watermelon_slice_cutter",
+  "sku": "7160_watermelon_slice_cutter",
   "specifications": { "Country of Origin": "China", "Dimensions": "30cm x 7cm x 4cm", "Weight": "140g" }
 },
 {
-  "id": "284334312",
+  "id": "2812",
   "slug": "triangle-3-tier-plastic-storage-rack",
   "name": "Triangle 3-Tier Plastic Storage Rack for Kitchen, Bathroom & Office",
   "brand": "VoltDesk",
   "category": "Home",
   "subcategory": "Storage & Organization",
-  "price": { "original": 299, "discounted": 299, "currency": "₹" },
+  "price": { "original": 299, "discounted": 290, "currency": "₹" },
   "quantity": 100,
   "image": "https://ik.imagekit.io/b5qewhvhb/e%20commers/tach/electronics%20aaitams/06_d748bf1f-ff1c-42fe-9c83-826bd1544147.avif?updatedAt=1757139337543",
   "extraImages": [
@@ -1605,13 +1833,13 @@ export const HOME_PRODUCTS: Product[] = [
   "specifications": { "Country of Origin": "India", "Dimensions": "39cm x 23cm x 7cm", "Weight": "535g" }
 },
 {
-  "id": "206gfdfd5",
+  "id": "2065",
   "slug": "6-blade-2in1-manual-food-chopper-1000ml",
   "name": "6 BLADE 2IN1 MANUAL FOOD CHOPPER, COMPACT & POWERFUL HAND HELD VEGETABLE CHOPPER (1000Ml)",
   "brand": "Quickslice",
   "category": "Home",
   "subcategory": "Kitchen Tools",
-  "price": { "original": 199, "discounted": 190, "currency": "₹" },
+  "price": { "original": 199, "discounted": 170, "currency": "₹" },
   "quantity": 100,
   "image": "https://ik.imagekit.io/b5qewhvhb/e%20commers/tach/electronics%20aaitams/02_bcb0e7cb-e52c-4233-b3dc-4c4a6d2e139a.avif?updatedAt=1757139553969",
   "extraImages": [
@@ -1635,7 +1863,7 @@ export const HOME_PRODUCTS: Product[] = [
     "brand": "Quickslice",
     "category": "Electronics",
     "subcategory": "Kitchen Appliances",
-    "price": { "original": 599, "discounted": 395, "currency": "₹" },
+    "price": { "original": 599, "discounted": 295, "currency": "₹" },
     "quantity": 100,
     "image": "https://ik.imagekit.io/b5qewhvhb/e%20commers/tach/electronics%20aaitams/2_869434bf-ee0b-489c-9523-f47273b77e69.avif?updatedAt=1757138819966",
     "extraImages": ["https://ik.imagekit.io/b5qewhvhb/e%20commers/tach/electronics%20aaitams/1_e43bcfe1-4ce2-4cf3-9ed8-a56d8b9013be.webp?updatedAt=1757138819977"],
@@ -1644,17 +1872,17 @@ export const HOME_PRODUCTS: Product[] = [
     "features": ["USB rechargeable", "One-touch operation", "Portable"],
     "ratings": { "average": 4.2, "count": 31 },
     "taxPercent": 18,
-    "sku": "23754_usb_garlic_chopper",
+    "sku": "2374_usb_garlic_chopper",
     "specifications": { "Country of Origin": "China", "Capacity": "250ml" }
   },
   {
-    "id": "716033",
+    "id": "7160",
     "slug": "watermelon-cutter-windmill-slicer",
     "name": "Stainless Steel Watermelon Cutter – Windmill Slicer",
     "brand": "Quickslice",
     "category": "Home",
     "subcategory": "Kitchen Tools",
-    "price": { "original": 299, "discounted": 213, "currency": "₹" },
+    "price": { "original": 299, "discounted": 143, "currency": "₹" },
     "quantity": 100,
     "image": "https://ik.imagekit.io/b5qewhvhb/e%20commers/tach/electronics%20aaitams/05_af19803f-0274-4f7b-829b-3974c9c6365d.avif?updatedAt=1757139103515",
     "extraImages": ["https://ik.imagekit.io/b5qewhvhb/e%20commers/tach/electronics%20aaitams/02_372861f3-47ac-40de-b185-1f39a8cf5abf.avif?updatedAt=1757139103833"],
@@ -1673,7 +1901,7 @@ export const HOME_PRODUCTS: Product[] = [
     "brand": "VoltDesk",
     "category": "Home",
     "subcategory": "Storage & Organization",
-    "price": { "original": 299, "discounted": 180, "currency": "₹" },
+    "price": { "original": 299, "discounted": 140, "currency": "₹" },
     "quantity": 100,
     "image": "https://ik.imagekit.io/b5qewhvhb/e%20commers/tach/electronics%20aaitams/06_d748bf1f-ff1c-42fe-9c83-826bd1544147.avif?updatedAt=1757139337543",
     "extraImages": ["https://ik.imagekit.io/b5qewhvhb/e%20commers/tach/electronics%20aaitams/01_0d6cad72-48f6-4147-a577-18144bf093aa.avif?updatedAt=1757139337614"],
@@ -1692,7 +1920,7 @@ export const HOME_PRODUCTS: Product[] = [
     "brand": "Quickslice",
     "category": "Home",
     "subcategory": "Kitchen Tools",
-    "price": { "original": 199, "discounted": 190, "currency": "₹" },
+    "price": { "original": 199, "discounted": 120, "currency": "₹" },
     "quantity": 100,
     "image": "https://ik.imagekit.io/b5qewhvhb/e%20commers/tach/electronics%20aaitams/02_bcb0e7cb-e52c-4233-b3dc-4c4a6d2e139a.avif?updatedAt=1757139553969",
     "extraImages": ["https://ik.imagekit.io/b5qewhvhb/e%20commers/tach/electronics%20aaitams/03_e60ddcb7-6794-48be-892f-052e503c5f0b.webp?updatedAt=1757139554343"],
@@ -1711,7 +1939,7 @@ export const HOME_PRODUCTS: Product[] = [
     "brand": "Quickslice",
     "category": "Home",
     "subcategory": "Kitchen Tools",
-    "price": { "original": 499, "discounted": 222, "currency": "₹" },
+    "price": { "original": 199, "discounted": 112, "currency": "₹" },
     "quantity": 100,
     "image": "https://ik.imagekit.io/b5qewhvhb/e%20commers/tach/electronics%20aaitams/4image_91a757cb-7e0a-4bfb-901e-779bc29199c4.webp?updatedAt=1757139682940",
     "extraImages": ["https://ik.imagekit.io/b5qewhvhb/e%20commers/tach/electronics%20aaitams/1image_1061d2a9-f6b5-43e3-b48c-1b0a27a4e46d.webp?updatedAt=1757139683043"],
@@ -1730,7 +1958,7 @@ export const HOME_PRODUCTS: Product[] = [
     "brand": "Apex",
     "category": "Home",
     "subcategory": "Kitchen Tools",
-    "price": { "original": 499, "discounted": 259, "currency": "₹" },
+    "price": { "original": 499, "discounted": 189, "currency": "₹" },
     "quantity": 100,
     "image": "https://ik.imagekit.io/b5qewhvhb/e%20commers/tach/electronics%20aaitams/sku_872ac7b8-0efd-405f-98f0-9872105ddb09.webp?updatedAt=1757150467988",
     "extraImages": ["https://ik.imagekit.io/b5qewhvhb/e%20commers/tach/electronics%20aaitams/02_73e9d212-8c24-4565-abf9-5d65745f4425.webp?updatedAt=1757150467776"],
@@ -1749,7 +1977,7 @@ export const HOME_PRODUCTS: Product[] = [
     "brand": "Bake & Dwell",
     "category": "Home",
     "subcategory": "Baking Tools",
-    "price": { "original": 199, "discounted": 119, "currency": "₹" },
+    "price": { "original": 99, "discounted": 29, "currency": "₹" },
     "quantity": 100,
     "image": "https://ik.imagekit.io/b5qewhvhb/e%20commers/tach/electronics%20aaitams/7636fc2e-a31a-4ba5-bd9a-d985e02e1f0f_f44e78eb-ccad-4b77-9eb4-3ef45c19b93d.webp",
     "extraImages": ["https://ik.imagekit.io/b5qewhvhb/e%20commers/tach/electronics%20aaitams/silicone-spatula-04_6779d59d-2128-4b80-8318-909101fa1874.webp"],
@@ -1768,7 +1996,7 @@ export const HOME_PRODUCTS: Product[] = [
     "brand": "Home Chef",
     "category": "Home",
     "subcategory": "Storage & Organization",
-    "price": { "original": 699, "discounted": 400, "currency": "₹" },
+    "price": { "original": 699, "discounted": 330, "currency": "₹" },
     "quantity": 100,
     "image": "https://ik.imagekit.io/b5qewhvhb/e%20commers/tach/electronics%20aaitams/01_0e7bc18b-a0d7-4761-a6f6-9becbc4344cc.avif",
     "extraImages": ["https://ik.imagekit.io/b5qewhvhb/e%20commers/tach/electronics%20aaitams/06_2af7e97a-b388-4f89-8acb-452c5a6751fe.webp"],
@@ -1787,7 +2015,7 @@ export const HOME_PRODUCTS: Product[] = [
     "brand": "Quickslice",
     "category": "Home",
     "subcategory": "Kitchen Tools",
-    "price": { "original": 399, "discounted": 325, "currency": "₹" },
+    "price": { "original": 399, "discounted": 175, "currency": "₹" },
     "quantity": 100,
     "image": "https://ik.imagekit.io/b5qewhvhb/e%20commers/tach/electronics%20aaitams/01_0693f05b-0418-49ea-8478-b24a001f33e9.avif",
     "extraImages": ["https://ik.imagekit.io/b5qewhvhb/e%20commers/tach/electronics%20aaitams/05_8b81c560-360b-40f7-b9f4-bf797ba5817f.webp"],
@@ -1806,7 +2034,7 @@ export const HOME_PRODUCTS: Product[] = [
     "brand": "Quickslice",
     "category": "Home",
     "subcategory": "Kitchen Tools",
-    "price": { "original": 599, "discounted": 485, "currency": "₹" },
+    "price": { "original": 599, "discounted": 295, "currency": "₹" },
     "quantity": 100,
     "image": "https://ik.imagekit.io/b5qewhvhb/e%20commers/tach/electronics%20aaitams/5.webp",
     "extraImages": ["https://ik.imagekit.io/b5qewhvhb/e%20commers/tach/electronics%20aaitams/f3608c44-e43d-427f-aa4e-e8224381bc2b.webp"],
@@ -1825,7 +2053,7 @@ export const HOME_PRODUCTS: Product[] = [
     "brand": "hydrozilla",
     "category": "Home",
     "subcategory": "Drinkware",
-    "price": { "original": 399, "discounted": 252, "currency": "₹" },
+    "price": { "original": 399, "discounted": 182, "currency": "₹" },
     "quantity": 100,
     "image": "https://ik.imagekit.io/b5qewhvhb/e%20commers/tach/electronics%20aaitams/mix-bottle02.webp",
     "extraImages": ["https://ik.imagekit.io/b5qewhvhb/e%20commers/tach/electronics%20aaitams/ColorfulTumblersonWoodSurface.avif"],
@@ -1844,7 +2072,7 @@ export const HOME_PRODUCTS: Product[] = [
     "brand": "hydrozilla",
     "category": "Home",
     "subcategory": "Drinkware",
-    "price": { "original": 399, "discounted": 226, "currency": "₹" },
+    "price": { "original": 399, "discounted": 196, "currency": "₹" },
     "quantity": 100,
     "image": "https://ik.imagekit.io/b5qewhvhb/e%20commers/tach/electronics%20aaitams/WhatsAppImage2025-08-06at14.33.02_f953818e.webp",
     "extraImages": ["https://ik.imagekit.io/b5qewhvhb/e%20commers/tach/electronics%20aaitams/bottle-05_4318c5a9-12ff-49f4-ac1e-61bddd38a3b8.webp"],
@@ -1856,4 +2084,5 @@ export const HOME_PRODUCTS: Product[] = [
     "sku": "12508_ss_coffee_tumbler_450ml_1pc_no7",
     "specifications": { "Country of Origin": "China", "Capacity": "450ml" }
   }
-]
+
+ ];

@@ -1,7 +1,19 @@
 import type { Product } from "./types";
+import { TECH_PRODUCTS } from "./tech";
+import { HOME_PRODUCTS } from "./home";
+import { NEWARRIVALS_PRODUCTS as NEW_ARRIVALS } from "./newarrivals";
 
-
+// Combine all products from different categories
 export const ALL_PRODUCTS: Product[] = [
+  ...TECH_PRODUCTS,
+  ...HOME_PRODUCTS,
+  ...NEW_ARRIVALS
+];
+
+// Keep individual exports for specific category filtering
+export const TECH_PRODUCTS_EXPORT = TECH_PRODUCTS;
+export const HOME_PRODUCTS_EXPORT = HOME_PRODUCTS;
+export const NEWARRIVALS_PRODUCTS: Product[] = [
      {
     "id": "na_14113",
     "slug": "shubhlabh-divine-plate",

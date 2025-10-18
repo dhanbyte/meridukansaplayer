@@ -1,14 +1,7 @@
 import type { Product } from './types';
-import { TECH_PRODUCTS } from './tech';
-import { HOME_PRODUCTS } from './home';
-import { NEWARRIVALS_PRODUCTS } from './newarrivals';
+import { ALL_PRODUCTS } from './products';
 
-// Combine all products from different categories
-export const ALL_PRODUCTS: Product[] = [
-  ...TECH_PRODUCTS,
-  ...HOME_PRODUCTS,
-  ...NEWARRIVALS_PRODUCTS
-];
+// Use products from products.ts
 
 // Remove duplicates based on product ID
 export const UNIQUE_PRODUCTS = ALL_PRODUCTS.filter((product, index, self) => 
