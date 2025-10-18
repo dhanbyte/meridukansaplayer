@@ -2,76 +2,32 @@ import type { Product } from "./types";
 
 
 export const ALL_PRODUCTS: Product[] = [
-  
-   
-    {
-    id: "NA_14523",
-    slug: "premium-astronaut-galaxy-projector-night-light-remote-control",
-    name: "Premium Astronaut Galaxy Projector Night Light with Remote Control",
-    brand: "DeoDap",
-    category: "New Arrivals",
-    subcategory: "LED Lights",
-    price: { original: 1999, discounted: 409, currency: "₹" },
-    quantity: 50,
-    image: "https://Shopwave.b-cdn.net/NEW%20ARIVALS/GalaxyProjector-04.webp",
-    extraImages: [
-      "https://Shopwave.b-cdn.net/NEW%20ARIVALS/GalaxyProjector-05%20(1).webp",
-      "https://Shopwave.b-cdn.net/NEW%20ARIVALS/GalaxyProjector-05.webp",
-      "https://Shopwave.b-cdn.net/NEW%20ARIVALS/GalaxyProjector-06.webp",
-      "https://Shopwave.b-cdn.net/NEW%20ARIVALS/GalaxyProjector-03.webp",
-      "https://Shopwave.b-cdn.net/NEW%20ARIVALS/GalaxyProjector-02.webp",
+     {
+    "id": "na_15545544113",
+    "slug": "shubhlabh-divine-plate",
+    "name": "ShubhLabh Divine Plate",
+    "brand": "ShubhLabh Collection",
+    "description": "हर घर की दीवार पर लिखा होता है — शुभ लाभ। लेकिन क्या आपने कभी सोचा… ये सिर्फ़ दो शब्द नहीं… ये तो माँ लक्ष्मी को आमंत्रण देने का एक दिव्य माध्यम है।\n\nशास्त्रों में कहा गया है— ‘शुभस्य लाभस्य च योजनेन, गृहे सदा लक्ष्मी निवासो भवति।’ अर्थात — शुभ और लाभ के संयोग से, किसी भी घर में सदैव माँ लक्ष्मी का वास होता है। और इसी संयोग को साकार करती है — हमारी ShubhLabh Divine Plate।\n\nइस प्लेट पर उकेरे गए हैं — लाल रंग में शुभ-लाभ के पावन शब्द। लाल रंग शक्ति, सौभाग्य और माँ लक्ष्मी का प्रतीक है।\n\nShubhLabh Divine Plate को लगाएं— मुख्य द्वार के दोनों ओर, पूजाघर में, तिजोरी या अलमारी पर, व्यापार स्थल के प्रवेश द्वार पर। यह सजावट नहीं, बल्कि एक ऊर्जा-संवाहक है, जो घर को सौभाग्य, संतुलन और समृद्धि से भर देता है।\n\nयह प्लेट सिर्फ दिवाली तक सीमित नहीं है। नवरात्रि से लेकर अक्षय तृतीया तक, गृह प्रवेश से लेकर व्यापार आरंभ तक, या जब भी आप शुभता और समृद्धि को आमंत्रित करना चाहें — ShubhLabh Divine Plate हर अवसर पर श्रेष्ठ है।\n\nजब एक सामान्य स्टीकर 125 रुपये में मिलता है, तो यह Divine Plate — शुद्ध, सुंदर और शक्तिशाली — मिल रही है सिर्फ ₹30 में, 80% की छूट के साथ, ताकि हर घर में शुभता का प्रकाश फैले।\n\nतो आइए, माँ लक्ष्मी का स्वागत करें इस ShubhLabh Divine Plate के साथ। Order कीजिए आज ही, और इसे बनाइए अपने जीवन का स्थायी शुभ संकेत। शुभ लाभ की दिव्यता आपके जीवन में सदा बनी रहे।",
+    "shortDescription": "माँ लक्ष्मी का स्वागत करें — शुभ लाभ की दिव्यता से अपने घर और व्यापार को समृद्ध बनाएं।",
+    "price": { "original": 125, "discounted": 135, "currency": "₹" },
+    "image": "https://ik.imagekit.io/b5qewhvhb/e%20commers/Labh.png",
+    "extraImages": [
+      "https://ik.imagekit.io/b5qewhvhb/e%20commers/Shubh%20Labh%20Almirah.png",
+      "https://ik.imagekit.io/b5qewhvhb/e%20commers/Shubh%20Labh%20on%20Glass%20Door.png",
+      "https://ik.imagekit.io/b5qewhvhb/e%20commers/Shubh.png"
+      
     ],
-    description:
-      "Transform your space into a magical universe with this premium Astronaut Galaxy Projector. Designed with a unique astronaut figure, it projects colorful nebula effects and starry skies across your ceiling and walls, creating a relaxing and dreamy ambiance. Equipped with a convenient remote control, you can easily adjust brightness, colors, lighting modes, and timers. Ideal for bedrooms, parties, meditation, and festive décor, this projector lamp adds a cosmic charm to any environment.",
-    shortDescription:
-      "Premium Astronaut Galaxy Projector with Remote Control - Starry Sky Nebula Projector for Home Décor",
-    features: [
-      "Astronaut-themed galaxy projector with stunning nebula and star effects",
-      "Remote control operation for easy adjustment of brightness, colors, and modes",
-      "Multiple color lighting effects including red, blue, green, and mixed nebula",
-      "Timer function for automatic shut-off – energy saving",
-      "360° adjustable projection angle with magnetic astronaut head",
-      "Creates a soothing, relaxing atmosphere – ideal for sleep or meditation",
-      "Compact, stylish, and portable – perfect for home décor and gifting",
+    "category": "New Arrivals",
+    "subcategory": "Best Selling",
+    "quantity": 500,
+    "ratings": { "average": 4.8, "count": 112 },
+    "features": [
+      "लाल रंग में शुभ-लाभ शब्द",
+      "पूजा घर व मुख्य द्वार के लिए",
+      "ऊर्जा संवाहक",
+      "सौभाग्य व समृद्धि"
     ],
-    ratings: { average: 5.0, count: 5 },
-    taxPercent: 18,
-    sku: "14523_astronaut_galaxy_projector_with_remote",
-    specifications: {
-      "Country of Origin": "China",
-      "Product Type": "Astronaut Galaxy Projector Night Lamp",
-      Design: "Astronaut-shaped with 360° rotating projection head",
-      "Light Effects": "Multicolor nebula + starry sky projection",
-      Control: "Remote control for brightness, modes, and timer",
-      Power: "USB powered",
-      Weight: "228g",
-      Dimensions: "13cm x 10cm x 8cm",
-    },
   },
- {
-  id: 'P_TECH_A_23',
-  slug: 'wireless-bluetooth-12w-music-led-bulb',
-  name: 'Wireless Bluetooth Sensor 12W Music Multicolor LED Bulb with Remote Controller',
-  brand: 'Indo Glow',
-  category: 'Tech',
-  subcategory: 'Accessories',
-  price: { original: 999, discounted: 339, currency: '₹' },
-  quantity: 100,
-  image: 'https://ik.imagekit.io/b5qewhvhb/e%20commers/tach/electronics%20aaitams/1_2_f01846ee-41f6-47f2-a32a-b779928bc234.avif?updatedAt=1757059018234',
-  extraImages: [
-    'https://ik.imagekit.io/b5qewhvhb/e%20commers/tach/electronics%20aaitams/e7619630-7dd5-4a40-8a52-cd83f753f692.webp?updatedAt=1757059018320',
-    'https://ik.imagekit.io/b5qewhvhb/e%20commers/tach/electronics%20aaitams/1363.webp?updatedAt=1757059018278',
-    'https://ik.imagekit.io/b5qewhvhb/e%20commers/tach/electronics%20aaitams/d2c8050f-b98c-44e7-8738-05d30de50892.avif?updatedAt=1757059018456',
-    'https://ik.imagekit.io/b5qewhvhb/e%20commers/tach/electronics%20aaitams/1_1_1b63c89f-2e81-4a8d-9f26-efa78aa926cd.avif?updatedAt=1757059018518'
-  ],
-  description: '12 W LED Colorful Light Lamp Bulb with Remote Control & Built-in Speaker. This LED Music bulb is a Wireless enabled, multicolored, energy efficient smart LED light which can be controlled through your smart phone.',
-  shortDescription: '12W LED Music Bulb with Bluetooth speaker and remote control.',
-  features: ['Wireless Bluetooth enabled', 'Remote control included', 'High Quality Loudspeaker', 'Energy saving 85%'],
-  ratings: { average: 4.7, count: 35 },
-  taxPercent: 1.8,
-  sku: '1363_12w_led_music_bulb',
-  specifications: { 'Country of Origin': 'China' }
-},
   {
   "id": "P_TEC45H_A_054",
   "slug": "3d-vr-box-virtual-reality-glasses-premium",
@@ -107,35 +63,6 @@ export const ALL_PRODUCTS: Product[] = [
     "Product Weight": "162g"
   }
 },
- {
-    id: 'P_HOME_KW_02',
-    slug: 'motivational-water-bottle',
-    name: 'Motivational Water Bottle with Straw & Time Marker',
-    brand: 'hydrozilla',
-    category: 'Home',
-    subcategory: 'Kitchenware',
-    price: { original: 299, discounted: 249, currency: '₹' },
-    quantity: 100,
-    image: 'https://Shopwave.b-cdn.net/puja%20photos/1_31242c97-2033-47e7-94cf-fd24e03fd330.webp ',
-    extraImages: [
-      'https://Shopwave.b-cdn.net/puja%20photos/05_5b3ece59-aa08-478f-8b27-fe24ee842ecb.webp ',
-      'https://Shopwave.b-cdn.net/puja%20photos/3_e1e4fcb8-bf12-4456-a565-e07d944180ee%20(1).webp ',
-      'https://Shopwave.b-cdn.net/puja%20photos/2_ae478b00-cebe-4867-87c5-3de253046b90.webp',
-      'https://Shopwave.b-cdn.net/puja%20photos/4_12ff871b-3e3c-4af5-9bdb-00650c68a223.webp'
-    ],
-    description: 'Designed with a pop-up silicone straw, just open with one hand by clicking the button on cap, convenient for drinking. The bottle is equipped with a carry strap. The water bottle cap equipped with a safety lock for leak-proof.',
-    shortDescription: 'BPA-Free Tritan portable gym water bottle with straw and time marker.',
-    features: [
-      'Motivational slogan and time markers',
-      'Convenient one-hand open design',
-      'Leak-Proof with safety lock',
-      'BPA-free Tritan material'
-    ],
-    ratings: { average: 4.5, count: 27 },
-    taxPercent: 18,
-    sku: '0325_motivational_water_bottle',
-    specifications: { 'Country of Origin': 'China', 'Dimensions': '21cm x 6cm x 6cm' }
-  },
 {
   "id": "P_TE54545CH_A_06", 
   "slug": "3d-vr-glasses-virtual-reality-goggles",
@@ -274,67 +201,6 @@ export const ALL_PRODUCTS: Product[] = [
     sku: '8854_chair_phone_stand_1pc',
     specifications: { 'Country of Origin': 'INDIA', 'Dimensions': '10cm x 10cm x 3cm' }
   },
-   {
-    id: "na_19189",
-    slug: "decorative-colorful-butterfly-wall-stickers-12pc",
-    name: "Decorative Colorful Butterfly Wall Stickers (12 Pc / Set)",
-    brand: "Shopwave",
-    description:
-      "12 Pcs 3D Colorful Butterfly Wall Stickers Set – Removable PVC Decorative Wall Decals for Home, Bedroom, Living Room, Office & Party Decoration",
-    shortDescription:
-      "3D butterfly wall stickers with realistic design, removable and reusable for home decoration.",
-    price: { original: 349, discounted: 159, currency: "₹" },
-    image:
-      "https://ik.imagekit.io/b5qewhvhb/e%20commers/tach/electronics%20itams%20part%202/WhatsAppImage2025-08-26at10.42.57_83dbfe1f.webp",
-    extraImages: [
-      "https://ik.imagekit.io/b5qewhvhb/e%20commers/tach/electronics%20itams%20part%202/07_butterfly.webp",
-      "https://ik.imagekit.io/b5qewhvhb/e%20commers/tach/electronics%20itams%20part%202/03_butterfly.webp",
-      "https://ik.imagekit.io/b5qewhvhb/e%20commers/tach/electronics%20itams%20part%202/06_butterfly.webp",
-      "https://ik.imagekit.io/b5qewhvhb/e%20commers/tach/electronics%20itams%20part%202/04_butterfly.webp",
-    ],
-    category: "New Arrivals",
-    subcategory: "Best Selling",
-    quantity: 50,
-    ratings: { average: 4.3, count: 15 },
-    features: [
-      "Set of 12 butterflies",
-      "Realistic 3D design",
-      "Removable & reusable",
-      "Strong adhesion",
-    ],
-  },
-    {
-    id: 'P_TECH_D_32',
-    slug: 'night-light-mushroom-lamp',
-    name: 'Night Light Mushroom Lamp (Colorful)',
-    brand: 'Oblivion',
-    category: 'Tech',
-    subcategory: 'Decor & Lighting',
-    price: { original: 375, discounted: 152, currency: '₹' },
-    quantity: 100,
-    image: 'https://ik.imagekit.io/b5qewhvhb/e%20commers/tach/electronics%20itams%20part%202/6_31c072f6-9abf-47c5-b9f5-64b26aa8ed1b.avif?updatedAt=1757157269942',
-    extraImages: [
-      'https://ik.imagekit.io/b5qewhvhb/e%20commers/tach/electronics%20itams%20part%202/4_8beb67f3-fef6-44aa-b644-3f91f6ed6f65.avif?updatedAt=1757157269846',
-      'https://ik.imagekit.io/b5qewhvhb/e%20commers/tach/electronics%20itams%20part%202/0239.webp?updatedAt=1757157269544',
-      'https://ik.imagekit.io/b5qewhvhb/e%20commers/tach/electronics%20itams%20part%202/61T4gcttgGL._SX425_0c1a0ea7-ad6d-4f9b-91da-3b68b8653049.avif?updatedAt=1757157269514',
-      'https://ik.imagekit.io/b5qewhvhb/e%20commers/tach/electronics%20itams%20part%202/5_17fb16e7-ecf4-415a-91a6-fa37c713113a.avif?updatedAt=1757157269428'
-    ],
-    description: 'Night Light Mushroom Lamp (Colorful). Ideal for home (bedroom, living room, kitchen et), bars, cafés, restaurants, wedding, party and other romantic places. LED intelligent light control sensor, delicate and convenient, home decorative necessary night light automatically turn on when in darkness, automatically shut down during the day.',
-    shortDescription: 'Automatic mushroom night light that turns on in darkness and off during daytime.',
-    features: [
-      'Automatic light sensor',
-      'LED intelligent light control',
-      'Easy plug-in operation',
-      'Water drop shape design'
-    ],
-    ratings: { average: 4.8, count: 28 },
-    taxPercent: 1.8,
-    sku: '0239_king_flower_light',
-    specifications: { 
-      'Country of Origin': 'China',
-      'Material': 'Plastic leaf, Silicone lampshade'
-    }
-  },
   {
     id: 'P_TE5454CH_A_0335',
     slug: 'usb-c-to-headphone-jack-adapter',
@@ -430,34 +296,6 @@ export const ALL_PRODUCTS: Product[] = [
     taxPercent: 1.8,
     sku: '7259_5_way_2pin_multi_plug_socket_1pc',
     specifications: { 'Country of Origin': 'China', 'Dimensions': '6cm x 5cm x 5cm' }
-  },
-    {
-    id: "na_13452",
-    slug: "multi-color-led-decorative-string-fairy-lights-8meter",
-    name: "Multi-Color LED Decorative String Fairy Lights (8 Meter)",
-    brand: "Shopwave",
-    description:
-      "8 Meter Multi-Color LED Decorative String Fairy Lights | Waterproof Festival Lighting for Home, Diwali, Christmas, Wedding, Party & Outdoor Decoration",
-    shortDescription:
-      "8-meter waterproof LED string lights with vibrant multi-color illumination.",
-    price: { original: 299, discounted: 146, currency: "₹" },
-    image:
-      "https://ik.imagekit.io/b5qewhvhb/e%20commers/tach/electronics%20itams%20part%202/04_light_59099232-79e1-4dec-805f-42dc9208c96b.webp",
-    extraImages: [
-      "https://ik.imagekit.io/b5qewhvhb/e%20commers/tach/electronics%20itams%20part%202/06_light_02c2bc16-189d-4a3c-9e16-def7006e2a08.webp",
-      "https://ik.imagekit.io/b5qewhvhb/e%20commers/tach/electronics%20itams%20part%202/02_light_6ac83d6e-50b5-498e-a7a5-e2259fae8209.webp",
-      "https://ik.imagekit.io/b5qewhvhb/e%20commers/tach/electronics%20itams%20part%202/03_light_93904c58-85ac-4ce4-964b-d91abbc614a1.webp",
-    ],
-    category: "New Arrivals",
-    subcategory: "Best Selling",
-    quantity: 45,
-    ratings: { average: 4.6, count: 20 },
-    features: [
-      "8 meter length",
-      "Energy efficient",
-      "Waterproof design",
-      "Flexible installation",
-    ],
   },
   {
     id: 'P_TECH_A_09',
@@ -818,34 +656,6 @@ export const ALL_PRODUCTS: Product[] = [
   sku: '1363_12w_led_music_bulb',
   specifications: { 'Country of Origin': 'China' }
 },
-{
-    id: "na_13330",
-    slug: "led-candle-lamp-table-lamp-portable-plastic-small",
-    name: "LED Candle lamp, Table Lamp Portable Plastic Lamps, Diwali (1 Pc / Small)",
-    brand: "Tidy Table",
-    description:
-      "LED Candle lamp, Table Lamp Portable Plastic Lamps for Restaurant, Outdoor, Office, Lamp, Show-piece Festival New Year Diwali Gift Decoration Home Decor Party",
-    shortDescription:
-      "Portable LED candle lamp with premium quality material for elegant decoration.",
-    price: { original: 299, discounted: 145, currency: "₹" },
-    image:
-      "https://ik.imagekit.io/b5qewhvhb/e%20commers/tach/electronics%20itams%20part%202/02_6d35b019-089f-4949-9571-7a7bd595fccd.webp",
-    extraImages: [
-      "https://ik.imagekit.io/b5qewhvhb/e%20commers/tach/electronics%20itams%20part%202/05_7aeb5412-f194-40ba-8597-f442d316bd23.webp",
-      "https://ik.imagekit.io/b5qewhvhb/e%20commers/tach/electronics%20itams%20part%202/01_3047139b-73d2-418d-8dbc-f71392fba225.webp",
-      "https://ik.imagekit.io/b5qewhvhb/e%20commers/tach/electronics%20itams%20part%202/03_9c22cd6e-d63e-43f3-ad1b-4fcf44f8a0a1.webp",
-    ],
-    category: "New Arrivals",
-    subcategory: "Best Selling",
-    quantity: 35,
-    ratings: { average: 4.2, count: 18 },
-    features: [
-      "High quality material",
-      "Multi-purpose use",
-      "Class and elegance",
-      "Battery powered",
-    ],
-  },
 {
   id: 'P_TECH_A_24',
   slug: 'adjustable-portable-desktop-fan-telescopic',
@@ -7726,32 +7536,7 @@ specifications: {
       "Romantic decor",
     ],
   },
-   {
-    "id": "na_15545544113",
-    "slug": "shubhlabh-divine-plate",
-    "name": "ShubhLabh Divine Plate",
-    "brand": "ShubhLabh Collection",
-    "description": "हर घर की दीवार पर लिखा होता है — शुभ लाभ। लेकिन क्या आपने कभी सोचा… ये सिर्फ़ दो शब्द नहीं… ये तो माँ लक्ष्मी को आमंत्रण देने का एक दिव्य माध्यम है।\n\nशास्त्रों में कहा गया है— ‘शुभस्य लाभस्य च योजनेन, गृहे सदा लक्ष्मी निवासो भवति।’ अर्थात — शुभ और लाभ के संयोग से, किसी भी घर में सदैव माँ लक्ष्मी का वास होता है। और इसी संयोग को साकार करती है — हमारी ShubhLabh Divine Plate।\n\nइस प्लेट पर उकेरे गए हैं — लाल रंग में शुभ-लाभ के पावन शब्द। लाल रंग शक्ति, सौभाग्य और माँ लक्ष्मी का प्रतीक है।\n\nShubhLabh Divine Plate को लगाएं— मुख्य द्वार के दोनों ओर, पूजाघर में, तिजोरी या अलमारी पर, व्यापार स्थल के प्रवेश द्वार पर। यह सजावट नहीं, बल्कि एक ऊर्जा-संवाहक है, जो घर को सौभाग्य, संतुलन और समृद्धि से भर देता है।\n\nयह प्लेट सिर्फ दिवाली तक सीमित नहीं है। नवरात्रि से लेकर अक्षय तृतीया तक, गृह प्रवेश से लेकर व्यापार आरंभ तक, या जब भी आप शुभता और समृद्धि को आमंत्रित करना चाहें — ShubhLabh Divine Plate हर अवसर पर श्रेष्ठ है।\n\nजब एक सामान्य स्टीकर 125 रुपये में मिलता है, तो यह Divine Plate — शुद्ध, सुंदर और शक्तिशाली — मिल रही है सिर्फ ₹30 में, 80% की छूट के साथ, ताकि हर घर में शुभता का प्रकाश फैले।\n\nतो आइए, माँ लक्ष्मी का स्वागत करें इस ShubhLabh Divine Plate के साथ। Order कीजिए आज ही, और इसे बनाइए अपने जीवन का स्थायी शुभ संकेत। शुभ लाभ की दिव्यता आपके जीवन में सदा बनी रहे।",
-    "shortDescription": "माँ लक्ष्मी का स्वागत करें — शुभ लाभ की दिव्यता से अपने घर और व्यापार को समृद्ध बनाएं।",
-    "price": { "original": 125, "discounted": 135, "currency": "₹" },
-    "image": "https://ik.imagekit.io/b5qewhvhb/e%20commers/Labh.png",
-    "extraImages": [
-      "https://ik.imagekit.io/b5qewhvhb/e%20commers/Shubh%20Labh%20Almirah.png",
-      "https://ik.imagekit.io/b5qewhvhb/e%20commers/Shubh%20Labh%20on%20Glass%20Door.png",
-      "https://ik.imagekit.io/b5qewhvhb/e%20commers/Shubh.png"
-      
-    ],
-    "category": "New Arrivals",
-    "subcategory": "Best Selling",
-    "quantity": 500,
-    "ratings": { "average": 4.8, "count": 112 },
-    "features": [
-      "लाल रंग में शुभ-लाभ शब्द",
-      "पूजा घर व मुख्य द्वार के लिए",
-      "ऊर्जा संवाहक",
-      "सौभाग्य व समृद्धि"
-    ],
-  },
+ 
    
 ];
 

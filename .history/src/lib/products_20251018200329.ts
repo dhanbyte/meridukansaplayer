@@ -303,38 +303,6 @@ export const ALL_PRODUCTS: Product[] = [
       "Strong adhesion",
     ],
   },
-    {
-    id: 'P_TECH_D_32',
-    slug: 'night-light-mushroom-lamp',
-    name: 'Night Light Mushroom Lamp (Colorful)',
-    brand: 'Oblivion',
-    category: 'Tech',
-    subcategory: 'Decor & Lighting',
-    price: { original: 375, discounted: 152, currency: '₹' },
-    quantity: 100,
-    image: 'https://ik.imagekit.io/b5qewhvhb/e%20commers/tach/electronics%20itams%20part%202/6_31c072f6-9abf-47c5-b9f5-64b26aa8ed1b.avif?updatedAt=1757157269942',
-    extraImages: [
-      'https://ik.imagekit.io/b5qewhvhb/e%20commers/tach/electronics%20itams%20part%202/4_8beb67f3-fef6-44aa-b644-3f91f6ed6f65.avif?updatedAt=1757157269846',
-      'https://ik.imagekit.io/b5qewhvhb/e%20commers/tach/electronics%20itams%20part%202/0239.webp?updatedAt=1757157269544',
-      'https://ik.imagekit.io/b5qewhvhb/e%20commers/tach/electronics%20itams%20part%202/61T4gcttgGL._SX425_0c1a0ea7-ad6d-4f9b-91da-3b68b8653049.avif?updatedAt=1757157269514',
-      'https://ik.imagekit.io/b5qewhvhb/e%20commers/tach/electronics%20itams%20part%202/5_17fb16e7-ecf4-415a-91a6-fa37c713113a.avif?updatedAt=1757157269428'
-    ],
-    description: 'Night Light Mushroom Lamp (Colorful). Ideal for home (bedroom, living room, kitchen et), bars, cafés, restaurants, wedding, party and other romantic places. LED intelligent light control sensor, delicate and convenient, home decorative necessary night light automatically turn on when in darkness, automatically shut down during the day.',
-    shortDescription: 'Automatic mushroom night light that turns on in darkness and off during daytime.',
-    features: [
-      'Automatic light sensor',
-      'LED intelligent light control',
-      'Easy plug-in operation',
-      'Water drop shape design'
-    ],
-    ratings: { average: 4.8, count: 28 },
-    taxPercent: 1.8,
-    sku: '0239_king_flower_light',
-    specifications: { 
-      'Country of Origin': 'China',
-      'Material': 'Plastic leaf, Silicone lampshade'
-    }
-  },
   {
     id: 'P_TE5454CH_A_0335',
     slug: 'usb-c-to-headphone-jack-adapter',
@@ -430,34 +398,6 @@ export const ALL_PRODUCTS: Product[] = [
     taxPercent: 1.8,
     sku: '7259_5_way_2pin_multi_plug_socket_1pc',
     specifications: { 'Country of Origin': 'China', 'Dimensions': '6cm x 5cm x 5cm' }
-  },
-    {
-    id: "na_13452",
-    slug: "multi-color-led-decorative-string-fairy-lights-8meter",
-    name: "Multi-Color LED Decorative String Fairy Lights (8 Meter)",
-    brand: "Shopwave",
-    description:
-      "8 Meter Multi-Color LED Decorative String Fairy Lights | Waterproof Festival Lighting for Home, Diwali, Christmas, Wedding, Party & Outdoor Decoration",
-    shortDescription:
-      "8-meter waterproof LED string lights with vibrant multi-color illumination.",
-    price: { original: 299, discounted: 146, currency: "₹" },
-    image:
-      "https://ik.imagekit.io/b5qewhvhb/e%20commers/tach/electronics%20itams%20part%202/04_light_59099232-79e1-4dec-805f-42dc9208c96b.webp",
-    extraImages: [
-      "https://ik.imagekit.io/b5qewhvhb/e%20commers/tach/electronics%20itams%20part%202/06_light_02c2bc16-189d-4a3c-9e16-def7006e2a08.webp",
-      "https://ik.imagekit.io/b5qewhvhb/e%20commers/tach/electronics%20itams%20part%202/02_light_6ac83d6e-50b5-498e-a7a5-e2259fae8209.webp",
-      "https://ik.imagekit.io/b5qewhvhb/e%20commers/tach/electronics%20itams%20part%202/03_light_93904c58-85ac-4ce4-964b-d91abbc614a1.webp",
-    ],
-    category: "New Arrivals",
-    subcategory: "Best Selling",
-    quantity: 45,
-    ratings: { average: 4.6, count: 20 },
-    features: [
-      "8 meter length",
-      "Energy efficient",
-      "Waterproof design",
-      "Flexible installation",
-    ],
   },
   {
     id: 'P_TECH_A_09',
@@ -818,34 +758,6 @@ export const ALL_PRODUCTS: Product[] = [
   sku: '1363_12w_led_music_bulb',
   specifications: { 'Country of Origin': 'China' }
 },
-{
-    id: "na_13330",
-    slug: "led-candle-lamp-table-lamp-portable-plastic-small",
-    name: "LED Candle lamp, Table Lamp Portable Plastic Lamps, Diwali (1 Pc / Small)",
-    brand: "Tidy Table",
-    description:
-      "LED Candle lamp, Table Lamp Portable Plastic Lamps for Restaurant, Outdoor, Office, Lamp, Show-piece Festival New Year Diwali Gift Decoration Home Decor Party",
-    shortDescription:
-      "Portable LED candle lamp with premium quality material for elegant decoration.",
-    price: { original: 299, discounted: 145, currency: "₹" },
-    image:
-      "https://ik.imagekit.io/b5qewhvhb/e%20commers/tach/electronics%20itams%20part%202/02_6d35b019-089f-4949-9571-7a7bd595fccd.webp",
-    extraImages: [
-      "https://ik.imagekit.io/b5qewhvhb/e%20commers/tach/electronics%20itams%20part%202/05_7aeb5412-f194-40ba-8597-f442d316bd23.webp",
-      "https://ik.imagekit.io/b5qewhvhb/e%20commers/tach/electronics%20itams%20part%202/01_3047139b-73d2-418d-8dbc-f71392fba225.webp",
-      "https://ik.imagekit.io/b5qewhvhb/e%20commers/tach/electronics%20itams%20part%202/03_9c22cd6e-d63e-43f3-ad1b-4fcf44f8a0a1.webp",
-    ],
-    category: "New Arrivals",
-    subcategory: "Best Selling",
-    quantity: 35,
-    ratings: { average: 4.2, count: 18 },
-    features: [
-      "High quality material",
-      "Multi-purpose use",
-      "Class and elegance",
-      "Battery powered",
-    ],
-  },
 {
   id: 'P_TECH_A_24',
   slug: 'adjustable-portable-desktop-fan-telescopic',

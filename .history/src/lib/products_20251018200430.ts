@@ -431,34 +431,6 @@ export const ALL_PRODUCTS: Product[] = [
     sku: '7259_5_way_2pin_multi_plug_socket_1pc',
     specifications: { 'Country of Origin': 'China', 'Dimensions': '6cm x 5cm x 5cm' }
   },
-    {
-    id: "na_13452",
-    slug: "multi-color-led-decorative-string-fairy-lights-8meter",
-    name: "Multi-Color LED Decorative String Fairy Lights (8 Meter)",
-    brand: "Shopwave",
-    description:
-      "8 Meter Multi-Color LED Decorative String Fairy Lights | Waterproof Festival Lighting for Home, Diwali, Christmas, Wedding, Party & Outdoor Decoration",
-    shortDescription:
-      "8-meter waterproof LED string lights with vibrant multi-color illumination.",
-    price: { original: 299, discounted: 146, currency: "₹" },
-    image:
-      "https://ik.imagekit.io/b5qewhvhb/e%20commers/tach/electronics%20itams%20part%202/04_light_59099232-79e1-4dec-805f-42dc9208c96b.webp",
-    extraImages: [
-      "https://ik.imagekit.io/b5qewhvhb/e%20commers/tach/electronics%20itams%20part%202/06_light_02c2bc16-189d-4a3c-9e16-def7006e2a08.webp",
-      "https://ik.imagekit.io/b5qewhvhb/e%20commers/tach/electronics%20itams%20part%202/02_light_6ac83d6e-50b5-498e-a7a5-e2259fae8209.webp",
-      "https://ik.imagekit.io/b5qewhvhb/e%20commers/tach/electronics%20itams%20part%202/03_light_93904c58-85ac-4ce4-964b-d91abbc614a1.webp",
-    ],
-    category: "New Arrivals",
-    subcategory: "Best Selling",
-    quantity: 45,
-    ratings: { average: 4.6, count: 20 },
-    features: [
-      "8 meter length",
-      "Energy efficient",
-      "Waterproof design",
-      "Flexible installation",
-    ],
-  },
   {
     id: 'P_TECH_A_09',
     slug: 'phone-selfie-ring-light',
