@@ -23,19 +23,56 @@ import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Search } from "lucide-react";
 import Link from "next/link";
 import { useToast } from "@/components/ui/use-toast";
-import { useUser } from "@/firebase/use-user";
-import { useCollection } from "@/firebase/use-collection";
-import type { Order } from "@/lib/types";
-import { where } from "firebase/firestore";
+import { useAuth } from "@/lib/AuthContext";
 import { Badge } from "@/components/ui/badge";
+import { useState, useEffect } from "react";
+
+interface Order {
+  _id: string;
+  orderId: string;
+  partnerId: string;
+  partnerName: string;
+  customerName: string;
+  customerPhone: string;
+  shippingAddress: string;
+  items: Array<{
+    productId: string;
+    productName: string;
+    productSku: string;
+    quantity: number;
+    price: number;
+    total: number;
+  }>;
+  paymentMethod: string;
+  totalAmount: number;
+  sellingPrice: number;
+  profit: number;
+  status: string;
+  createdAt: string;
+}
 
 export default function OrdersPage() {
     const { toast } = useToast();
-    const { user, loading: userLoading } = useUser();
-    const { data: orders, loading: ordersLoading } = useCollection<Order>(
-        user ? `orders` : null,
-        user ? where('partnerId', '==', user.uid) : null
-    );
+    const { user } = useAuth();
+    const [orders, setOrders] = useState<Order[]>([]);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        loadOrders();
+    }, [user]);
+
+    const loadOrders = async () => {
+        try {
+            const response = await fetch('/api/orders');
+            const data = await response.json();
+            const userOrders = data.orders.filter((order: Order) => order.partnerId === user?.id);
+            setOrders(userOrders);
+        } catch (error) {
+            console.error('Error loading orders:', error);
+        } finally {
+            setLoading(false);
+        }
+    };
 
     const handleRefer = async () => {
     const shareData = {
@@ -64,7 +101,7 @@ export default function OrdersPage() {
     }
   };
   
-  const isLoading = userLoading || ordersLoading;
+  const isLoading = loading;
 
   return (
     <div className="flex flex-col h-full">
@@ -141,18 +178,18 @@ export default function OrdersPage() {
                 </TableRow>
               ) : (
                 orders.map((order) => (
-                   <TableRow key={order.id}>
+                   <TableRow key={order._id}>
                     <TableCell><Input type="checkbox" /></TableCell>
-                    <TableCell>{order.id.slice(0, 8)}...</TableCell>
+                    <TableCell>{order.orderId}</TableCell>
                     <TableCell>N/A</TableCell>
-                    <TableCell>{order.orderDate?.toDate().toLocaleDateString()}</TableCell>
-                    <TableCell>{order.productSku}</TableCell>
+                    <TableCell>{new Date(order.createdAt).toLocaleDateString()}</TableCell>
+                    <TableCell>{order.items?.map(item => item.productName).join(', ') || 'No items'}</TableCell>
                     <TableCell>{order.paymentMethod}</TableCell>
                     <TableCell>{order.customerName}</TableCell>
                      <TableCell>
                       <Badge variant={
-                        order.status === "Pending" ? "secondary" : 
-                        order.status === "Cancelled" || order.status === "Rejected" ? "destructive" :
+                        order.status === "pending" ? "secondary" : 
+                        order.status === "cancelled" || order.status === "rejected" ? "destructive" :
                         "default"
                       }>
                         {order.status}

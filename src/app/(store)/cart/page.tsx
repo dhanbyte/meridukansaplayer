@@ -69,7 +69,7 @@ export default function CartPage() {
   };
 
   const handlePlaceOrder = async () => {
-    if (!user || !firestore) {
+    if (!user) {
       toast({
         variant: "destructive",
         title: "Not Logged In",
@@ -95,40 +95,44 @@ export default function CartPage() {
     }
 
     try {
-      for (const item of cart) {
-        const orderData: Omit<Order, 'id' | 'orderDate'> = {
-          partnerId: user.uid,
-          customerName: shippingInfo.customerName,
-          customerPhone: shippingInfo.customerPhone,
-          shippingAddress: shippingInfo.address,
+      const orderData = {
+        partnerId: user.id,
+        partnerName: user.name,
+        customerName: shippingInfo.customerName,
+        customerPhone: shippingInfo.customerPhone,
+        shippingAddress: shippingInfo.address,
+        items: cart.map(item => ({
+          productId: item.id,
+          productName: item.name,
           productSku: item.sku || 'N/A',
           quantity: item.quantity,
-          paymentMethod: paymentMethod,
-          status: "Pending",
-          amount: (item.price.discounted || item.price.original) * item.quantity,
-        };
-        const finalData = { ...orderData, orderDate: serverTimestamp() };
-        
-        const docRef = await addDoc(collection(firestore, "orders"), finalData);
-        await setDoc(doc(firestore, "orders", docRef.id), { id: docRef.id }, { merge: true })
-          .catch(async (err) => {
-            const permissionError = new FirestorePermissionError({
-              path: `orders/${docRef.id}`,
-              operation: 'update',
-              requestResourceData: { id: docRef.id }
-            });
-            errorEmitter.emit('permission-error', permissionError);
-          });
-      }
+          price: item.price.discounted || item.price.original,
+          total: (item.price.discounted || item.price.original) * item.quantity
+        })),
+        paymentMethod: paymentMethod,
+        totalAmount: totalCartPrice,
+        sellingPrice: parseFloat(sellingPrice) || totalCartPrice,
+        profit: profit
+      };
 
-      toast({
-        title: "Order Placed!",
-        description: "Your order has been successfully placed.",
+      const response = await fetch('/api/orders', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(orderData)
       });
 
-      clearCart();
-      setSellingPrice('');
-      setShippingInfo(null);
+      if (response.ok) {
+        toast({
+          title: "Order Placed!",
+          description: "Your order has been successfully placed.",
+        });
+
+        clearCart();
+        setSellingPrice('');
+        setShippingInfo(null);
+      } else {
+        throw new Error('Failed to place order');
+      }
 
     } catch (error) {
        console.error("Error placing order:", error);

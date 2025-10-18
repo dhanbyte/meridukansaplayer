@@ -1,7 +1,5 @@
 "use client";
 import React, { useState, useEffect } from 'react';
-import { OrderService } from '@/lib/orderService';
-import { Order } from '@/lib/orderTypes';
 import {
   Card,
   CardContent,
@@ -28,6 +26,30 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
+interface Order {
+  _id: string;
+  orderId: string;
+  partnerId: string;
+  partnerName: string;
+  customerName: string;
+  customerPhone: string;
+  shippingAddress: string;
+  items: Array<{
+    productId: string;
+    productName: string;
+    productSku: string;
+    quantity: number;
+    price: number;
+    total: number;
+  }>;
+  paymentMethod: string;
+  totalAmount: number;
+  sellingPrice: number;
+  profit: number;
+  status: string;
+  createdAt: string;
+}
+
 export default function AdminOrdersPage() {
   const [orders, setOrders] = useState<Order[]>([]);
   const [loading, setLoading] = useState(true);
@@ -36,20 +58,26 @@ export default function AdminOrdersPage() {
     loadOrders();
   }, []);
 
-  const loadOrders = () => {
-    const ordersList = OrderService.getOrders();
-    setOrders(ordersList);
-    setLoading(false);
+  const loadOrders = async () => {
+    try {
+      const response = await fetch('/api/orders');
+      const data = await response.json();
+      setOrders(data.orders);
+    } catch (error) {
+      console.error('Error loading orders:', error);
+    } finally {
+      setLoading(false);
+    }
   };
 
-  const handleStatusUpdate = async (orderId: string, newStatus: Order['status']) => {
-    await OrderService.updateOrderStatus(orderId, newStatus);
-    loadOrders();
+  const handleStatusUpdate = async (orderId: string, newStatus: string) => {
+    // TODO: Implement status update API
+    console.log('Update status:', orderId, newStatus);
   };
 
   const totalRevenue = orders
     .filter(order => order.status !== 'cancelled' && order.status !== 'pending')
-    .reduce((sum, order) => sum + order.totalAmount, 0);
+    .reduce((sum, order) => sum + (order.totalAmount || 0), 0);
 
   if (loading) {
     return <div>Loading...</div>;
@@ -129,28 +157,35 @@ export default function AdminOrdersPage() {
             </TableHeader>
             <TableBody>
               {orders.map(order => (
-                <TableRow key={order.id}>
-                  <TableCell className="font-medium">{order.id}</TableCell>
+                <TableRow key={order._id}>
+                  <TableCell className="font-medium">{order.orderId}</TableCell>
                   <TableCell>
-                    <div className="font-medium">{order.userName}</div>
+                    <div className="font-medium">{order.customerName}</div>
                     <div className="text-sm text-muted-foreground">
-                      {order.userPhone}
+                      {order.customerPhone}
+                    </div>
+                    <div className="text-xs text-blue-600">
+                      by {order.partnerName}
                     </div>
                   </TableCell>
                   <TableCell>
                     <div className="text-sm">
-                      {order.items.map((item, index) => (
-                        <div key={index}>
-                          {item.productName} x{item.quantity}
-                        </div>
-                      ))}
+                      {order.items && order.items.length > 0 ? (
+                        order.items.map((item, index) => (
+                          <div key={index}>
+                            {item.productName} x{item.quantity}
+                          </div>
+                        ))
+                      ) : (
+                        <div>No items</div>
+                      )}
                     </div>
                   </TableCell>
-                  <TableCell>₹{order.totalAmount.toFixed(2)}</TableCell>
+                  <TableCell>₹{(order.totalAmount || 0).toFixed(2)}</TableCell>
                   <TableCell>
                     <Select
                       value={order.status}
-                      onValueChange={(value: Order['status']) => handleStatusUpdate(order.id, value)}
+                      onValueChange={(value: string) => handleStatusUpdate(order._id, value)}
                     >
                       <SelectTrigger className="w-32">
                         <SelectValue />
