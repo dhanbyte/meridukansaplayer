@@ -38,7 +38,7 @@ export const LoginForm = () => {
             Welcome to Shopwave
           </h2>
           <p className="mt-2 text-center text-sm text-gray-600">
-            Please sign in to continue
+            Sign in to access your account
           </p>
         </div>
         <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
