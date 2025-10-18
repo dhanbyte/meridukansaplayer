@@ -30,30 +30,54 @@ export default function UsersPage() {
   }, []);
 
   const loadUsers = async () => {
-    const usersList = await UserService.getUsers();
-    setUsers(usersList);
+    try {
+      const usersList = await UserService.getUsers();
+      setUsers(usersList || []);
+    } catch (error) {
+      console.error('Error loading users:', error);
+      setUsers([]);
+    }
   };
 
   const handleCreateUser = async () => {
-    const result = await UserService.createUser(formData);
-    
-    alert(`User created successfully!\nUsername: ${result.user.username}\nPassword: ${result.password}`);
-    loadUsers();
-    resetForm();
+    try {
+      const result = await UserService.createUser(formData);
+      
+      if (result && result.user) {
+        alert(`User created successfully!\nUsername: ${result.user.username}\nPassword: ${result.password}`);
+        loadUsers();
+        resetForm();
+      } else {
+        throw new Error('Invalid response from server');
+      }
+    } catch (error) {
+      console.error('Error creating user:', error);
+      alert('Failed to create user. Please try again.');
+    }
   };
 
   const handleUpdateUser = async () => {
     if (!editingUser) return;
     
-    await UserService.updateUser(editingUser.id, formData);
-    loadUsers();
-    resetForm();
+    try {
+      await UserService.updateUser(editingUser.id, formData);
+      loadUsers();
+      resetForm();
+    } catch (error) {
+      console.error('Error updating user:', error);
+      alert('Failed to update user. Please try again.');
+    }
   };
 
   const handleDeleteUser = async (userId: string) => {
     if (confirm('Are you sure you want to delete this user?')) {
-      await UserService.deleteUser(userId);
-      loadUsers();
+      try {
+        await UserService.deleteUser(userId);
+        loadUsers();
+      } catch (error) {
+        console.error('Error deleting user:', error);
+        alert('Failed to delete user. Please try again.');
+      }
     }
   };
 
@@ -227,35 +251,43 @@ export default function UsersPage() {
               </tr>
             </thead>
             <tbody>
-              {users.map((user) => (
-                <tr key={user.id} className="border-b">
-                  <td className="p-4 font-medium">{user.username}</td>
-                  <td className="p-4">{user.name}</td>
-                  <td className="p-4">{user.phone}</td>
-                  <td className="p-4 font-mono text-sm">{user.password}</td>
-                  <td className="p-4">
-                    <span className={`px-2 py-1 rounded text-xs ${
-                      user.isActive ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
-                    }`}>
-                      {user.isActive ? 'Active' : 'Inactive'}
-                    </span>
-                  </td>
-                  <td className="p-4">
-                    <div className="flex gap-2">
-                      <Button size="sm" variant="outline" onClick={() => startEdit(user)}>
-                        <Edit className="h-4 w-4" />
-                      </Button>
-                      <Button 
-                        size="sm" 
-                        variant="outline" 
-                        onClick={() => handleDeleteUser(user.id)}
-                      >
-                        <Trash2 className="h-4 w-4" />
-                      </Button>
-                    </div>
+              {users && users.length > 0 ? (
+                users.map((user) => (
+                  <tr key={user.id || user._id} className="border-b">
+                    <td className="p-4 font-medium">{user.username || 'N/A'}</td>
+                    <td className="p-4">{user.name || 'N/A'}</td>
+                    <td className="p-4">{user.phone || 'N/A'}</td>
+                    <td className="p-4 font-mono text-sm">{user.password || 'N/A'}</td>
+                    <td className="p-4">
+                      <span className={`px-2 py-1 rounded text-xs ${
+                        user.isActive ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
+                      }`}>
+                        {user.isActive ? 'Active' : 'Inactive'}
+                      </span>
+                    </td>
+                    <td className="p-4">
+                      <div className="flex gap-2">
+                        <Button size="sm" variant="outline" onClick={() => startEdit(user)}>
+                          <Edit className="h-4 w-4" />
+                        </Button>
+                        <Button 
+                          size="sm" 
+                          variant="outline" 
+                          onClick={() => handleDeleteUser(user.id || user._id)}
+                        >
+                          <Trash2 className="h-4 w-4" />
+                        </Button>
+                      </div>
+                    </td>
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td colSpan={6} className="p-4 text-center text-gray-500">
+                    No users found
                   </td>
                 </tr>
-              ))}
+              )}
             </tbody>
           </table>
         </div>

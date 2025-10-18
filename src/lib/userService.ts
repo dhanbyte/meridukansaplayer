@@ -16,21 +16,39 @@ export class UserService {
   static async getUsers(): Promise<User[]> {
     try {
       const response = await fetch('/api/users');
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
       const data = await response.json();
       return data.users || [];
     } catch (error) {
+      console.error('UserService.getUsers error:', error);
       return [];
     }
   }
 
   static async createUser(userData: Omit<User, 'id' | 'createdAt'>): Promise<{ user: User; password: string }> {
-    const response = await fetch('/api/users', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(userData)
-    });
-    const data = await response.json();
-    return data;
+    try {
+      const response = await fetch('/api/users', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(userData)
+      });
+      
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      
+      const data = await response.json();
+      if (!data.success) {
+        throw new Error(data.error || 'Failed to create user');
+      }
+      
+      return data;
+    } catch (error) {
+      console.error('UserService.createUser error:', error);
+      throw error;
+    }
   }
 
   static generatePassword(): string {
