@@ -1,7 +1,15 @@
 import { MongoClient } from 'mongodb';
 
-const uri = process.env.MONGODB_URI || 'mongodb://localhost:27017/meridukansaplayer';
-const options = {};
+const uri = process.env.MONGODB_URI || 'mongodb://localhost:27017/shopwave';
+
+if (!process.env.MONGODB_URI) {
+  console.warn('MONGODB_URI not found, using fallback localhost');
+}
+const options = {
+  maxPoolSize: 10,
+  serverSelectionTimeoutMS: 5000,
+  socketTimeoutMS: 45000,
+};
 
 let client: MongoClient;
 let clientPromise: Promise<MongoClient>;

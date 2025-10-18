@@ -65,10 +65,16 @@ export default function OrdersPage() {
         try {
             const response = await fetch('/api/orders');
             const data = await response.json();
-            const userOrders = data.orders.filter((order: Order) => order.partnerId === user?.id);
-            setOrders(userOrders);
+            
+            if (data.orders && Array.isArray(data.orders)) {
+                const userOrders = data.orders.filter((order: Order) => order.partnerId === user?.id);
+                setOrders(userOrders);
+            } else {
+                setOrders([]);
+            }
         } catch (error) {
             console.error('Error loading orders:', error);
+            setOrders([]);
         } finally {
             setLoading(false);
         }

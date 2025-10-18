@@ -9,9 +9,14 @@ export async function GET() {
     
     const orders = await db.collection('orders').find({}).sort({ createdAt: -1 }).toArray();
     
-    return NextResponse.json({ orders });
+    return NextResponse.json({ orders: orders || [] });
   } catch (error) {
-    return NextResponse.json({ error: 'Failed to fetch orders' }, { status: 500 });
+    console.error('Database error:', error);
+    // Return empty array instead of error for frontend compatibility
+    return NextResponse.json({ 
+      orders: [],
+      error: 'Database connection failed'
+    });
   }
 }
 

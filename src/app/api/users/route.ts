@@ -9,9 +9,14 @@ export async function GET() {
     
     const users = await db.collection('users').find({}).toArray();
     
-    return NextResponse.json({ users });
+    return NextResponse.json({ users: users || [] });
   } catch (error) {
-    return NextResponse.json({ error: 'Failed to fetch users' }, { status: 500 });
+    console.error('Database error:', error);
+    // Return empty array instead of error for frontend compatibility
+    return NextResponse.json({ 
+      users: [],
+      error: 'Database connection failed'
+    });
   }
 }
 

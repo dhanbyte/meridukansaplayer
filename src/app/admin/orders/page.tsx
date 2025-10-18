@@ -70,9 +70,15 @@ export default function AdminOrdersPage() {
     try {
       const response = await fetch('/api/orders');
       const data = await response.json();
-      setOrders(data.orders);
+      
+      if (data.orders && Array.isArray(data.orders)) {
+        setOrders(data.orders);
+      } else {
+        setOrders([]);
+      }
     } catch (error) {
       console.error('Error loading orders:', error);
+      setOrders([]);
     } finally {
       setLoading(false);
     }
