@@ -39,3 +39,21 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: 'Failed to create order' }, { status: 500 });
   }
 }
+
+export async function PUT(request: Request) {
+  try {
+    const { id, ...updates } = await request.json();
+    
+    const client = await clientPromise;
+    const db = client.db();
+    
+    await db.collection('orders').updateOne(
+      { _id: new ObjectId(id) },
+      { $set: updates }
+    );
+    
+    return NextResponse.json({ success: true });
+  } catch (error) {
+    return NextResponse.json({ error: 'Failed to update order' }, { status: 500 });
+  }
+}

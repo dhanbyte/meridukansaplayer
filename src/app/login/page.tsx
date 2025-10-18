@@ -118,15 +118,8 @@ export default function LoginPage() {
     <div className="flex min-h-screen items-center justify-center bg-gray-100">
       <div className="w-full max-w-md rounded-lg bg-white p-8 shadow-lg">
         <div className="mb-8 text-center">
-          <Image
-            src="https://wukusy.com/wp-content/uploads/2024/05/wukusy-logo.png"
-            alt="Wukusy Logo"
-            width={180}
-            height={50}
-            className="mx-auto"
-            priority
-          />
-          <h1 className="mt-4 text-2xl font-bold text-gray-800">Shopwave Dropshipping</h1>
+          <h1 className="text-3xl font-bold text-red-600 mb-2">Shopwave</h1>
+          <h2 className="text-2xl font-bold text-gray-800">Dropshipping</h2>
           <p className="text-gray-600">Partner me aapka swagat hai</p>
         </div>
         <form onSubmit={handleLogin} className="space-y-6">

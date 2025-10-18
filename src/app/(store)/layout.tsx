@@ -246,13 +246,7 @@ function Header() {
       <header className="sticky top-0 z-10 flex flex-col sm:flex-row items-center justify-between mb-6 gap-4 bg-white p-4 border-b">
         <div className="w-full sm:w-auto">
           <Link href="/">
-            <Image
-              src="https://wukusy.com/wp-content/uploads/2024/05/wukusy-logo.png"
-              alt="Wukusy Logo"
-              width={150}
-              height={40}
-              priority
-            />
+            <h1 className="text-2xl font-bold text-red-600">Shopwave</h1>
           </Link>
         </div>
         <div className="w-full sm:flex-1 flex justify-center">

@@ -25,6 +25,13 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 
 interface Order {
   _id: string;
@@ -53,6 +60,7 @@ interface Order {
 export default function AdminOrdersPage() {
   const [orders, setOrders] = useState<Order[]>([]);
   const [loading, setLoading] = useState(true);
+  const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
 
   useEffect(() => {
     loadOrders();
@@ -71,8 +79,19 @@ export default function AdminOrdersPage() {
   };
 
   const handleStatusUpdate = async (orderId: string, newStatus: string) => {
-    // TODO: Implement status update API
-    console.log('Update status:', orderId, newStatus);
+    try {
+      const response = await fetch('/api/orders', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id: orderId, status: newStatus })
+      });
+      
+      if (response.ok) {
+        loadOrders(); // Reload orders
+      }
+    } catch (error) {
+      console.error('Error updating status:', error);
+    }
   };
 
   const totalRevenue = orders
@@ -203,9 +222,57 @@ export default function AdminOrdersPage() {
                     {new Date(order.createdAt).toLocaleDateString()}
                   </TableCell>
                   <TableCell>
-                    <Button variant="outline" size="sm">
-                      View Details
-                    </Button>
+                    <Dialog>
+                      <DialogTrigger asChild>
+                        <Button variant="outline" size="sm" onClick={() => setSelectedOrder(order)}>
+                          View Details
+                        </Button>
+                      </DialogTrigger>
+                      <DialogContent className="max-w-2xl">
+                        <DialogHeader>
+                          <DialogTitle>Order Details - {selectedOrder?.orderId}</DialogTitle>
+                        </DialogHeader>
+                        {selectedOrder && (
+                          <div className="space-y-4">
+                            <div className="grid grid-cols-2 gap-4">
+                              <div>
+                                <h4 className="font-semibold">Partner Information</h4>
+                                <p>Name: {selectedOrder.partnerName}</p>
+                                <p>ID: {selectedOrder.partnerId}</p>
+                              </div>
+                              <div>
+                                <h4 className="font-semibold">Customer Information</h4>
+                                <p>Name: {selectedOrder.customerName}</p>
+                                <p>Phone: {selectedOrder.customerPhone}</p>
+                                <p>Address: {selectedOrder.shippingAddress}</p>
+                              </div>
+                            </div>
+                            <div>
+                              <h4 className="font-semibold">Order Items</h4>
+                              {selectedOrder.items?.map((item, index) => (
+                                <div key={index} className="border p-2 rounded">
+                                  <p>Product: {item.productName}</p>
+                                  <p>SKU: {item.productSku}</p>
+                                  <p>Quantity: {item.quantity}</p>
+                                  <p>Price: ₹{item.price}</p>
+                                  <p>Total: ₹{item.total}</p>
+                                </div>
+                              ))}
+                            </div>
+                            <div className="grid grid-cols-2 gap-4">
+                              <div>
+                                <p>Payment Method: {selectedOrder.paymentMethod}</p>
+                                <p>Total Amount: ₹{selectedOrder.totalAmount}</p>
+                              </div>
+                              <div>
+                                <p>Selling Price: ₹{selectedOrder.sellingPrice}</p>
+                                <p>Partner Profit: ₹{selectedOrder.profit}</p>
+                              </div>
+                            </div>
+                          </div>
+                        )}
+                      </DialogContent>
+                    </Dialog>
                   </TableCell>
                 </TableRow>
               ))}
