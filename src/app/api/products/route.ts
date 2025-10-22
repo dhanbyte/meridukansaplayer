@@ -106,31 +106,134 @@ export async function GET() {
     console.log('Fetching products...');
     
     // 1. First try to get products from MongoDB
+    console.log('Environment Variables:', {
+      NODE_ENV: process.env.NODE_ENV,
+      MONGODB_URI_PRESENT: !!uri && uri !== 'undefined',
+      MONGODB_URI_STARTS: uri ? uri.substring(0, 30) + '...' : 'Not set'
+    });
+
     if (uri && uri !== 'undefined') {
+      console.log('MongoDB URI found, attempting to connect...');
+      
+      // Log a masked version of the connection string for security
+      const maskedUri = uri.replace(
+        /(mongodb\+srv:\/\/)([^:]+):[^@]+@/, 
+        (match, protocol, user) => `${protocol}${user}:****@`
+      );
+      console.log('Connection string:', maskedUri);
+      
+      let client;
       try {
-        console.log('Attempting to connect to MongoDB...');
-        const client = new MongoClient(uri);
+        client = new MongoClient(uri, {
+          serverApi: {
+            version: '1',
+            strict: true,
+            deprecationErrors: true,
+          },
+          connectTimeoutMS: 5000,
+          socketTimeoutMS: 10000,
+        });
+        
+        console.log('Connecting to MongoDB...');
         await client.connect();
+        console.log('Successfully connected to MongoDB');
         
         const db = client.db('dropship');
+        console.log('Accessing database: dropship');
+        
         const collection = db.collection('products');
+        console.log('Accessing collection: products');
+        
+        const count = await collection.countDocuments();
+        console.log(`Found ${count} documents in collection`);
         
         const dbProducts = await collection.find({}).toArray();
+        console.log(`Successfully fetched ${dbProducts.length} products`);
+        
         await client.close();
         
-        console.log(`Successfully fetched ${dbProducts.length} products from MongoDB`);
         return NextResponse.json({ 
           success: true,
           products: dbProducts,
-          source: 'mongodb'
+          source: 'mongodb',
+          count: dbProducts.length
         });
-      } catch (dbError) {
-        console.error('MongoDB connection failed:', dbError);
-        // Continue to fallback
+      } catch (error) {
+        const dbError = error as Error & { code?: string; errorLabels?: string[]; };
+        
+        console.error('\n=== MONGODB CONNECTION ERROR ===');
+        console.error('Error name:', dbError.name);
+        console.error('Error code:', dbError.code);
+        console.error('Error message:', dbError.message);
+        
+        if ('errorLabels' in dbError) {
+          console.error('Error labels:', dbError.errorLabels);
+        }
+        
+        // Common MongoDB error patterns
+        if (dbError.message.includes('ECONNREFUSED')) {
+          console.error('\n❌ Cannot connect to MongoDB server. Please check if:');
+          console.error('1. Your MongoDB server is running');
+          console.error('2. The connection string is correct');
+          console.error('3. Your IP is whitelisted in MongoDB Atlas (if using Atlas)');
+        } 
+        else if (dbError.message.includes('bad auth') || dbError.message.includes('Authentication failed')) {
+          console.error('\n🔑 Authentication failed. Please check:');
+          console.error('1. Your MongoDB username and password');
+          console.error('2. If the user has the correct permissions');
+        }
+        else if (dbError.message.includes('ENOTFOUND')) {
+          console.error('\n🔍 Could not resolve MongoDB host. Please check:');
+          console.error('1. Your internet connection');
+          console.error('2. The MongoDB hostname in the connection string');
+          console.error('3. Your DNS settings');
+        }
+        else if (dbError.message.includes('ETIMEDOUT')) {
+          console.error('\n⏱️  Connection timed out. Please check:');
+          console.error('1. Your internet connection');
+          console.error('2. If your MongoDB server is accessible from your network');
+          console.error('3. Firewall settings that might be blocking the connection');
+        }
+        
+        console.error('\nFalling back to alternative data source...');
+      } finally {
+        if (client) {
+          try {
+            await client.close();
+          } catch (e) {
+            console.error('Error closing MongoDB connection:', e);
+          }
+        }
       }
     }
     
-    // 2. Fallback to in-memory products in development
+  
+    // 2. Fallback to static products
+    console.log('Environment:', process.env.NODE_ENV);
+    console.log('Node Version:', process.version);
+    
+    // Try to load static products as fallback
+    try {
+      const { ALL_PRODUCTS } = await import('../../../lib/products');
+      const jsonProducts = (ALL_PRODUCTS || []).map((product: any) => ({
+        ...product,
+        price: typeof product.price === 'object' ? product.price.original : product.price,
+        deliveryCharge: 0
+      }));
+      
+      console.log(`Using ${jsonProducts.length} static products as fallback`);
+      return NextResponse.json({
+        success: true,
+        products: jsonProducts,
+        source: 'static-fallback',
+        message: 'Using static products as fallback',
+        count: jsonProducts.length
+      });
+    } catch (error) {
+      console.error('Error loading static products:', error);
+    }
+      
+    // If we get here, try in-memory products (development only)
     if (process.env.NODE_ENV === 'development') {
       if (global._products) {
         console.log('Using in-memory products (development fallback)');
@@ -140,36 +243,17 @@ export async function GET() {
           source: 'memory'
         });
       }
-      
-      // 3. Final fallback to static products
-      try {
-        const { ALL_PRODUCTS } = await import('../../../lib/products');
-        const jsonProducts = (ALL_PRODUCTS || []).map(product => ({
-          ...product,
-          price: typeof product.price === 'object' ? product.price.original : product.price,
-          deliveryCharge: 0
-        }));
-        
-        console.log(`Using ${jsonProducts.length} static products as fallback`);
-        return NextResponse.json({
-          success: true,
-          products: jsonProducts,
-          source: 'static'
-        });
-      } catch (err) {
-        const error = err as Error;
-        console.error('Error loading static products:', error);
-      }
     }
     
-    // If we get here, return empty array
-    console.warn('No products found and no fallback available');
+    // Final fallback - return empty array
+    console.log('No products found in any source');
     return NextResponse.json({
-      success: false,
+      success: true,
       products: [],
-      error: 'No products available'
+      source: 'none',
+      message: 'No products found in any source',
+      count: 0
     });
-    
   } catch (err) {
     const error = err as Error;
     console.error('API Error:', error);
