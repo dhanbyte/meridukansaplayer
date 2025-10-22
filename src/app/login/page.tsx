@@ -1,118 +1,33 @@
 "use client";
 import * as React from "react";
 import { useRouter } from "next/navigation";
-import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/components/ui/use-toast";
-import {
-  getAuth,
-  signInWithEmailAndPassword,
-  createUserWithEmailAndPassword,
-  onAuthStateChanged,
-} from "firebase/auth";
-import { useFirebaseApp, useFirestore, useAuth } from "@/firebase/provider";
-import { useUser } from "@/firebase/use-user";
-import { doc, getDoc, setDoc } from "firebase/firestore";
 
 export default function LoginPage() {
   const router = useRouter();
   const { toast } = useToast();
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
-  const app = useFirebaseApp();
-  const auth = useAuth();
-  const firestore = useFirestore();
-  const { user, loading } = useUser();
-
-  React.useEffect(() => {
-    if (user && !loading) {
-      const checkUserRole = async () => {
-        if (!firestore) return;
-        const userDoc = await getDoc(doc(firestore, "users", user.uid));
-        if (userDoc.exists()) {
-          const userData = userDoc.data();
-          if (userData.role === "admin") {
-            router.push("/admin");
-          } else if (userData.role === "partner") {
-            router.push("/partner/orders");
-          } else {
-             router.push("/");
-          }
-        }
-      };
-      checkUserRole();
-    }
-  }, [user, loading, firestore, router]);
-
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!auth || !firestore) return;
-
-    try {
-      const userCredential = await signInWithEmailAndPassword(auth, email, password);
-      const user = userCredential.user;
-      
-      const userDoc = await getDoc(doc(firestore, "users", user.uid));
-
-      if (userDoc.exists()) {
-        const userData = userDoc.data();
-        if (userData.role === 'admin') {
-          router.push("/admin");
-        } else if (userData.role === 'partner') {
-          router.push("/partner/orders");
-        } else {
-           router.push("/");
-        }
-      } else {
-          // This case handles regular users or partners who don't have a specific role document yet.
-          // For this app, we assume they are customers/store visitors.
-          router.push("/");
-      }
-
-    } catch (error: any) {
-       // Special handling for admin user creation on first login
-      if (email === "admin@example.com" && password === "704331" && error.code === 'auth/user-not-found') {
-          try {
-            const adminCredential = await createUserWithEmailAndPassword(auth, email, password);
-            const adminUser = adminCredential.user;
-            await setDoc(doc(firestore, "users", adminUser.uid), {
-              uid: adminUser.uid,
-              email: adminUser.email,
-              displayName: "Admin",
-              role: "admin",
-            });
-            router.push("/admin");
-          } catch (creationError: any) {
-             toast({
-                variant: "destructive",
-                title: "Admin Creation Failed",
-                description: creationError.message,
-            });
-          }
-      } else {
-         toast({
-            variant: "destructive",
-            title: "Login Failed",
-            description: "Please check your email and password.",
-        });
-      }
+    
+    // Simple admin check
+    if (email === "admin@example.com" && password === "704331") {
+      router.push("/admin");
+      return;
     }
+    
+    // For now, redirect all users to home
+    router.push("/");
   };
 
   const handleSkip = () => {
     router.push("/");
   };
-
-  if(loading || user) {
-    return (
-       <div className="flex min-h-screen items-center justify-center bg-gray-100">
-        <div>Loading...</div>
-      </div>
-    )
-  }
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-gray-100">
