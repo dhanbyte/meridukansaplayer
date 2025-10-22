@@ -1,5 +1,5 @@
-
 "use client";
+import * as React from "react";
 import {
   Card,
   CardContent,
@@ -16,17 +16,26 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
-import { useUser } from "@/firebase/use-user";
-import { useCollection } from "@/firebase/use-collection";
-import type { Order } from "@/lib/types";
-import { where } from "firebase/firestore";
 
 export default function PartnerOrdersPage() {
-  const { user } = useUser();
-  const { data: orders, loading } = useCollection<Order>(
-    user ? `orders` : null,
-    user ? where('partnerId', '==', user.uid) : null
-  );
+  const [orders, setOrders] = React.useState([]);
+  const [loading, setLoading] = React.useState(true);
+
+  React.useEffect(() => {
+    fetchOrders();
+  }, []);
+
+  const fetchOrders = async () => {
+    try {
+      const response = await fetch('/api/orders');
+      const data = await response.json();
+      setOrders(data.orders || []);
+    } catch (error) {
+      console.error('Failed to fetch orders:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   if (loading) {
     return <div>Loading your orders...</div>
@@ -75,8 +84,8 @@ export default function PartnerOrdersPage() {
                     {order.status}
                   </Badge>
                 </TableCell>
-                <TableCell>₹{order.amount.toFixed(2)}</TableCell>
-                <TableCell>{order.orderDate?.toDate().toLocaleDateString()}</TableCell>
+                <TableCell>₹{order.amount}</TableCell>
+                <TableCell>{new Date(order.orderDate).toLocaleDateString()}</TableCell>
               </TableRow>
             )))}
           </TableBody>
