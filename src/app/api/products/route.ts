@@ -17,7 +17,21 @@ interface Product {
   createdAt?: Date;
 }
 
-const uri = process.env.MONGODB_URI!;
+const uri = process.env.MONGODB_URI;
+
+if (!uri) {
+  console.error('❌ MONGODB_URI is not defined in environment variables');
+  console.log('Make sure you have a .env.local file with MONGODB_URI set');
+}
+
+// Helper function to mask sensitive information in logs
+function maskMongoUri(uri: string | undefined): string {
+  if (!uri) return 'Not set';
+  return uri.replace(
+    /(mongodb(?:\+srv)?:\/\/)([^:]+):[^@]+@/, 
+    (_, protocol, user) => `${protocol}${user}:****@`
+  );
+}
 
 export async function POST(request: NextRequest) {
   try {
@@ -102,8 +116,11 @@ export async function POST(request: NextRequest) {
 }
 
 export async function GET() {
+  console.log('\n=== PRODUCTS API REQUEST STARTED ===');
+  console.log('Environment:', process.env.NODE_ENV);
+  console.log('MongoDB URI:', maskMongoUri(uri));
+  
   try {
-    console.log('Fetching products...');
     
     // 1. First try to get products from MongoDB
     console.log('Environment Variables:', {
@@ -152,12 +169,45 @@ export async function GET() {
         
         await client.close();
         
-        return NextResponse.json({ 
-          success: true,
-          products: dbProducts,
-          source: 'mongodb',
-          count: dbProducts.length
-        });
+        // Also load JSON products and combine
+        try {
+          const { ALL_PRODUCTS } = await import('../../../lib/products');
+          const jsonProducts = (ALL_PRODUCTS || []).map((product: any) => ({
+            ...product,
+            price: typeof product.price === 'object' ? product.price.original : product.price,
+            deliveryCharge: 0 // JSON products have no delivery charge
+          }));
+          
+          // Remove duplicates by ID
+          const seenIds = new Set();
+          const combinedProducts = [...dbProducts, ...jsonProducts].filter(product => {
+            if (seenIds.has(product.id)) {
+              return false;
+            }
+            seenIds.add(product.id);
+            return true;
+          });
+          
+          console.log(`Combined products: ${dbProducts.length} from DB + ${jsonProducts.length} from JSON = ${combinedProducts.length} total`);
+          
+          return NextResponse.json({ 
+            success: true,
+            products: combinedProducts,
+            source: 'combined',
+            dbCount: dbProducts.length,
+            jsonCount: jsonProducts.length,
+            totalCount: combinedProducts.length
+          });
+        } catch (jsonError) {
+          console.error('Error loading JSON products:', jsonError);
+          // Return only DB products if JSON fails
+          return NextResponse.json({ 
+            success: true,
+            products: dbProducts,
+            source: 'mongodb-only',
+            count: dbProducts.length
+          });
+        }
       } catch (error) {
         const dbError = error as Error & { code?: string; errorLabels?: string[]; };
         
@@ -256,22 +306,62 @@ export async function GET() {
     });
   } catch (err) {
     const error = err as Error;
-    console.error('API Error:', error);
-    return NextResponse.json({
-      success: false,
-      products: [],
-      error: 'Failed to fetch products',
-      details: error.message
-    }, { status: 500 });
+    console.error('\n❌ API ERROR:', error);
+    console.error('Error stack:', error.stack);
+    
+    return new NextResponse(
+      JSON.stringify({
+        success: false,
+        error: 'Failed to fetch products',
+        details: process.env.NODE_ENV === 'development' ? error.message : 'Internal server error',
+        stack: process.env.NODE_ENV === 'development' ? error.stack : undefined
+      }),
+      {
+        status: 500,
+        headers: { 'Content-Type': 'application/json' }
+      }
+    );
+  } finally {
+    console.log('=== PRODUCTS API REQUEST COMPLETED ===\n');
   }
 }
 
 export async function PUT(request: NextRequest) {
+  console.log('\n=== UPDATE PRODUCT REQUEST STARTED ===');
+  
+  if (!uri) {
+    const error = new Error('MongoDB URI is not configured');
+    console.error(error.message);
+    return new NextResponse(
+      JSON.stringify({
+        success: false,
+        error: 'Database configuration error',
+        details: process.env.NODE_ENV === 'development' ? error.message : undefined
+      }),
+      {
+        status: 500,
+        headers: { 'Content-Type': 'application/json' }
+      }
+    );
+  }
+  
   try {
     const body = await request.json();
     const { id, name, price, image, stock, weight, category } = body;
-
-    const client = new MongoClient(uri);
+    
+    console.log('Updating product:', { id, name });
+    
+    // At this point, TypeScript knows uri is defined
+    const client = new MongoClient(uri, {
+      serverApi: {
+        version: '1',
+        strict: true,
+        deprecationErrors: true,
+      },
+      connectTimeoutMS: 5000,
+      socketTimeoutMS: 10000,
+    });
+    
     await client.connect();
     
     const db = client.db('dropship');
