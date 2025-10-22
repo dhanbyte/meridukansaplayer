@@ -5,11 +5,20 @@ const uri = process.env.MONGODB_URI!;
 
 export async function POST(request: NextRequest) {
   try {
+    console.log('POST /api/products called');
     const body = await request.json();
     const { name, price, image, stock, weight, category } = body;
+    
+    console.log('Product data received:', { name, price, image: image ? 'present' : 'missing', stock, category });
+
+    if (!uri || uri === 'undefined') {
+      console.error('MongoDB URI not found');
+      return NextResponse.json({ error: 'Database connection not configured' }, { status: 500 });
+    }
 
     const client = new MongoClient(uri);
     await client.connect();
+    console.log('MongoDB connected successfully');
     
     const db = client.db('dropship');
     const collection = db.collection('products');
@@ -26,12 +35,15 @@ export async function POST(request: NextRequest) {
       createdAt: new Date()
     };
 
+    console.log('Inserting product:', product.id);
     await collection.insertOne(product);
     await client.close();
+    console.log('Product added successfully');
 
     return NextResponse.json({ success: true, product });
   } catch (error) {
-    return NextResponse.json({ error: 'Failed to add product' }, { status: 500 });
+    console.error('Error adding product:', error);
+    return NextResponse.json({ error: 'Failed to add product', details: error.message }, { status: 500 });
   }
 }
 
