@@ -158,12 +158,12 @@ export default function StoreHome() {
                 {product.name}
               </h3>
               <div className="flex items-baseline mt-2">
-                <span className="text-lg font-bold">
-                  ₹{product.price?.discounted || product.price?.original || product.price}
+                <span className="text-lg font-bold text-green-600">
+                  ₹{product.price}
                 </span>
-                {product.price?.discounted && (
+                {product.originalPrice && product.originalPrice > product.price && (
                   <span className="ml-2 text-sm text-gray-500 line-through">
-                    ₹{product.price.original}
+                    ₹{product.originalPrice}
                   </span>
                 )}
               </div>

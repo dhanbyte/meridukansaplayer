@@ -174,7 +174,9 @@ export async function GET() {
           const { ALL_PRODUCTS } = await import('../../../lib/products');
           const jsonProducts = (ALL_PRODUCTS || []).map((product: any) => ({
             ...product,
-            price: typeof product.price === 'object' ? product.price.original : product.price,
+            price: typeof product.price === 'object' ? 
+              (product.price.discounted || product.price.original) : product.price,
+            originalPrice: typeof product.price === 'object' ? product.price.original : undefined,
             deliveryCharge: 0 // JSON products have no delivery charge
           }));
           
@@ -267,7 +269,9 @@ export async function GET() {
       const { ALL_PRODUCTS } = await import('../../../lib/products');
       const jsonProducts = (ALL_PRODUCTS || []).map((product: any) => ({
         ...product,
-        price: typeof product.price === 'object' ? product.price.original : product.price,
+        price: typeof product.price === 'object' ? 
+          (product.price.discounted || product.price.original) : product.price,
+        originalPrice: typeof product.price === 'object' ? product.price.original : undefined,
         deliveryCharge: 0
       }));
       
