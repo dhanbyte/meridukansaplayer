@@ -11,28 +11,67 @@ export default function AdminProductsPage() {
     weight: '',
     category: 'Home & Kitchen'
   });
-  const [products, setProducts] = useState([]);
+  interface Product {
+    id: string;
+    name: string;
+    price: number | string;
+    image: string;
+    stock: number | string;
+    weight?: number | string;
+    category: string;
+    createdAt?: Date;
+  }
+
+  const [products, setProducts] = useState<Product[]>([]);
   const [showForm, setShowForm] = useState(false);
-  const [editingProduct, setEditingProduct] = useState(null);
+  const [editingProduct, setEditingProduct] = useState<Product | null>(null);
+  
+  // Add this effect to log when products change
+  useEffect(() => {
+    console.log('Products updated:', products.length);
+  }, [products]);
   const [selectedCategory, setSelectedCategory] = useState('All');
 
   const categories = ['All', 'Accessories', 'Automotive', 'Baby Care', 'Bracelets', 'Chocolates', 'Electronics', 'Face & Body Care', 'Home & Kitchen', 'Home Care'];
   
   const filteredProducts = selectedCategory === 'All' 
     ? products 
-    : products.filter((product: any) => product.category === selectedCategory);
+    : products.filter((product) => product.category === selectedCategory);
 
   useEffect(() => {
     fetchProducts();
   }, []);
 
+  const [isLoading, setIsLoading] = useState(true);
+  const [apiError, setApiError] = useState('');
+
   const fetchProducts = async () => {
+    setIsLoading(true);
+    setApiError('');
+    
     try {
+      console.log('Fetching products from API...');
       const response = await fetch('/api/products');
       const data = await response.json();
-      setProducts(data.products);
+      
+      if (!response.ok) {
+        throw new Error(data.error || 'Failed to fetch products');
+      }
+      
+      console.log('Products fetched:', data.products?.length || 0);
+      
+      if (data.products && Array.isArray(data.products)) {
+        setProducts(data.products);
+      } else {
+        console.warn('Unexpected API response format:', data);
+        setApiError('Invalid response format from server');
+      }
     } catch (error) {
-      console.error('Failed to fetch products');
+      const err = error as Error;
+      console.error('Failed to fetch products:', err);
+      setApiError(err.message || 'Failed to load products. Please try again.');
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -63,17 +102,32 @@ export default function AdminProductsPage() {
     }
   };
 
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState('');
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setError('');
     
     if (!formData.image) {
-      alert('Please upload an image for the product');
+      setError('Please upload an image for the product');
       return;
     }
+    
+    // Type guard to ensure we have the required fields
+    const { name, price, image, stock, category } = formData;
+    if (!name || !price || !image || !stock || !category) {
+      setError('Please fill in all required fields');
+      return;
+    }
+    
+    setIsSubmitting(true);
     
     try {
       const method = editingProduct ? 'PUT' : 'POST';
       const body = editingProduct ? { ...formData, id: editingProduct.id } : formData;
+      
+      console.log('Submitting product:', body);
       
       const response = await fetch('/api/products', {
         method,
@@ -81,26 +135,42 @@ export default function AdminProductsPage() {
         body: JSON.stringify(body)
       });
 
-      if (response.ok) {
-        alert(editingProduct ? 'Product updated successfully!' : 'Product added successfully!');
-        setFormData({
-          name: '',
-          price: '',
-          image: '',
-          stock: '',
-          weight: '',
-          category: 'Home & Kitchen'
-        });
-        setEditingProduct(null);
-        fetchProducts();
-        setShowForm(false);
+      const result = await response.json();
+      
+      if (!response.ok) {
+        throw new Error(result.error || 'Failed to save product');
       }
-    } catch (error) {
-      alert('Failed to save product');
+
+      // Show success message based on response source
+      const message = result.source === 'memory' 
+        ? 'Product added to memory (development only)' 
+        : editingProduct ? 'Product updated successfully!' : 'Product added successfully!';
+      
+      alert(message);
+      
+      // Reset form and refresh products
+      setFormData({
+        name: '',
+        price: '',
+        image: '',
+        stock: '',
+        weight: '',
+        category: 'Home & Kitchen'
+      });
+      setEditingProduct(null);
+      await fetchProducts();
+      setShowForm(false);
+      
+    } catch (err) {
+      const error = err as Error;
+      console.error('Error saving product:', error);
+      setError(error.message || 'Failed to save product. Please check the console for details.');
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
-  const editProduct = (product: any) => {
+  const editProduct = (product: Product) => {
     setFormData({
       name: product.name,
       price: product.price.toString(),
@@ -260,19 +330,55 @@ export default function AdminProductsPage() {
             </select>
           </div>
 
+          {error && (
+            <div className="p-3 bg-red-100 border border-red-400 text-red-700 rounded mb-4">
+              {error}
+            </div>
+          )}
           <button
             type="submit"
-            className="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600"
+            disabled={isSubmitting}
+            className={`w-full p-2 rounded text-white ${
+              isSubmitting 
+                ? 'bg-blue-400 cursor-not-allowed' 
+                : 'bg-blue-500 hover:bg-blue-600'
+            }`}
           >
-            {editingProduct ? 'Update Product' : 'Add Product'}
+            {isSubmitting 
+              ? 'Saving...' 
+              : editingProduct ? 'Update Product' : 'Add Product'}
           </button>
         </form>
       )}
 
       <div>
-        <h2 className="text-xl font-bold mb-4">Products ({filteredProducts.length})</h2>
-        <div className="grid gap-4">
-          {filteredProducts.map((product: any) => (
+        <div className="flex justify-between items-center mb-4">
+          <h2 className="text-xl font-bold">Products ({isLoading ? '...' : filteredProducts.length})</h2>
+          {apiError && (
+            <div className="text-red-500 text-sm">
+              {apiError}
+            </div>
+          )}
+        </div>
+        
+        {isLoading ? (
+          <div className="text-center py-8">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500 mx-auto"></div>
+            <p className="mt-2 text-gray-600">Loading products...</p>
+          </div>
+        ) : filteredProducts.length === 0 ? (
+          <div className="text-center py-8 bg-gray-50 rounded-lg">
+            <p className="text-gray-500">No products found</p>
+            <button
+              onClick={() => setShowForm(true)}
+              className="mt-4 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+            >
+              Add Your First Product
+            </button>
+          </div>
+        ) : (
+          <div className="grid gap-4">
+          {filteredProducts.map((product) => (
             <div key={product.id} className="border p-4 rounded">
               <div className="flex gap-4 justify-between">
                 <div className="flex gap-4">
@@ -301,7 +407,8 @@ export default function AdminProductsPage() {
               </div>
             </div>
           ))}
-        </div>
+          </div>
+        )}
       </div>
     </div>
     </div>
