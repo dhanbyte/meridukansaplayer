@@ -1,4 +1,3 @@
-
 "use client";
 import * as React from "react";
 import { Button } from "@/components/ui/button";
@@ -12,19 +11,10 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { useUser } from "@/firebase/use-user";
-import { useFirestore } from "@/firebase/provider";
-import { addDoc, collection, serverTimestamp, doc, setDoc } from "firebase/firestore";
-import type { Order } from "@/lib/types";
 import { useToast } from "@/components/ui/use-toast";
 import { useRouter } from "next/navigation";
-import { errorEmitter } from "@/firebase/error-emitter";
-import { FirestorePermissionError } from "@/firebase/errors";
-
 
 export default function CreateOrderPage() {
-  const { user } = useUser();
-  const firestore = useFirestore();
   const { toast } = useToast();
   const router = useRouter();
 
@@ -38,51 +28,37 @@ export default function CreateOrderPage() {
 
   const handleSubmitOrder = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!user || !firestore) {
-      toast({
-        variant: "destructive",
-        title: "Authentication Error",
-        description: "You must be logged in to create an order.",
-      });
-      return;
-    }
-
-    const orderData: Omit<Order, 'id' | 'orderDate'> = {
-      partnerId: user.uid,
-      customerName,
-      customerPhone,
-      shippingAddress,
-      productSku,
-      quantity,
-      paymentMethod,
-      status: "Pending",
-      amount,
-    };
-     const finalData = { ...orderData, orderDate: serverTimestamp() };
-
+    
     try {
-      const docRef = await addDoc(collection(firestore, "orders"), finalData);
-      
-      await setDoc(doc(firestore, "orders", docRef.id), { id: docRef.id }, { merge: true })
-       .catch(async (err) => {
-          const permissionError = new FirestorePermissionError({
-            path: `orders/${docRef.id}`,
-            operation: 'update',
-            requestResourceData: { id: docRef.id }
-          });
-          errorEmitter.emit('permission-error', permissionError);
+      const orderData = {
+        customerName,
+        customerPhone,
+        shippingAddress,
+        productSku,
+        quantity,
+        paymentMethod,
+        amount,
+        status: "Pending",
+        orderDate: new Date().toISOString()
+      };
+
+      const response = await fetch('/api/orders', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(orderData)
       });
 
-      toast({
-        title: "Order Submitted",
-        description: "Your new order has been successfully created.",
-      });
-
-      router.push("/partner/orders");
-
+      if (response.ok) {
+        toast({
+          title: "Order Submitted",
+          description: "Your new order has been successfully created.",
+        });
+        router.push("/partner/orders");
+      } else {
+        throw new Error('Failed to create order');
+      }
     } catch (error) {
-       console.error("Error creating order:", error);
-       toast({
+      toast({
         variant: "destructive",
         title: "Order Creation Failed",
         description: "There was an error creating the order. Please try again.",
