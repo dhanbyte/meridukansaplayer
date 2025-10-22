@@ -37,7 +37,7 @@ export async function POST(request: NextRequest) {
 
 export async function GET() {
   try {
-    let dbProducts = [];
+    let dbProducts: any[] = [];
     
     // Try to connect to MongoDB if URI is available
     if (uri && uri !== 'undefined') {
