@@ -40,9 +40,12 @@ export default function StoreHome() {
       const response = await fetch('/api/products?t=' + Date.now());
       const data = await response.json();
       console.log('API Response:', data);
-      console.log('Total products:', data.products?.length);
+      
+      const products = data.products || [];
+      console.log('Total products:', products.length);
+      
       // Sort products - database products first (newest first), then JSON products
-      const sorted = data.products.sort((a: any, b: any) => {
+      const sorted = products.sort((a: any, b: any) => {
         if (a.createdAt && !b.createdAt) return -1;
         if (!a.createdAt && b.createdAt) return 1;
         if (a.createdAt && b.createdAt) return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
@@ -52,6 +55,7 @@ export default function StoreHome() {
       setAllProducts(sorted);
     } catch (error) {
       console.error('Failed to fetch products:', error);
+      setAllProducts([]);
     }
   };
 

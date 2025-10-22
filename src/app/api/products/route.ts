@@ -37,17 +37,27 @@ export async function POST(request: NextRequest) {
 
 export async function GET() {
   try {
-    const client = new MongoClient(uri);
-    await client.connect();
+    let dbProducts = [];
     
-    const db = client.db('dropship');
-    const collection = db.collection('products');
-    
-    const dbProducts = await collection.find({}).toArray();
-    await client.close();
+    // Try to connect to MongoDB if URI is available
+    if (uri && uri !== 'undefined') {
+      try {
+        const client = new MongoClient(uri);
+        await client.connect();
+        
+        const db = client.db('dropship');
+        const collection = db.collection('products');
+        
+        dbProducts = await collection.find({}).toArray();
+        await client.close();
+      } catch (dbError) {
+        console.error('MongoDB connection failed:', dbError);
+        // Continue with empty dbProducts array
+      }
+    }
 
     const { ALL_PRODUCTS } = await import('../../../lib/products');
-    const jsonProducts = ALL_PRODUCTS.map(product => ({
+    const jsonProducts = (ALL_PRODUCTS || []).map(product => ({
       ...product,
       price: typeof product.price === 'object' ? product.price.original : product.price,
       deliveryCharge: 0
@@ -63,9 +73,10 @@ export async function GET() {
       return true;
     });
 
-    return NextResponse.json({ products: uniqueProducts });
+    return NextResponse.json({ products: uniqueProducts || [] });
   } catch (error) {
-    return NextResponse.json({ error: 'Failed to fetch products' }, { status: 500 });
+    console.error('API Error:', error);
+    return NextResponse.json({ products: [] }, { status: 200 });
   }
 }
 
