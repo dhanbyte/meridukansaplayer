@@ -1,0 +1,103 @@
+import { NextRequest, NextResponse } from 'next/server';
+import { MongoClient } from 'mongodb';
+
+const uri = process.env.MONGODB_URI!;
+
+export async function POST(request: NextRequest) {
+  try {
+    const body = await request.json();
+    const { name, price, image, stock, weight, category } = body;
+
+    const client = new MongoClient(uri);
+    await client.connect();
+    
+    const db = client.db('dropship');
+    const collection = db.collection('products');
+    
+    const product = {
+      id: `PRODUCT_${Date.now()}`,
+      name,
+      price: Number(price),
+      image,
+      stock: Number(stock),
+      weight: weight ? Number(weight) : undefined,
+      category,
+      deliveryCharge: 50,
+      createdAt: new Date()
+    };
+
+    await collection.insertOne(product);
+    await client.close();
+
+    return NextResponse.json({ success: true, product });
+  } catch (error) {
+    return NextResponse.json({ error: 'Failed to add product' }, { status: 500 });
+  }
+}
+
+export async function GET() {
+  try {
+    const client = new MongoClient(uri);
+    await client.connect();
+    
+    const db = client.db('dropship');
+    const collection = db.collection('products');
+    
+    const dbProducts = await collection.find({}).toArray();
+    await client.close();
+
+    const { ALL_PRODUCTS } = await import('../../../lib/products');
+    const jsonProducts = ALL_PRODUCTS.map(product => ({
+      ...product,
+      price: typeof product.price === 'object' ? product.price.original : product.price,
+      deliveryCharge: 0
+    }));
+
+    // Remove duplicates by ID
+    const seenIds = new Set();
+    const uniqueProducts = [...dbProducts, ...jsonProducts].filter(product => {
+      if (seenIds.has(product.id)) {
+        return false;
+      }
+      seenIds.add(product.id);
+      return true;
+    });
+
+    return NextResponse.json({ products: uniqueProducts });
+  } catch (error) {
+    return NextResponse.json({ error: 'Failed to fetch products' }, { status: 500 });
+  }
+}
+
+export async function PUT(request: NextRequest) {
+  try {
+    const body = await request.json();
+    const { id, name, price, image, stock, weight, category } = body;
+
+    const client = new MongoClient(uri);
+    await client.connect();
+    
+    const db = client.db('dropship');
+    const collection = db.collection('products');
+    
+    await collection.updateOne(
+      { id },
+      { 
+        $set: {
+          name,
+          price: Number(price),
+          image,
+          stock: Number(stock),
+          weight: weight ? Number(weight) : undefined,
+          category,
+          updatedAt: new Date()
+        }
+      }
+    );
+    
+    await client.close();
+    return NextResponse.json({ success: true });
+  } catch (error) {
+    return NextResponse.json({ error: 'Failed to update product' }, { status: 500 });
+  }
+}
