@@ -17,7 +17,7 @@ import { useSearch } from "./layout";
 export default function StoreHome() {
   const { toast } = useToast();
   const { addToCart } = useCart();
-  const { searchQuery, searchResults } = useSearch();
+  const { searchQuery, searchResults, selectedProduct, setSelectedProduct, setSearchQuery } = useSearch();
   const [allProducts, setAllProducts] = React.useState([]);
   const [filter, setFilter] = React.useState("all");
 
@@ -71,9 +71,29 @@ export default function StoreHome() {
     setFilter(value);
   };
   
-  const subcategories = allProducts 
-    ? [...new Set(allProducts.map((p: any) => p.subcategory).filter(Boolean))]
-    : [];
+  const subcategories = React.useMemo(() => {
+    if (!allProducts) return [];
+    
+    // Get subcategories from all products (both database and JSON)
+    const allSubcategories = allProducts
+      .map((p: any) => p.subcategory)
+      .filter(Boolean);
+    
+    // Remove duplicates and sort
+    return [...new Set(allSubcategories)].sort();
+  }, [allProducts]);
+  
+  const categories = React.useMemo(() => {
+    if (!allProducts) return [];
+    
+    // Get categories from all products (both database and JSON)
+    const allCategories = allProducts
+      .map((p: any) => p.category)
+      .filter(Boolean);
+    
+    // Remove duplicates and sort
+    return [...new Set(allCategories)].sort();
+  }, [allProducts]);
 
   const isValidUrl = (url: string) => {
     if (!url || url.trim() === '') return false;
@@ -88,13 +108,20 @@ export default function StoreHome() {
   };
 
   const filteredProducts = React.useMemo(() => {
+    // If a specific product is selected from search, show only that product
+    if (selectedProduct) {
+      return [selectedProduct];
+    }
+    
     // If there's a search query, show search results
     if (searchQuery.trim()) {
       if (filter === "all") {
         return searchResults;
       }
       return searchResults.filter(
-        (p: any) => p.subcategory?.toLowerCase() === filter.toLowerCase()
+        (p: any) => 
+          p.subcategory?.toLowerCase() === filter.toLowerCase() ||
+          p.category?.toLowerCase() === filter.toLowerCase()
       );
     }
     
@@ -104,24 +131,46 @@ export default function StoreHome() {
       return allProducts;
     }
     return allProducts.filter(
-      (p: any) => p.subcategory?.toLowerCase() === filter.toLowerCase()
+      (p: any) => 
+        p.subcategory?.toLowerCase() === filter.toLowerCase() ||
+        p.category?.toLowerCase() === filter.toLowerCase()
     );
-  }, [allProducts, filter, searchQuery, searchResults]);
+  }, [allProducts, filter, searchQuery, searchResults, selectedProduct]);
   
   return (
     <>
     <div className="flex-1">
       <div className="flex justify-between items-center mb-4">
-        <h2 className="text-xl font-bold">
-          {searchQuery.trim() ? `Search Results (${filteredProducts.length})` : "Products"}
-        </h2>
+        <div className="flex items-center gap-4">
+          <h2 className="text-xl font-bold">
+            {selectedProduct ? `Selected Product` : searchQuery.trim() ? `Search Results (${filteredProducts.length})` : "Products"}
+          </h2>
+          {selectedProduct && (
+            <Button 
+              variant="outline" 
+              size="sm"
+              onClick={() => {
+                setSelectedProduct(null);
+                setSearchQuery('');
+              }}
+            >
+              ← Back to All Products
+            </Button>
+          )}
+        </div>
          <div className="flex items-center gap-4">
           <Select onValueChange={handleFilterChange} defaultValue="all">
-            <SelectTrigger className="w-[180px]">
+            <SelectTrigger className="w-[200px]">
               <SelectValue placeholder="Filter by category" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="all">All</SelectItem>
+              <SelectItem value="all">All Categories</SelectItem>
+              {categories.map((cat: string) => (
+                <SelectItem key={cat} value={cat}>
+                  {cat}
+                </SelectItem>
+              ))}
+              <SelectItem value="subcategory">--- By Subcategory ---</SelectItem>
               {subcategories.map((sub: string) => (
                 <SelectItem key={sub} value={sub}>
                   {sub}
@@ -132,7 +181,7 @@ export default function StoreHome() {
           <Button variant="link">VIEW ALL</Button>
         </div>
       </div>
-      {searchQuery.trim() && filteredProducts.length === 0 ? (
+      {searchQuery.trim() && !selectedProduct && filteredProducts.length === 0 ? (
         <div className="text-center py-12">
           <p className="text-gray-500 text-lg">No products found for "{searchQuery}"</p>
         </div>

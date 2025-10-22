@@ -32,7 +32,6 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { CartProvider, useCart } from "@/lib/CartContext";
-import { searchProducts, getSearchSuggestions } from "@/lib/search";
 import type { Product } from "@/lib/types";
 import { AuthProvider, useAuth } from "@/lib/AuthContext";
 import { LoginForm } from "@/components/LoginForm";
@@ -41,23 +40,41 @@ const SearchContext = React.createContext<{
   searchQuery: string;
   setSearchQuery: (query: string) => void;
   searchResults: Product[];
-}>({ searchQuery: "", setSearchQuery: () => {}, searchResults: [] });
+  selectedProduct: Product | null;
+  setSelectedProduct: (product: Product | null) => void;
+}>({ searchQuery: "", setSearchQuery: () => {}, searchResults: [], selectedProduct: null, setSelectedProduct: () => {} });
 
 export const useSearch = () => React.useContext(SearchContext);
 
 function SearchBox() {
-  const { searchQuery, setSearchQuery, searchResults } = useSearch();
+  const { searchQuery, setSearchQuery, setSelectedProduct } = useSearch();
   const [showSuggestions, setShowSuggestions] = React.useState(false);
   const [suggestions, setSuggestions] = React.useState<Product[]>([]);
+  const [isSearching, setIsSearching] = React.useState(false);
 
-  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const searchProducts = async (query: string) => {
+    if (!query.trim()) return [];
+    try {
+      const response = await fetch(`/api/search?q=${encodeURIComponent(query)}`);
+      const data = await response.json();
+      return data.products || [];
+    } catch (error) {
+      console.error('Search failed:', error);
+      return [];
+    }
+  };
+
+  const handleSearchChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setSearchQuery(value);
+    setSelectedProduct(null);
     
     if (value.trim()) {
-      const results = getSearchSuggestions(value, 5);
-      setSuggestions(results);
+      setIsSearching(true);
+      const results = await searchProducts(value);
+      setSuggestions(results.slice(0, 5));
       setShowSuggestions(true);
+      setIsSearching(false);
     } else {
       setShowSuggestions(false);
       setSuggestions([]);
@@ -66,6 +83,7 @@ function SearchBox() {
 
   const handleSuggestionClick = (product: Product) => {
     setSearchQuery(product.name);
+    setSelectedProduct(product);
     setShowSuggestions(false);
   };
 
@@ -96,35 +114,49 @@ function SearchBox() {
         </button>
       )}
       
-      {showSuggestions && suggestions.length > 0 && (
-        <div className="absolute top-full left-0 right-0 bg-white border border-gray-200 rounded-md shadow-lg z-50 mt-1">
-          {suggestions.map((product) => (
-            <div
-              key={product.id}
-              className="p-3 hover:bg-gray-50 cursor-pointer border-b last:border-b-0 flex items-center gap-3"
-              onClick={() => handleSuggestionClick(product)}
-            >
-              <Image
-                src={product.image}
-                alt={product.name}
-                width={40}
-                height={40}
-                className="rounded object-cover"
-                unoptimized
-              />
-              <div className="flex-1">
-                <p className="text-sm font-medium truncate">{product.name}</p>
-                <p className="text-xs text-gray-500">
-                  {product.price.currency}{product.price.discounted || product.price.original}
-                  {product.price.discounted && (
-                    <span className="ml-2 line-through text-gray-400">
-                      {product.price.currency}{product.price.original}
-                    </span>
-                  )}
-                </p>
-              </div>
+      {showSuggestions && (
+        <div className="absolute top-full left-0 right-0 bg-white border border-gray-200 rounded-md shadow-lg z-50 mt-1 max-h-80 overflow-y-auto">
+          {isSearching ? (
+            <div className="p-4 text-center text-gray-500">
+              <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-red-500 mx-auto"></div>
+              <p className="mt-2 text-sm">Searching...</p>
             </div>
-          ))}
+          ) : suggestions.length > 0 ? (
+            suggestions.map((product) => (
+              <div
+                key={product.id}
+                className="p-3 hover:bg-gray-50 cursor-pointer border-b last:border-b-0 flex items-center gap-3 transition-colors"
+                onClick={() => handleSuggestionClick(product)}
+              >
+                <Image
+                  src={product.image || '/placeholder.jpg'}
+                  alt={product.name}
+                  width={40}
+                  height={40}
+                  className="rounded object-cover flex-shrink-0"
+                  unoptimized
+                />
+                <div className="flex-1 min-w-0">
+                  <p className="text-sm font-medium truncate">{product.name}</p>
+                  <div className="flex items-center gap-2">
+                    <span className="text-sm font-semibold text-green-600">
+                      ₹{product.price}
+                    </span>
+                    {product.originalPrice && (
+                      <span className="text-xs text-gray-400 line-through">
+                        ₹{product.originalPrice}
+                      </span>
+                    )}
+                  </div>
+                  <p className="text-xs text-gray-500">{product.brand}</p>
+                </div>
+              </div>
+            ))
+          ) : searchQuery.trim() && (
+            <div className="p-4 text-center text-gray-500">
+              <p className="text-sm">No products found</p>
+            </div>
+          )}
         </div>
       )}
     </div>
@@ -282,15 +314,35 @@ function Header() {
 
 function StoreLayoutContent({ children }: { children: React.ReactNode }) {
   const [searchQuery, setSearchQuery] = React.useState("");
-  const searchResults = React.useMemo(() => searchProducts(searchQuery), [searchQuery]);
+  const [searchResults, setSearchResults] = React.useState<Product[]>([]);
+  const [selectedProduct, setSelectedProduct] = React.useState<Product | null>(null);
   const { isLoggedIn } = useAuth();
+
+  React.useEffect(() => {
+    const searchProducts = async () => {
+      if (!searchQuery.trim()) {
+        setSearchResults([]);
+        return;
+      }
+      try {
+        const response = await fetch(`/api/search?q=${encodeURIComponent(searchQuery)}`);
+        const data = await response.json();
+        setSearchResults(data.products || []);
+      } catch (error) {
+        console.error('Search failed:', error);
+        setSearchResults([]);
+      }
+    };
+    
+    searchProducts();
+  }, [searchQuery]);
 
   if (!isLoggedIn) {
     return <LoginForm />;
   }
 
   return (
-    <SearchContext.Provider value={{ searchQuery, setSearchQuery, searchResults }}>
+    <SearchContext.Provider value={{ searchQuery, setSearchQuery, searchResults, selectedProduct, setSelectedProduct }}>
       <div className="flex min-h-screen bg-gray-100">
         <div className="flex flex-col flex-1 sm:pl-16">
           <Header />
