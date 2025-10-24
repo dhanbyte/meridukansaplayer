@@ -25,6 +25,7 @@ export default function AdminProductsPage() {
   const [products, setProducts] = useState<Product[]>([]);
   const [showForm, setShowForm] = useState(false);
   const [editingProduct, setEditingProduct] = useState<Product | null>(null);
+  const [showEditModal, setShowEditModal] = useState(false);
   
   // Add this effect to log when products change
   useEffect(() => {
@@ -148,7 +149,7 @@ export default function AdminProductsPage() {
       
       alert(message);
       
-      // Reset form and refresh products
+      // Reset form without auto-refresh
       setFormData({
         name: '',
         price: '',
@@ -158,8 +159,11 @@ export default function AdminProductsPage() {
         category: 'Home & Kitchen'
       });
       setEditingProduct(null);
-      await fetchProducts();
-      setShowForm(false);
+      if (editingProduct) {
+        setShowEditModal(false);
+      } else {
+        setShowForm(false);
+      }
       
     } catch (err) {
       const error = err as Error;
@@ -180,7 +184,20 @@ export default function AdminProductsPage() {
       category: product.category
     });
     setEditingProduct(product);
-    setShowForm(true);
+    setShowEditModal(true);
+  };
+
+  const closeEditModal = () => {
+    setShowEditModal(false);
+    setEditingProduct(null);
+    setFormData({
+      name: '',
+      price: '',
+      image: '',
+      stock: '',
+      weight: '',
+      category: 'Home & Kitchen'
+    });
   };
 
   return (
@@ -206,23 +223,39 @@ export default function AdminProductsPage() {
     <div className="p-6">
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-2xl font-bold">Products ({products.length})</h1>
-        <button
-          onClick={() => {
-            setShowForm(!showForm);
-            setEditingProduct(null);
-            setFormData({
-              name: '',
-              price: '',
-              image: '',
-              stock: '',
-              weight: '',
-              category: 'Home & Kitchen'
-            });
-          }}
-          className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
-        >
-          {showForm ? 'Cancel' : 'Add Product'}
-        </button>
+        <div className="flex gap-2">
+          <button
+            onClick={fetchProducts}
+            className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 flex items-center gap-2"
+            disabled={isLoading}
+          >
+            {isLoading ? (
+              <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
+            ) : (
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+              </svg>
+            )}
+            Refresh
+          </button>
+          <button
+            onClick={() => {
+              setShowForm(!showForm);
+              setEditingProduct(null);
+              setFormData({
+                name: '',
+                price: '',
+                image: '',
+                stock: '',
+                weight: '',
+                category: 'Home & Kitchen'
+              });
+            }}
+            className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
+          >
+            {showForm ? 'Cancel' : 'Add Product'}
+          </button>
+        </div>
       </div>
       
       {showForm && (
@@ -410,6 +443,149 @@ export default function AdminProductsPage() {
           </div>
         )}
       </div>
+
+      {/* Edit Product Modal */}
+      {showEditModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white rounded-lg p-6 w-full max-w-md max-h-[90vh] overflow-y-auto">
+            <div className="flex justify-between items-center mb-4">
+              <h2 className="text-xl font-bold">Edit Product</h2>
+              <button
+                onClick={closeEditModal}
+                className="text-gray-500 hover:text-gray-700 text-2xl"
+              >
+                ×
+              </button>
+            </div>
+            
+            <form onSubmit={handleSubmit} className="space-y-4">
+              <div>
+                <label className="block text-sm font-medium mb-1">Product Name</label>
+                <input
+                  type="text"
+                  value={formData.name}
+                  onChange={(e) => setFormData({...formData, name: e.target.value})}
+                  className="w-full p-2 border rounded"
+                  required
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium mb-1">Price</label>
+                <input
+                  type="number"
+                  value={formData.price}
+                  onChange={(e) => setFormData({...formData, price: e.target.value})}
+                  className="w-full p-2 border rounded"
+                  required
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium mb-1">Product Image</label>
+                <div className="flex gap-4">
+                  <div 
+                    className="flex-1 p-4 border-2 border-dashed rounded text-center cursor-pointer hover:bg-gray-50"
+                    onDrop={(e) => {
+                      e.preventDefault();
+                      const file = e.dataTransfer.files[0];
+                      if (file) uploadImage(file);
+                    }}
+                    onDragOver={(e) => e.preventDefault()}
+                    onClick={() => document.getElementById('editFileInput')?.click()}
+                  >
+                    {formData.image ? (
+                      <div>
+                        <img src={formData.image} alt="Preview" className="w-20 h-20 mx-auto object-cover mb-2" />
+                        <p className="text-sm text-gray-600">Click to change image</p>
+                      </div>
+                    ) : (
+                      <p>Drag & drop image or click to select</p>
+                    )}
+                  </div>
+                </div>
+                <input
+                  id="editFileInput"
+                  type="file"
+                  accept="image/*"
+                  className="hidden"
+                  onChange={(e) => {
+                    const file = e.target.files?.[0];
+                    if (file) uploadImage(file);
+                  }}
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium mb-1">Stock</label>
+                <input
+                  type="number"
+                  value={formData.stock}
+                  onChange={(e) => setFormData({...formData, stock: e.target.value})}
+                  className="w-full p-2 border rounded"
+                  required
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium mb-1">Weight (optional)</label>
+                <input
+                  type="number"
+                  value={formData.weight}
+                  onChange={(e) => setFormData({...formData, weight: e.target.value})}
+                  className="w-full p-2 border rounded"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium mb-1">Category</label>
+                <select
+                  value={formData.category}
+                  onChange={(e) => setFormData({...formData, category: e.target.value})}
+                  className="w-full p-2 border rounded"
+                >
+                  <option value="Accessories">Accessories</option>
+                  <option value="Automotive">Automotive</option>
+                  <option value="Baby Care">Baby Care</option>
+                  <option value="Bracelets">Bracelets</option>
+                  <option value="Chocolates">Chocolates</option>
+                  <option value="Electronics">Electronics</option>
+                  <option value="Face & Body Care">Face & Body Care</option>
+                  <option value="Home & Kitchen">Home & Kitchen</option>
+                  <option value="Home Care">Home Care</option>
+                </select>
+              </div>
+
+              {error && (
+                <div className="p-3 bg-red-100 border border-red-400 text-red-700 rounded">
+                  {error}
+                </div>
+              )}
+              
+              <div className="flex gap-2">
+                <button
+                  type="button"
+                  onClick={closeEditModal}
+                  className="flex-1 p-2 border border-gray-300 rounded text-gray-700 hover:bg-gray-50"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className={`flex-1 p-2 rounded text-white ${
+                    isSubmitting 
+                      ? 'bg-blue-400 cursor-not-allowed' 
+                      : 'bg-blue-500 hover:bg-blue-600'
+                  }`}
+                >
+                  {isSubmitting ? 'Updating...' : 'Update Product'}
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
     </div>
     </div>
   );
