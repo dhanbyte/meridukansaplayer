@@ -2,17 +2,28 @@ import { NextResponse } from 'next/server';
 import clientPromise from '@/lib/mongodb';
 import { ObjectId } from 'mongodb';
 
-export async function GET() {
+export async function GET(request: Request) {
   try {
+    const { searchParams } = new URL(request.url);
+    const userId = searchParams.get('id');
+    
     const client = await clientPromise;
     const db = client.db();
     
-    const users = await db.collection('users').find({}).toArray();
-    
-    return NextResponse.json({ users: users || [] });
+    if (userId) {
+      // Get single user
+      const user = await db.collection('users').findOne({ _id: new ObjectId(userId) });
+      if (!user) {
+        return NextResponse.json({ success: false, error: 'User not found' }, { status: 404 });
+      }
+      return NextResponse.json({ success: true, user });
+    } else {
+      // Get all users
+      const users = await db.collection('users').find({}).toArray();
+      return NextResponse.json({ users: users || [] });
+    }
   } catch (error) {
     console.error('Database error:', error);
-    // Return empty array instead of error for frontend compatibility
     return NextResponse.json({ 
       users: [],
       error: 'Database connection failed'
@@ -73,19 +84,34 @@ export async function PUT(request: Request) {
     const client = await clientPromise;
     const db = client.db();
     
-    await db.collection('users').updateOne(
+    const result = await db.collection('users').updateOne(
       { _id: new ObjectId(id) },
-      { $set: updates }
+      { 
+        $set: {
+          ...updates,
+          updatedAt: new Date().toISOString()
+        }
+      }
     );
     
-    return NextResponse.json({ success: true });
+    if (result.matchedCount === 0) {
+      return NextResponse.json({ success: false, error: 'User not found' }, { status: 404 });
+    }
+    
+    // Fetch and return updated user
+    const updatedUser = await db.collection('users').findOne({ _id: new ObjectId(id) });
+    
+    return NextResponse.json({ 
+      success: true, 
+      user: updatedUser,
+      message: 'User updated successfully'
+    });
   } catch (error) {
     console.error('Database error:', error);
-    // Return success for frontend compatibility
     return NextResponse.json({ 
-      success: true,
-      warning: 'Database unavailable - update not persisted'
-    });
+      success: false,
+      error: 'Database error occurred'
+    }, { status: 500 });
   }
 }
 

@@ -158,17 +158,16 @@ export default function StoreHome() {
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="all">All Categories</SelectItem>
-              {categories.map((cat: string) => (
-                <SelectItem key={cat} value={cat}>
-                  {cat}
-                </SelectItem>
-              ))}
-              <SelectItem value="subcategory">--- By Subcategory ---</SelectItem>
-              {subcategories.map((sub: string) => (
-                <SelectItem key={sub} value={sub}>
-                  {sub}
-                </SelectItem>
-              ))}
+              <SelectItem value="VIEW ALL">VIEW ALL</SelectItem>
+              <SelectItem value="Accessories">Accessories</SelectItem>
+              <SelectItem value="Automotive">Automotive</SelectItem>
+              <SelectItem value="Baby Care">Baby Care</SelectItem>
+              <SelectItem value="Bracelets">Bracelets</SelectItem>
+              <SelectItem value="Chocolates">Chocolates</SelectItem>
+              <SelectItem value="Electronics">Electronics</SelectItem>
+              <SelectItem value="Face & Body Care">Face & Body Care</SelectItem>
+              <SelectItem value="Home & Kitchen">Home & Kitchen</SelectItem>
+              <SelectItem value="Home Care">Home Care</SelectItem>
             </SelectContent>
           </Select>
           <Button variant="link" className="hidden sm:inline-flex">VIEW ALL</Button>
@@ -183,7 +182,8 @@ export default function StoreHome() {
           {filteredProducts.map((product: any, index: number) => (
           <div
             key={`${product.id}-${index}`}
-            className="bg-white rounded-lg shadow-md overflow-hidden group"
+            className="bg-white rounded-lg shadow-md overflow-hidden group cursor-pointer"
+            onClick={() => window.location.href = `/product/${product.id}`}
           >
             <div className="relative">
               <Image
@@ -216,7 +216,10 @@ export default function StoreHome() {
               </div>
               <Button
                 className="w-full mt-2 sm:mt-4 bg-red-500 hover:bg-red-600 text-xs sm:text-sm py-1 sm:py-2"
-                onClick={() => handleAddToCart(product)}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleAddToCart(product);
+                }}
               >
                 Add to Cart
               </Button>

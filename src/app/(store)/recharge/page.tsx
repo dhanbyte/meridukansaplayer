@@ -24,35 +24,21 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
-import { useUser } from "@/firebase/use-user";
-import { useFirestore } from "@/firebase/provider";
-import { useCollection } from "@/firebase/use-collection";
-import { collection, addDoc, serverTimestamp, where } from "firebase/firestore";
-import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
-import type { RechargeRequest } from "@/lib/types";
-import { errorEmitter } from "@/firebase/error-emitter";
-import { FirestorePermissionError } from "@/firebase/errors";
+import { useAuth } from "@/lib/AuthContext";
 
 export default function RechargePage() {
   const { toast } = useToast();
-  const { user, loading: userLoading } = useUser();
-  const firestore = useFirestore();
+  const { user, isLoggedIn } = useAuth();
   const [screenshot, setScreenshot] = useState<File | null>(null);
   const [amount, setAmount] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [transactions, setTransactions] = useState([]);
 
-  const { data: transactions = [], loading: transactionsLoading } = useCollection<RechargeRequest>(
-    user ? 'rechargeRequests' : null,
-    user ? where('userId', '==', user.uid) : ''
-  );
-
-  const currentBalance = transactions
-    .filter((t) => t.status === "Approved")
-    .reduce((acc, t) => acc + t.amount, 0);
+  const currentBalance = user?.walletBalance || 0;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!amount || !screenshot || !user || !firestore) {
+    if (!amount || !screenshot || !user) {
       toast({
         variant: "destructive",
         title: "Missing Information",
@@ -64,42 +50,28 @@ export default function RechargePage() {
     setIsSubmitting(true);
 
     try {
-      // 1. Upload screenshot to Firebase Storage
-      const storage = getStorage();
-      const storageRef = ref(storage, `recharge-screenshots/${user.uid}/${Date.now()}-${screenshot.name}`);
-      const snapshot = await uploadBytes(storageRef, screenshot);
-      const downloadURL = await getDownloadURL(snapshot.ref);
-
-      // 2. Create recharge request in Firestore
-      const rechargeData = {
-        userId: user.uid,
-        amount: Number(amount),
-        screenshotUrl: downloadURL,
-        status: "Pending",
-        requestDate: serverTimestamp(),
-      };
+      const formData = new FormData();
+      formData.append('userId', user._id || user.id);
+      formData.append('amount', amount);
+      formData.append('screenshot', screenshot);
       
-      addDoc(collection(firestore, "rechargeRequests"), rechargeData)
-        .then(() => {
-            toast({
-              title: "Request Submitted",
-              description: "Your recharge request has been sent for approval.",
-            });
-            setAmount("");
-            setScreenshot(null);
-            // Clear the file input
-            const fileInput = document.getElementById('screenshot') as HTMLInputElement;
-            if (fileInput) fileInput.value = '';
-        })
-        .catch(async (err) => {
-            const permissionError = new FirestorePermissionError({
-              path: 'rechargeRequests',
-              operation: 'create',
-              requestResourceData: rechargeData
-            });
-            errorEmitter.emit('permission-error', permissionError);
+      const response = await fetch('/api/recharge', {
+        method: 'POST',
+        body: formData
+      });
+      
+      if (response.ok) {
+        toast({
+          title: "Request Submitted",
+          description: "Your recharge request has been sent for approval.",
         });
-
+        setAmount("");
+        setScreenshot(null);
+        const fileInput = document.getElementById('screenshot') as HTMLInputElement;
+        if (fileInput) fileInput.value = '';
+      } else {
+        throw new Error('Failed to submit request');
+      }
     } catch (error) {
       console.error("Error submitting recharge request:", error);
       toast({
@@ -112,8 +84,8 @@ export default function RechargePage() {
     }
   };
   
-  if (userLoading) {
-    return <div>Loading...</div>;
+  if (!isLoggedIn) {
+    return <div>Please login to access recharge page.</div>;
   }
 
   return (
@@ -191,45 +163,43 @@ export default function RechargePage() {
             </CardDescription>
           </CardHeader>
           <CardContent>
-            {transactionsLoading ? <p>Loading history...</p> : (
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead>Amount</TableHead>
-                    <TableHead>Date</TableHead>
-                    <TableHead>Status</TableHead>
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>Amount</TableHead>
+                  <TableHead>Date</TableHead>
+                  <TableHead>Status</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {transactions.length === 0 ? (
+                   <TableRow>
+                      <TableCell colSpan={3} className="text-center">No transactions yet.</TableCell>
+                   </TableRow>
+                ) : (
+                  transactions.map((transaction: any) => (
+                  <TableRow key={transaction.id}>
+                    <TableCell className="font-medium">
+                      ₹{transaction.amount.toFixed(2)}
+                    </TableCell>
+                    <TableCell>{new Date(transaction.requestDate).toLocaleDateString()}</TableCell>
+                    <TableCell>
+                      <Badge
+                        variant={
+                          transaction.status === "Approved"
+                            ? "default"
+                            : transaction.status === "Pending"
+                            ? "secondary"
+                            : "destructive"
+                        }
+                      >
+                        {transaction.status}
+                      </Badge>
+                    </TableCell>
                   </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {transactions.length === 0 ? (
-                     <TableRow>
-                        <TableCell colSpan={3} className="text-center">No transactions yet.</TableCell>
-                     </TableRow>
-                  ) : (
-                    transactions.map((transaction) => (
-                    <TableRow key={transaction.id}>
-                      <TableCell className="font-medium">
-                        ₹{transaction.amount.toFixed(2)}
-                      </TableCell>
-                      <TableCell>{transaction.requestDate?.toDate().toLocaleDateString()}</TableCell>
-                      <TableCell>
-                        <Badge
-                          variant={
-                            transaction.status === "Approved"
-                              ? "default"
-                              : transaction.status === "Pending"
-                              ? "secondary"
-                              : "destructive"
-                          }
-                        >
-                          {transaction.status}
-                        </Badge>
-                      </TableCell>
-                    </TableRow>
-                  )))}
-                </TableBody>
-              </Table>
-            )}
+                )))}
+              </TableBody>
+            </Table>
             
           </CardContent>
         </Card>

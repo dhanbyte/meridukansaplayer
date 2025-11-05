@@ -220,6 +220,10 @@ function MobileNav() {
             <ShoppingCart className="h-5 w-5" />
             <span>Cart {totalItems > 0 && `(${totalItems})`}</span>
           </Link>
+          <Link href="/recharge" className="flex items-center space-x-3 p-2 rounded-md hover:bg-gray-100">
+            <Wallet className="h-5 w-5" />
+            <span>Recharge</span>
+          </Link>
           <Link href="/settings" className="flex items-center space-x-3 p-2 rounded-md hover:bg-gray-100">
             <MoreHorizontal className="h-5 w-5" />
             <span>Settings</span>
@@ -231,6 +235,93 @@ function MobileNav() {
         </div>
       </SheetContent>
     </Sheet>
+  );
+}
+
+function CategoryNavbar() {
+  const { setSearchQuery } = useSearch();
+  
+  const categories = [
+    'VIEW ALL',
+    'Accessories',
+    'Automotive', 
+    'Baby Care',
+    'Bracelets',
+    'Chocolates',
+    'Electronics',
+    'Face & Body Care',
+    'Home & Kitchen',
+    'Home Care'
+  ];
+
+  const handleCategoryClick = (category: string) => {
+    if (category === 'VIEW ALL') {
+      setSearchQuery('');
+    } else {
+      setSearchQuery(category);
+    }
+  };
+
+  return (
+    <div className="bg-white border-b px-4 sm:px-6 py-2">
+      <div className="flex gap-2 overflow-x-auto scrollbar-hide">
+        {categories.map((category) => (
+          <button
+            key={category}
+            onClick={() => handleCategoryClick(category)}
+            className="flex-shrink-0 px-3 py-1 text-xs sm:text-sm bg-gray-100 border rounded-full hover:bg-red-50 hover:border-red-200 transition-colors"
+          >
+            {category}
+          </button>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function SubcategoryNavbar() {
+  const [subcategories, setSubcategories] = React.useState<string[]>([]);
+  const { setSearchQuery } = useSearch();
+
+  React.useEffect(() => {
+    const fetchSubcategories = async () => {
+      try {
+        const response = await fetch('/api/products');
+        const data = await response.json();
+        const allProducts = data.products || [];
+        
+        const allSubcategories = allProducts
+          .map((p: any) => p.subcategory)
+          .filter(Boolean);
+        
+        const uniqueSubcategories = [...new Set(allSubcategories)].sort();
+        setSubcategories(uniqueSubcategories.slice(0, 10));
+      } catch (error) {
+        console.error('Failed to fetch subcategories:', error);
+      }
+    };
+    
+    fetchSubcategories();
+  }, []);
+
+  const handleSubcategoryClick = (subcategory: string) => {
+    setSearchQuery(subcategory);
+  };
+
+  return (
+    <div className="bg-gray-50 border-b px-4 sm:px-6 py-2">
+      <div className="flex gap-2 overflow-x-auto scrollbar-hide">
+        {subcategories.map((subcategory) => (
+          <button
+            key={subcategory}
+            onClick={() => handleSubcategoryClick(subcategory)}
+            className="flex-shrink-0 px-3 py-1 text-xs sm:text-sm bg-white border rounded-full hover:bg-red-50 hover:border-red-200 transition-colors"
+          >
+            {subcategory}
+          </button>
+        ))}
+      </div>
+    </div>
   );
 }
 
@@ -371,7 +462,6 @@ function Header() {
             
             <div className="hidden sm:flex items-center space-x-2">
               <span className="hidden lg:inline text-sm">+91 93115-25609</span>
-              <Button variant="destructive" size="sm" className="bg-red-500 hidden md:inline-flex">Support</Button>
               <Button asChild variant="outline" size="sm" className="hidden lg:inline-flex">
                 <Link href="/recharge">
                   <Wallet className="mr-2 h-4 w-4" />
@@ -399,6 +489,8 @@ function Header() {
           <SearchBox />
         </div>
       </header>
+      
+      <CategoryNavbar />
     </>
   );
 }

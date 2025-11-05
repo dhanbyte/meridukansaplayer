@@ -117,6 +117,15 @@
     overflow: hidden;
   }
   
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+  
   /* Responsive text utilities */
   .text-responsive {
     @apply text-sm sm:text-base md:text-lg;

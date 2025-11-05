@@ -3,12 +3,12 @@ import { useAuth } from '@/lib/AuthContext';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { CreditCard, Building, User, Hash, Edit } from 'lucide-react';
+import { CreditCard, Building, User, Hash, Edit, Wallet, Plus } from 'lucide-react';
 import { useState } from 'react';
 import { useToast } from '@/components/ui/use-toast';
 
 export default function BankingPage() {
-  const { user, isLoggedIn } = useAuth();
+  const { user, isLoggedIn, updateUser } = useAuth();
   const { toast } = useToast();
   const [isEditing, setIsEditing] = useState(false);
   const [formData, setFormData] = useState({
@@ -34,18 +34,28 @@ export default function BankingPage() {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ 
-          id: user?.id, 
+          id: user?._id || user?.id, 
           bankDetails: formData 
         })
       });
       
       if (response.ok) {
+        // Fetch updated user from database
+        const userResponse = await fetch(`/api/users?id=${user?._id || user?.id}`);
+        if (userResponse.ok) {
+          const userData = await userResponse.json();
+          updateUser(userData.user);
+        } else {
+          // Fallback: update context locally
+          const updatedUser = { ...user, bankDetails: formData };
+          updateUser(updatedUser);
+        }
+        
         toast({
           title: "Success",
-          description: "Bank details updated successfully"
+          description: "Bank details saved to database successfully"
         });
         setIsEditing(false);
-        // Update user context would need to be implemented
       } else {
         throw new Error('Failed to update');
       }
@@ -53,7 +63,7 @@ export default function BankingPage() {
       toast({
         variant: "destructive",
         title: "Error",
-        description: "Failed to update bank details"
+        description: "Failed to save bank details to database"
       });
     }
   };
@@ -79,9 +89,32 @@ export default function BankingPage() {
 
   return (
     <div className="p-6 max-w-4xl mx-auto">
-      <h1 className="text-2xl font-bold mb-6">Banking Details</h1>
+      <h1 className="text-2xl font-bold mb-6">Banking & Wallet</h1>
       
-      {user.bankDetails || isEditing ? (
+      {/* Wallet Balance Section */}
+      <Card className="mb-6">
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <Wallet className="h-5 w-5" />
+            Wallet Balance
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="flex items-center justify-between">
+            <div>
+              <p className="text-3xl font-bold text-green-600">₹{user?.walletBalance || 0}</p>
+              <p className="text-sm text-gray-500">Available Balance</p>
+            </div>
+            <Button className="bg-blue-500 hover:bg-blue-600">
+              <Plus className="h-4 w-4 mr-2" />
+              Recharge Wallet
+            </Button>
+          </div>
+        </CardContent>
+      </Card>
+      {/* Bank Details Section */}
+      <h2 className="text-xl font-semibold mb-4">Bank Account Details</h2>
+      {(user?.bankDetails && Object.keys(user.bankDetails).length > 0) || isEditing ? (
         <Card>
           <CardHeader>
             <div className="flex justify-between items-center">
