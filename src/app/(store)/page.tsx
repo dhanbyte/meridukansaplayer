@@ -19,7 +19,12 @@ export default function StoreHome() {
   const { addToCart } = useCart();
   const { searchQuery, searchResults, selectedProduct, setSelectedProduct, setSearchQuery } = useSearch();
   const [allProducts, setAllProducts] = React.useState([]);
+  const [displayedProducts, setDisplayedProducts] = React.useState([]);
   const [filter, setFilter] = React.useState("all");
+  const [loading, setLoading] = React.useState(true);
+  const [loadingMore, setLoadingMore] = React.useState(false);
+  const [currentPage, setCurrentPage] = React.useState(1);
+  const PRODUCTS_PER_PAGE = 50;
 
   React.useEffect(() => {
     fetchProducts();
@@ -36,13 +41,12 @@ export default function StoreHome() {
   }, []);
 
   const fetchProducts = async () => {
+    setLoading(true);
     try {
       const response = await fetch('/api/products?t=' + Date.now());
       const data = await response.json();
-      console.log('API Response:', data);
       
       const products = data.products || [];
-      console.log('Total products:', products.length);
       
       // Sort products - database products first (newest first), then JSON products
       const sorted = products.sort((a: any, b: any) => {
@@ -51,11 +55,16 @@ export default function StoreHome() {
         if (a.createdAt && b.createdAt) return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
         return 0;
       });
-      console.log('Sorted products:', sorted.length);
+      
       setAllProducts(sorted);
+      setDisplayedProducts(sorted.slice(0, PRODUCTS_PER_PAGE));
+      setCurrentPage(1);
     } catch (error) {
       console.error('Failed to fetch products:', error);
       setAllProducts([]);
+      setDisplayedProducts([]);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -107,6 +116,60 @@ export default function StoreHome() {
     }
   };
 
+  const loadMoreProducts = React.useCallback(() => {
+    if (loadingMore || searchQuery.trim() || selectedProduct) return;
+    
+    setLoadingMore(true);
+    setTimeout(() => {
+      const nextPage = currentPage + 1;
+      const startIndex = currentPage * PRODUCTS_PER_PAGE;
+      const endIndex = nextPage * PRODUCTS_PER_PAGE;
+      
+      let productsToShow = allProducts;
+      if (filter !== "all") {
+        productsToShow = allProducts.filter(
+          (p: any) => 
+            p.subcategory?.toLowerCase() === filter.toLowerCase() ||
+            p.category?.toLowerCase() === filter.toLowerCase()
+        );
+      }
+      
+      const newProducts = productsToShow.slice(startIndex, endIndex);
+      if (newProducts.length > 0) {
+        setDisplayedProducts(prev => [...prev, ...newProducts]);
+        setCurrentPage(nextPage);
+      }
+      setLoadingMore(false);
+    }, 500);
+  }, [allProducts, currentPage, filter, loadingMore, searchQuery, selectedProduct]);
+
+  React.useEffect(() => {
+    const handleScroll = () => {
+      if (window.innerHeight + document.documentElement.scrollTop >= document.documentElement.offsetHeight - 1000) {
+        loadMoreProducts();
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [loadMoreProducts]);
+
+  React.useEffect(() => {
+    // Reset displayed products when filter changes
+    if (!searchQuery.trim() && !selectedProduct) {
+      let productsToShow = allProducts;
+      if (filter !== "all") {
+        productsToShow = allProducts.filter(
+          (p: any) => 
+            p.subcategory?.toLowerCase() === filter.toLowerCase() ||
+            p.category?.toLowerCase() === filter.toLowerCase()
+        );
+      }
+      setDisplayedProducts(productsToShow.slice(0, PRODUCTS_PER_PAGE));
+      setCurrentPage(1);
+    }
+  }, [filter, allProducts, searchQuery, selectedProduct]);
+
   const filteredProducts = React.useMemo(() => {
     // If a specific product is selected from search, show only that product
     if (selectedProduct) {
@@ -118,17 +181,9 @@ export default function StoreHome() {
       return searchResults;
     }
     
-    // Otherwise show all products with filter
-    if (!allProducts) return [];
-    if (filter === "all") {
-      return allProducts;
-    }
-    return allProducts.filter(
-      (p: any) => 
-        p.subcategory?.toLowerCase() === filter.toLowerCase() ||
-        p.category?.toLowerCase() === filter.toLowerCase()
-    );
-  }, [allProducts, filter, searchQuery, searchResults, selectedProduct]);
+    // Otherwise show paginated products
+    return displayedProducts;
+  }, [displayedProducts, searchQuery, searchResults, selectedProduct]);
   
   return (
     <>
@@ -173,11 +228,16 @@ export default function StoreHome() {
           <Button variant="link" className="hidden sm:inline-flex">VIEW ALL</Button>
         </div>
       </div>
-      {searchQuery.trim() && !selectedProduct && filteredProducts.length === 0 ? (
+      {loading ? (
+        <div className="flex justify-center items-center py-20">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-red-500"></div>
+        </div>
+      ) : searchQuery.trim() && !selectedProduct && filteredProducts.length === 0 ? (
         <div className="text-center py-8 sm:py-12">
           <p className="text-gray-500 text-base sm:text-lg px-4">No products found for "{searchQuery}"</p>
         </div>
       ) : (
+        <>
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3 sm:gap-4 md:gap-6">
           {filteredProducts.map((product: any, index: number) => (
           <div
@@ -227,6 +287,13 @@ export default function StoreHome() {
           </div>
           ))}
         </div>
+        {loadingMore && (
+          <div className="flex justify-center items-center py-8">
+            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-red-500"></div>
+            <span className="ml-2 text-gray-600">Loading more products...</span>
+          </div>
+        )}
+        </>
       )}
       </div>
     </>
