@@ -17,3 +17,6 @@ export function useIsMobile() {
 
   return !!isMobile
 }
+
+
+// dfgergel jerg je;;ge;l t2ot
