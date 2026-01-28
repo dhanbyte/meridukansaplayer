@@ -5,7 +5,7 @@
 
 -- Enable UUID extension
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
-TNERS TABLE
+-- 1. USERS / PARTNERS TABLE
 -- =====================================================
 CREATE TABLE IF NOT EXISTS users (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
@@ -19,6 +19,11 @@ CREATE TABLE IF NOT EXISTS users (
     bank_details JSONB DEFAULT '{}',
     wallet_balance DECIMAL(12,2) DEFAULT 0,
     role VARCHAR(20) DEFAULT 'partner',
+    shopify_store_url VARCHAR(255),
+    shopify_access_token VARCHAR(255),
+    shopify_api_key VARCHAR(255),
+    shopify_api_secret VARCHAR(255),
+    shopify_is_connected BOOLEAN DEFAULT false,
     is_active BOOLEAN DEFAULT true,
     created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
     updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
@@ -51,6 +56,7 @@ CREATE TABLE IF NOT EXISTS orders (
     status VARCHAR(30) DEFAULT 'draft',
     tracking_id VARCHAR(100),
     notes TEXT,
+    cancellation_reason TEXT,
     confirmed_at TIMESTAMP WITH TIME ZONE,
     in_transit_at TIMESTAMP WITH TIME ZONE,
     delivered_at TIMESTAMP WITH TIME ZONE,
@@ -190,10 +196,19 @@ ALTER TABLE wallet_transactions ENABLE ROW LEVEL SECURITY;
 ALTER TABLE tickets ENABLE ROW LEVEL SECURITY;
 
 -- Create policies (allow all for now, customize as needed)
+DROP POLICY IF EXISTS "Allow all for users" ON users;
 CREATE POLICY "Allow all for users" ON users FOR ALL USING (true);
+
+DROP POLICY IF EXISTS "Allow all for orders" ON orders;
 CREATE POLICY "Allow all for orders" ON orders FOR ALL USING (true);
+
+DROP POLICY IF EXISTS "Allow all for wallet" ON wallet_transactions;
 CREATE POLICY "Allow all for wallet" ON wallet_transactions FOR ALL USING (true);
+
+DROP POLICY IF EXISTS "Allow all for tickets" ON tickets;
 CREATE POLICY "Allow all for tickets" ON tickets FOR ALL USING (true);
+
+DROP POLICY IF EXISTS "Allow all for products" ON products;
 CREATE POLICY "Allow all for products" ON products FOR ALL USING (true);
 
 -- =====================================================

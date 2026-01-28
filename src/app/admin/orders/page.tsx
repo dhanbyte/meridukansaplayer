@@ -811,7 +811,12 @@ export default function AdminOrdersPage() {
                             />
                           </TableCell>
                           <TableCell className="font-medium">
-                            <div className="font-bold text-[10px]">{order.orderNumber || order.orderId}</div>
+                            <div className="flex items-center gap-1">
+                                <div className="font-bold text-[10px]">{order.orderNumber || order.orderId}</div>
+                                {order.orderId?.startsWith('SHP-') && (
+                                    <Badge variant="outline" className="text-[8px] h-4 px-1 bg-green-50 text-green-700 border-green-200">Shopify</Badge>
+                                )}
+                            </div>
                             <div className="text-xs text-blue-600">{order.customerPhone}</div>
                             <div className="text-[10px] text-muted-foreground">{new Date(order.createdAt).toLocaleDateString()}</div>
                           </TableCell>

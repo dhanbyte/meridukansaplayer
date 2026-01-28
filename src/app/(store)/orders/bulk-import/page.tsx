@@ -24,6 +24,7 @@ interface PreviewOrder {
   sellingPrice: number;
   paymentMethod: string; // COD or Prepaid
   items?: any[];
+  isDuplicate?: boolean;
 }
 
 export default function BulkImportPage() {
@@ -33,6 +34,7 @@ export default function BulkImportPage() {
   const [isUploading, setIsUploading] = useState(false);
   const [previewOrders, setPreviewOrders] = useState<PreviewOrder[]>([]);
   const [pincodeValidation, setPincodeValidation] = useState<Record<string, { valid: boolean; city?: string }>>({});
+  const [existingOrderNumbers, setExistingOrderNumbers] = useState<Set<string>>(new Set());
   const [isValidating, setIsValidating] = useState(false);
 
   // Validate pincodes using API
@@ -137,11 +139,29 @@ export default function BulkImportPage() {
     return 'Prepaid';
   };
 
-  const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
 
     setIsUploading(true);
+
+    // Fetch existing order numbers for duplicate check
+    let existingSet = new Set<string>();
+    try {
+      const resp = await fetch('/api/orders?status=all');
+      const data = await resp.json();
+      if (data.orders) {
+        data.orders.forEach((o: any) => {
+          if (o.orderNumber) existingSet.add(o.orderNumber.toString().toLowerCase());
+          // If the order has its own ID in shopify format, check that too
+          if (o.orderId) existingSet.add(o.orderId.toString().toLowerCase());
+        });
+        setExistingOrderNumbers(existingSet);
+      }
+    } catch (err) {
+      console.error("Failed to fetch existing orders for duplicate check", err);
+    }
+
     const reader = new FileReader();
 
     reader.onload = (event) => {
@@ -213,6 +233,7 @@ export default function BulkImportPage() {
           ...order,
           productName: order.items[0]?.productName || 'Multiple Items',
           quantity: order.items.reduce((sum: number, i: any) => sum + i.quantity, 0),
+          isDuplicate: existingSet.has(order.orderNumber.toString().toLowerCase()),
           // We assume costPrice might need adjustment or is same as selling price initially
           costPrice: order.sellingPrice * 0.8 // Dummy estimate if not provided, user will edit
         }));
@@ -265,6 +286,10 @@ export default function BulkImportPage() {
     }
 
     try {
+      // Filter out duplicates that haven't been "approved" (though we just import what's in list)
+      // Actually, let's just import everything that is currently in the preview orders list
+      // If user wants to skip, they should remove them from list using Trash icon
+      
       for (const order of previewOrders) {
         const orderData = {
           partnerId: user.partnerId || user.partner_id || user.id || user._id,
@@ -369,6 +394,17 @@ export default function BulkImportPage() {
               <Button variant="outline" onClick={() => setPreviewOrders([])} disabled={isUploading}>
                 Cancel
               </Button>
+              <Button onClick={() => {
+                const nonDuplicates = previewOrders.filter(o => !o.isDuplicate);
+                if (nonDuplicates.length === 0) {
+                  toast({ title: "No New Orders", description: "All orders are duplicates.", variant: "destructive" });
+                  return;
+                }
+                setPreviewOrders(nonDuplicates);
+                toast({ title: "Duplicates Removed", description: "Removed suspected duplicate orders." });
+              }} variant="destructive" className="bg-orange-600 hover:bg-orange-700">
+                Skip Duplicates
+              </Button>
               <Button onClick={handleImport} disabled={isUploading} className="bg-green-600 hover:bg-green-700">
                 {isUploading ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : null}
                 Import {previewOrders.length} Orders
@@ -393,8 +429,18 @@ export default function BulkImportPage() {
               </TableHeader>
               <TableBody>
                 {previewOrders.map((order, idx) => (
-                  <TableRow key={idx}>
-                    <TableCell className="font-bold">{order.orderNumber}</TableCell>
+                  <TableRow key={idx} className={order.isDuplicate ? 'bg-red-50' : ''}>
+                    <TableCell className="font-bold relative">
+                      {order.isDuplicate && (
+                        <div className="absolute -top-1 -left-1">
+                          <AlertCircle className="h-4 w-4 text-red-600 fill-white" />
+                        </div>
+                      )}
+                      {order.orderNumber}
+                      {order.isDuplicate && (
+                        <span className="block text-[8px] text-red-600 font-bold">DUPLICATE</span>
+                      )}
+                    </TableCell>
                     <TableCell>{order.customerName}</TableCell>
                     <TableCell className="text-blue-600 font-mono text-xs">{order.customerPhone}</TableCell>
                     <TableCell className="max-w-[180px] truncate text-xs" title={order.shippingAddress}>

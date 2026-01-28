@@ -143,6 +143,13 @@ export async function PUT(request: Request) {
     if (updates.bankDetails) supabaseUpdates.bank_details = updates.bankDetails;
     if (updates.walletBalance !== undefined) supabaseUpdates.wallet_balance = updates.walletBalance;
     if (updates.isActive !== undefined) supabaseUpdates.is_active = updates.isActive;
+    
+    // Shopify Integration Fields
+    if (updates.shopifyStoreUrl !== undefined) supabaseUpdates.shopify_store_url = updates.shopifyStoreUrl;
+    if (updates.shopifyAccessToken !== undefined) supabaseUpdates.shopify_access_token = updates.shopifyAccessToken;
+    if (updates.shopifyApiKey !== undefined) supabaseUpdates.shopify_api_key = updates.shopifyApiKey;
+    if (updates.shopifyApiSecret !== undefined) supabaseUpdates.shopify_api_secret = updates.shopifyApiSecret;
+    if (updates.shopifyIsConnected !== undefined) supabaseUpdates.shopify_is_connected = updates.shopifyIsConnected;
 
     const { data, error } = await supabase
       .from('users')
@@ -207,6 +214,11 @@ function normalizeUser(user: any) {
     walletBalance: user.wallet_balance,
     role: user.role,
     isActive: user.is_active,
+    shopifyStoreUrl: user.shopify_store_url,
+    shopifyAccessToken: user.shopify_access_token,
+    shopifyApiKey: user.shopify_api_key,
+    shopifyApiSecret: user.shopify_api_secret,
+    shopifyIsConnected: user.shopify_is_connected,
     createdAt: user.created_at,
     updatedAt: user.updated_at
   };

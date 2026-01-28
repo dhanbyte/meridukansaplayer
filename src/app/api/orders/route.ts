@@ -76,6 +76,7 @@ export async function GET(request: Request) {
       status: order.status,
       trackingId: order.tracking_id,
       notes: order.notes,
+      cancellation_reason: order.cancellation_reason,
       createdAt: order.created_at,
       updatedAt: order.updated_at,
       confirmedAt: order.confirmed_at,

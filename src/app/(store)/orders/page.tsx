@@ -468,8 +468,14 @@ export default function OrdersPage() {
               ) : (
                 orders.map((order) => (
                   <TableRow key={order._id}>
-                    <TableCell><Input type="checkbox" className="w-4 h-4" /></TableCell>
-                    <TableCell className="text-sm font-bold">{order.orderNumber || order.orderId}</TableCell>
+                    <TableCell className="font-bold">
+                      <div className="flex items-center gap-1">
+                        {order.orderNumber || order.orderId}
+                        {(order.orderId?.startsWith('SHP-') || order.orderNumber?.includes('-#')) && (
+                          <Badge variant="outline" className="text-[8px] h-4 px-1 bg-green-50 text-green-700 border-green-200 uppercase">Shopify</Badge>
+                        )}
+                      </div>
+                    </TableCell>
                     <TableCell className="text-sm">
                       {order.trackingId ? (
                         <span className="bg-blue-50 text-blue-700 px-2 py-0.5 rounded border border-blue-200 font-mono">
@@ -582,6 +588,9 @@ export default function OrdersPage() {
                   <div className="flex items-center gap-2">
                     <Input type="checkbox" className="w-4 h-4" />
                     <span className="font-bold text-sm">{order.orderNumber || order.orderId}</span>
+                    {(order.orderId?.startsWith('SHP-') || order.orderNumber?.includes('-#')) && (
+                      <Badge variant="outline" className="text-[8px] h-4 px-1 bg-green-50 text-green-700 border-green-200">Shopify</Badge>
+                    )}
                   </div>
                   <Badge variant={
                     order.status === "draft" ? "outline" :

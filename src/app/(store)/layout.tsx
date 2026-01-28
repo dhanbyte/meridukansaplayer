@@ -18,7 +18,8 @@ import {
   X,
   Menu,
   MessageSquare,
-  Video
+  Video,
+  RefreshCw
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -215,6 +216,10 @@ function MobileNav() {
             <Box className="h-5 w-5" />
             <span>Orders</span>
           </Link>
+          <Link href="/shopify" className="flex items-center space-x-3 p-2 rounded-md hover:bg-gray-100">
+            <RefreshCw className="h-5 w-5 text-green-600" />
+            <span>Shopify Sync</span>
+          </Link>
           <Link href="/learning" className="flex items-center space-x-3 p-2 rounded-md hover:bg-gray-100">
             <Video className="h-5 w-5" />
             <span>Learning</span>
@@ -272,6 +277,10 @@ function Header() {
             <Link href="/orders" className="flex items-center space-x-2 text-gray-600 hover:text-brand-navy hover:bg-gray-50 px-3 py-2 rounded-md transition-colors">
               <Box className="h-5 w-5" />
               <span className="font-medium">Orders</span>
+            </Link>
+            <Link href="/shopify" className="flex items-center space-x-2 text-gray-600 hover:text-brand-navy hover:bg-gray-50 px-3 py-2 rounded-md transition-colors">
+              <RefreshCw className="h-5 w-5 text-green-600" />
+              <span className="font-medium">Shopify Sync</span>
             </Link>
             <Link href="/learning" className="flex items-center space-x-2 text-gray-600 hover:text-brand-navy hover:bg-gray-50 px-3 py-2 rounded-md transition-colors">
               <Video className="h-5 w-5" />
