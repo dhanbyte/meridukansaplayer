@@ -74,6 +74,13 @@ export default function BulkImportPage() {
   const [editingPincodeIdx, setEditingPincodeIdx] = useState<number | null>(null);
   const [editPincodeValue, setEditPincodeValue] = useState('');
 
+  // State for editing Name and Address
+  const [editingCell, setEditingCell] = useState<{ idx: number, field: 'customerName' | 'shippingAddress' } | null>(null);
+  const [editCellValue, setEditCellValue] = useState('');
+
+  // English-only validation helper
+  const isEnglishOnly = (text: string) => /^[\x00-\x7F]*$/.test(text || '');
+
   // Update pincode for an order and re-validate
   const updatePincode = async (idx: number) => {
     const newPincode = editPincodeValue.trim();
@@ -121,6 +128,15 @@ export default function BulkImportPage() {
     } catch (error) {
       console.error('Re-validation failed:', error);
     }
+  };
+
+  // Update Name or Address
+  const updateCell = (idx: number, field: 'customerName' | 'shippingAddress') => {
+    const updatedOrders = [...previewOrders];
+    updatedOrders[idx][field] = editCellValue.trim();
+    setPreviewOrders(updatedOrders);
+    setEditingCell(null);
+    setEditCellValue('');
   };
 
   // Helper function to clean pincode (remove quotes and special chars)
@@ -270,7 +286,6 @@ export default function BulkImportPage() {
     setIsUploading(true);
     let successCount = 0;
 
-    const isEnglishOnly = (text: string) => /^[\x00-\x7F]*$/.test(text || '');
     
     // Check all orders first
     const invalidOrders = previewOrders.filter(o => !isEnglishOnly(o.customerName) || !isEnglishOnly(o.shippingAddress));
@@ -441,10 +456,57 @@ export default function BulkImportPage() {
                         <span className="block text-[8px] text-red-600 font-bold">DUPLICATE</span>
                       )}
                     </TableCell>
-                    <TableCell>{order.customerName}</TableCell>
+                    <TableCell className="relative p-2">
+                        {editingCell?.idx === idx && editingCell?.field === 'customerName' ? (
+                            <div className="flex items-center gap-1">
+                                <Input 
+                                    value={editCellValue} 
+                                    onChange={e => setEditCellValue(e.target.value)}
+                                    className="h-8 text-xs min-w-[120px]"
+                                    autoFocus
+                                    onKeyDown={e => {
+                                        if (e.key === 'Enter') updateCell(idx, 'customerName');
+                                        if (e.key === 'Escape') setEditingCell(null);
+                                    }}
+                                />
+                                <Button size="sm" className="h-8 px-2 bg-green-600" onClick={() => updateCell(idx, 'customerName')}>✓</Button>
+                            </div>
+                        ) : (
+                            <div 
+                                onClick={() => { setEditingCell({ idx, field: 'customerName' }); setEditCellValue(order.customerName); }}
+                                className={`cursor-pointer hover:bg-muted p-1 rounded min-h-[30px] flex items-center gap-2 ${!isEnglishOnly(order.customerName) ? 'bg-red-100 border border-red-300' : ''}`}
+                            >
+                                <span className="text-sm">{order.customerName}</span>
+                                {!isEnglishOnly(order.customerName) && <AlertCircle className="h-3 w-3 text-red-600" />}
+                            </div>
+                        )}
+                    </TableCell>
                     <TableCell className="text-blue-600 font-mono text-xs">{order.customerPhone}</TableCell>
-                    <TableCell className="max-w-[180px] truncate text-xs" title={order.shippingAddress}>
-                      {order.shippingAddress}
+                    <TableCell className="max-w-[180px] p-2">
+                        {editingCell?.idx === idx && editingCell?.field === 'shippingAddress' ? (
+                            <div className="flex items-center gap-1">
+                                <Input 
+                                    value={editCellValue} 
+                                    onChange={e => setEditCellValue(e.target.value)}
+                                    className="h-8 text-xs min-w-[200px]"
+                                    autoFocus
+                                    onKeyDown={e => {
+                                        if (e.key === 'Enter') updateCell(idx, 'shippingAddress');
+                                        if (e.key === 'Escape') setEditingCell(null);
+                                    }}
+                                />
+                                <Button size="sm" className="h-8 px-2 bg-green-600" onClick={() => updateCell(idx, 'shippingAddress')}>✓</Button>
+                            </div>
+                        ) : (
+                            <div 
+                                onClick={() => { setEditingCell({ idx, field: 'shippingAddress' }); setEditCellValue(order.shippingAddress); }}
+                                className={`cursor-pointer hover:bg-muted p-1 rounded text-xs leading-tight min-h-[30px] flex items-start gap-2 ${!isEnglishOnly(order.shippingAddress) ? 'bg-red-100 border border-red-300' : ''}`}
+                                title={order.shippingAddress}
+                            >
+                                <span className={`${!isEnglishOnly(order.shippingAddress) ? 'line-clamp-none' : 'line-clamp-2'}`}>{order.shippingAddress}</span>
+                                {!isEnglishOnly(order.shippingAddress) && <AlertCircle className="h-3 w-3 text-red-600 shrink-0 mt-0.5" />}
+                            </div>
+                        )}
                     </TableCell>
                     <TableCell>
                       {(() => {
