@@ -11,15 +11,15 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useToast } from "@/components/ui/use-toast";
-import { 
-  Edit, 
-  Trash2, 
-  Check, 
-  X, 
-  Package, 
-  ShoppingCart, 
-  Home, 
-  User, 
+import {
+  Edit,
+  Trash2,
+  Check,
+  X,
+  Package,
+  ShoppingCart,
+  Home,
+  User,
   Search,
   Plus,
   Star,
@@ -46,15 +46,15 @@ export default function ProductsPage() {
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
-  const [isMobile, setIsMobile] = useState(false);
+  const [isMobile, setIsMobile] = useState<boolean | undefined>(undefined);
   const { toast } = useToast();
 
   const categories = ['All', 'Accessories', 'Automotive', 'Baby Care', 'Bracelets', 'Chocolates', 'Electronics', 'Face & Body Care', 'Home & Kitchen', 'Home Care'];
-  
+
   const filteredProducts = products.filter((product) => {
     const matchesCategory = selectedCategory === 'All' || product.category === selectedCategory;
     const matchesSearch = product.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                         product.brand.toLowerCase().includes(searchQuery.toLowerCase());
+      product.brand.toLowerCase().includes(searchQuery.toLowerCase());
     return matchesCategory && matchesSearch;
   });
 
@@ -105,7 +105,7 @@ export default function ProductsPage() {
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ id: productId }),
         });
-        
+
         if (response.ok) {
           setProducts(products.filter(p => p._id !== productId));
           toast({
@@ -130,9 +130,9 @@ export default function ProductsPage() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ id: productId, status: 'active' }),
       });
-      
+
       if (response.ok) {
-        setProducts(products.map(p => 
+        setProducts(products.map(p =>
           p._id === productId ? { ...p, status: 'active' } : p
         ));
         toast({
@@ -156,9 +156,9 @@ export default function ProductsPage() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ id: updatedProduct._id, ...updatedProduct }),
       });
-      
+
       if (response.ok) {
-        setProducts(products.map(p => 
+        setProducts(products.map(p =>
           p._id === updatedProduct._id ? updatedProduct : p
         ));
         setIsEditDialogOpen(false);
@@ -221,11 +221,10 @@ export default function ProductsPage() {
             <button
               key={category}
               onClick={() => setSelectedCategory(category)}
-              className={`px-4 py-2 rounded-full text-sm whitespace-nowrap ${
-                selectedCategory === category 
-                  ? 'bg-blue-500 text-white' 
-                  : 'bg-gray-100 hover:bg-gray-200 text-gray-700'
-              }`}
+              className={`px-4 py-2 rounded-full text-sm whitespace-nowrap ${selectedCategory === category
+                ? 'bg-blue-500 text-white'
+                : 'bg-gray-100 hover:bg-gray-200 text-gray-700'
+                }`}
             >
               {category === 'All' ? 'VIEW ALL' : category}
             </button>
@@ -238,7 +237,7 @@ export default function ProductsPage() {
         <div className="container mx-auto px-4 py-6">
           <div className="mb-6">
             <h2 className="text-2xl font-bold">
-              {selectedCategory === 'All' ? 'All Products' : selectedCategory} 
+              {selectedCategory === 'All' ? 'All Products' : selectedCategory}
               <span className="text-gray-500 ml-2">({filteredProducts.length})</span>
             </h2>
           </div>
@@ -264,14 +263,14 @@ export default function ProductsPage() {
                     )}
                   </div>
                 </CardHeader>
-                
+
                 <CardContent className="p-3">
                   <div className="space-y-2">
                     <div>
                       <h3 className="font-semibold text-sm line-clamp-2">{product.name}</h3>
                       <p className="text-xs text-gray-600">{product.brand || 'Generic'}</p>
                     </div>
-                    
+
                     <div className="flex items-center justify-between">
                       <div className="flex items-center space-x-1">
                         <DollarSign className="h-3 w-3 text-green-600" />
@@ -294,7 +293,7 @@ export default function ProductsPage() {
                         Total: {product.price + product.deliveryCharge}
                       </div>
                     )}
-                    
+
                     <div className="flex items-center justify-between">
                       <span className="text-xs text-gray-600">
                         Stock: {product.stock}
@@ -349,7 +348,7 @@ export default function ProductsPage() {
       </main>
 
       {/* Bottom Navigation (Mobile Only) */}
-      {isMobile && (
+      {isMobile === true && (
         <footer className="fixed bottom-0 left-0 right-0 bg-white border-t z-40">
           <div className="grid grid-cols-4 py-2">
             <button className="flex flex-col items-center py-2 text-blue-600">
@@ -386,7 +385,7 @@ export default function ProductsPage() {
                   <Input
                     id="name"
                     value={selectedProduct.name}
-                    onChange={(e) => setSelectedProduct({...selectedProduct, name: e.target.value})}
+                    onChange={(e) => setSelectedProduct({ ...selectedProduct, name: e.target.value })}
                   />
                 </div>
                 <div>
@@ -394,11 +393,11 @@ export default function ProductsPage() {
                   <Input
                     id="brand"
                     value={selectedProduct.brand}
-                    onChange={(e) => setSelectedProduct({...selectedProduct, brand: e.target.value})}
+                    onChange={(e) => setSelectedProduct({ ...selectedProduct, brand: e.target.value })}
                   />
                 </div>
               </div>
-              
+
               <div className="grid grid-cols-3 gap-4">
                 <div>
                   <Label htmlFor="price">Price</Label>
@@ -406,7 +405,7 @@ export default function ProductsPage() {
                     id="price"
                     type="number"
                     value={selectedProduct.price}
-                    onChange={(e) => setSelectedProduct({...selectedProduct, price: Number(e.target.value)})}
+                    onChange={(e) => setSelectedProduct({ ...selectedProduct, price: Number(e.target.value) })}
                   />
                 </div>
                 <div>
@@ -415,7 +414,7 @@ export default function ProductsPage() {
                     id="delivery"
                     type="number"
                     value={selectedProduct.deliveryCharge}
-                    onChange={(e) => setSelectedProduct({...selectedProduct, deliveryCharge: Number(e.target.value)})}
+                    onChange={(e) => setSelectedProduct({ ...selectedProduct, deliveryCharge: Number(e.target.value) })}
                   />
                 </div>
                 <div>
@@ -424,14 +423,14 @@ export default function ProductsPage() {
                     id="stock"
                     type="number"
                     value={selectedProduct.stock}
-                    onChange={(e) => setSelectedProduct({...selectedProduct, stock: Number(e.target.value)})}
+                    onChange={(e) => setSelectedProduct({ ...selectedProduct, stock: Number(e.target.value) })}
                   />
                 </div>
               </div>
 
               <div>
                 <Label htmlFor="category">Category</Label>
-                <Select value={selectedProduct.category} onValueChange={(value) => setSelectedProduct({...selectedProduct, category: value})}>
+                <Select value={selectedProduct.category} onValueChange={(value) => setSelectedProduct({ ...selectedProduct, category: value })}>
                   <SelectTrigger>
                     <SelectValue />
                   </SelectTrigger>
@@ -448,7 +447,7 @@ export default function ProductsPage() {
                 <Input
                   id="image"
                   value={selectedProduct.image}
-                  onChange={(e) => setSelectedProduct({...selectedProduct, image: e.target.value})}
+                  onChange={(e) => setSelectedProduct({ ...selectedProduct, image: e.target.value })}
                 />
               </div>
 
@@ -457,7 +456,7 @@ export default function ProductsPage() {
                 <Textarea
                   id="description"
                   value={selectedProduct.description || ''}
-                  onChange={(e) => setSelectedProduct({...selectedProduct, description: e.target.value})}
+                  onChange={(e) => setSelectedProduct({ ...selectedProduct, description: e.target.value })}
                 />
               </div>
 

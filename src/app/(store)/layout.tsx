@@ -19,7 +19,9 @@ import {
   Menu,
   MessageSquare,
   Video,
-  RefreshCw
+  RefreshCw,
+  LayoutDashboard,
+  Package
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -392,10 +394,31 @@ function StoreLayoutContent({ children }: { children: React.ReactNode }) {
       <div className="flex min-h-screen bg-gray-100">
         <div className="flex flex-col flex-1">
           <Header />
-          <main className="flex-1 p-4 sm:p-6">
+          <main className="flex-1 p-4 sm:p-6 pb-24 sm:pb-6">
             {children}
           </main>
 
+          {/* Mobile Bottom Navigation - Only visible on phone */}
+          <nav className="fixed bottom-0 left-0 right-0 bg-white border-t-2 border-gray-200 shadow-2xl z-[999] block sm:hidden">
+            <div className="grid grid-cols-4 py-3 px-2">
+              <Link href="/" className="flex flex-col items-center justify-center py-1 text-gray-500 hover:text-blue-600 transition-colors">
+                <LayoutDashboard className="h-6 w-6" />
+                <span className="text-[11px] mt-1 font-medium">Dashboard</span>
+              </Link>
+              <Link href="/orders" className="flex flex-col items-center justify-center py-1 text-gray-500 hover:text-blue-600 transition-colors">
+                <Package className="h-6 w-6" />
+                <span className="text-[11px] mt-1 font-medium">Orders</span>
+              </Link>
+              <Link href="/learning" className="flex flex-col items-center justify-center py-1 text-gray-500 hover:text-blue-600 transition-colors">
+                <Video className="h-6 w-6" />
+                <span className="text-[11px] mt-1 font-medium">Learning</span>
+              </Link>
+              <Link href="/profile" className="flex flex-col items-center justify-center py-1 text-gray-500 hover:text-blue-600 transition-colors">
+                <User className="h-6 w-6" />
+                <span className="text-[11px] mt-1 font-medium">Profile</span>
+              </Link>
+            </div>
+          </nav>
         </div>
       </div>
     </SearchContext.Provider>
