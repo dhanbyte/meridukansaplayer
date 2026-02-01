@@ -48,7 +48,7 @@ export async function GET(request: Request) {
     const { data: usersData } = await supabase
       .from('users')
       .select('partner_id, email');
-    
+
     const emailMap = new Map();
     (usersData || []).forEach((u: any) => {
       emailMap.set(u.partner_id, u.email);
@@ -123,9 +123,10 @@ export async function POST(request: Request) {
       pincode: orderData.pincode || '',
       city: orderData.city || '',
       state: orderData.state || '',
+      customer_state: orderData.customerState || orderData.state || '', // For analytics
       items: orderData.items || [],
       total_amount: Number(orderData.totalAmount) || 0,
-      selling_price: Number(orderData.sellingPrice) || 0,
+      selling_price: Number(orderData.sellingPrice) || Number(orderData.totalAmount) || 0,
       profit: Number(orderData.profit) || 0,
       payment_method: orderData.paymentMethod || 'cod',
       status: orderData.status || 'draft',
@@ -144,9 +145,9 @@ export async function POST(request: Request) {
 
     if (error) {
       console.error('[Orders] Supabase insert error:', error);
-      return NextResponse.json({ 
+      return NextResponse.json({
         error: error.message || 'Database insert failed',
-        details: error 
+        details: error
       }, { status: 500 });
     }
 

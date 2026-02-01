@@ -2,22 +2,24 @@ import { NextResponse } from 'next/server';
 import { supabase } from '@/lib/supabase';
 
 export async function GET(request: Request) {
-  console.log('=== PRODUCTS API (SUPABASE) ===');
-
   try {
     if (!supabase) {
-      console.log('Supabase not configured, returning empty');
-      return NextResponse.json({ products: [] });
+      return NextResponse.json({ products: [], success: true });
     }
 
     const { searchParams } = new URL(request.url);
     const category = searchParams.get('category');
+    const includePending = searchParams.get('includePending') === 'true';
 
     let query = supabase
       .from('products')
       .select('*')
-      .eq('is_active', true)
       .order('created_at', { ascending: false });
+
+    // Only filter by is_active if not including pending
+    if (!includePending) {
+      query = query.eq('is_active', true);
+    }
 
     if (category && category !== 'all') {
       query = query.eq('category', category);
@@ -40,19 +42,32 @@ export async function GET(request: Request) {
       mrp: p.mrp,
       description: p.description,
       image: p.image_url,
+      extraImages: p.extra_images || [],
       category: p.category,
       stock: p.stock,
-      weightKg: p.weight_kg,
+      weight: p.weight_kg,
+      packingCostPerUnit: p.packing_cost_per_unit || 0,
+      useGlobalCharges: p.use_global_charges !== false,
+      customDeliveryCharge: p.custom_delivery_charge,
+      customRtoPenalty: p.custom_rto_penalty,
       isActive: p.is_active,
+      status: p.is_active ? 'active' : 'pending',
       createdAt: p.created_at
     }));
 
-    console.log(`Found ${normalizedProducts.length} products`);
-    return NextResponse.json({ products: normalizedProducts });
+    // Return with cache headers for better performance
+    return NextResponse.json(
+      { products: normalizedProducts, success: true },
+      {
+        headers: {
+          'Cache-Control': 'private, max-age=10, stale-while-revalidate=30',
+        },
+      }
+    );
 
   } catch (error) {
     console.error('Products API error:', error);
-    return NextResponse.json({ products: [], error: 'Failed to fetch products' });
+    return NextResponse.json({ products: [], error: 'Failed to fetch products', success: false });
   }
 }
 
@@ -66,14 +81,19 @@ export async function POST(request: Request) {
 
     const newProduct = {
       name: productData.name,
-      sku: productData.sku,
-      price: productData.price || 0,
-      mrp: productData.mrp,
-      description: productData.description,
+      sku: productData.sku || null,
+      price: parseFloat(productData.price) || 0,
+      mrp: productData.mrp ? parseFloat(productData.mrp) : null,
+      description: productData.description || null,
       image_url: productData.image,
-      category: productData.category,
-      stock: productData.stock || 0,
-      weight_kg: productData.weightKg || 0.5,
+      extra_images: productData.extraImages || [],
+      category: productData.category || 'General',
+      stock: parseInt(productData.stock) || 0,
+      weight_kg: parseFloat(productData.weight) || 0.5,
+      packing_cost_per_unit: parseFloat(productData.packingCostPerUnit) || 10,
+      use_global_charges: productData.useGlobalCharges !== false,
+      custom_delivery_charge: productData.customDeliveryCharge || null,
+      custom_rto_penalty: productData.customRtoPenalty || null,
       is_active: true,
       created_at: new Date().toISOString(),
       updated_at: new Date().toISOString()
@@ -90,7 +110,7 @@ export async function POST(request: Request) {
     return NextResponse.json({
       success: true,
       product: {
-        _id: data.id,
+        id: data.id,
         ...productData,
         createdAt: data.created_at
       }
@@ -114,13 +134,19 @@ export async function PUT(request: Request) {
     };
 
     if (updates.name) supabaseUpdates.name = updates.name;
-    if (updates.sku) supabaseUpdates.sku = updates.sku;
-    if (updates.price !== undefined) supabaseUpdates.price = updates.price;
-    if (updates.mrp !== undefined) supabaseUpdates.mrp = updates.mrp;
-    if (updates.description) supabaseUpdates.description = updates.description;
+    if (updates.sku !== undefined) supabaseUpdates.sku = updates.sku || null;
+    if (updates.price !== undefined) supabaseUpdates.price = parseFloat(updates.price);
+    if (updates.mrp !== undefined) supabaseUpdates.mrp = updates.mrp ? parseFloat(updates.mrp) : null;
+    if (updates.description !== undefined) supabaseUpdates.description = updates.description;
     if (updates.image) supabaseUpdates.image_url = updates.image;
+    if (updates.extraImages !== undefined) supabaseUpdates.extra_images = updates.extraImages;
     if (updates.category) supabaseUpdates.category = updates.category;
-    if (updates.stock !== undefined) supabaseUpdates.stock = updates.stock;
+    if (updates.stock !== undefined) supabaseUpdates.stock = parseInt(updates.stock);
+    if (updates.weight !== undefined) supabaseUpdates.weight_kg = parseFloat(updates.weight);
+    if (updates.packingCostPerUnit !== undefined) supabaseUpdates.packing_cost_per_unit = parseFloat(updates.packingCostPerUnit);
+    if (updates.useGlobalCharges !== undefined) supabaseUpdates.use_global_charges = updates.useGlobalCharges;
+    if (updates.customDeliveryCharge !== undefined) supabaseUpdates.custom_delivery_charge = updates.customDeliveryCharge;
+    if (updates.customRtoPenalty !== undefined) supabaseUpdates.custom_rto_penalty = updates.customRtoPenalty;
     if (updates.isActive !== undefined) supabaseUpdates.is_active = updates.isActive;
 
     const { error } = await supabase

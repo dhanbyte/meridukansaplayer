@@ -84,7 +84,7 @@ export default function AdminOrdersPage() {
   const [batchDate, setBatchDate] = useState(new Date().toISOString().split('T')[0]);
 
   const [selectedOrderIds, setSelectedOrderIds] = useState<Set<string>>(new Set());
-  
+
   // Cancellation reason state
   const [isCancelDialogOpen, setIsCancelDialogOpen] = useState(false);
   const [cancelOrderId, setCancelOrderId] = useState<string | null>(null);
@@ -120,7 +120,57 @@ export default function AdminOrdersPage() {
     return match ? match[1] : '';
   };
 
-  // Generate Shipping Manifest CSV
+  // Get state and city from pincode (first 2 digits zone mapping)
+  const getStateFromPincode = (pincode: string): { state: string; city: string } => {
+    if (!pincode || pincode.length !== 6) return { state: '', city: '' };
+
+    const prefix = pincode.substring(0, 2);
+    const zoneMap: Record<string, string> = {
+      '11': 'Delhi', '12': 'Haryana', '13': 'Punjab', '14': 'Punjab',
+      '15': 'Himachal Pradesh', '16': 'Punjab', '17': 'Himachal Pradesh',
+      '18': 'Jammu & Kashmir', '19': 'Jammu & Kashmir',
+      '20': 'Uttar Pradesh', '21': 'Uttar Pradesh', '22': 'Uttar Pradesh',
+      '23': 'Uttar Pradesh', '24': 'Uttar Pradesh', '25': 'Uttar Pradesh',
+      '26': 'Uttar Pradesh', '27': 'Uttar Pradesh', '28': 'Uttar Pradesh',
+      '30': 'Rajasthan', '31': 'Rajasthan', '32': 'Rajasthan',
+      '33': 'Rajasthan', '34': 'Rajasthan',
+      '36': 'Gujarat', '37': 'Gujarat', '38': 'Gujarat', '39': 'Gujarat',
+      '40': 'Maharashtra', '41': 'Maharashtra', '42': 'Maharashtra',
+      '43': 'Maharashtra', '44': 'Maharashtra',
+      '45': 'Madhya Pradesh', '46': 'Madhya Pradesh', '47': 'Madhya Pradesh', '48': 'Madhya Pradesh',
+      '49': 'Chhattisgarh',
+      '50': 'Telangana', '51': 'Telangana',
+      '52': 'Andhra Pradesh', '53': 'Andhra Pradesh',
+      '56': 'Karnataka', '57': 'Karnataka', '58': 'Karnataka', '59': 'Karnataka',
+      '60': 'Tamil Nadu', '61': 'Tamil Nadu', '62': 'Tamil Nadu', '63': 'Tamil Nadu', '64': 'Tamil Nadu',
+      '67': 'Kerala', '68': 'Kerala', '69': 'Kerala',
+      '70': 'West Bengal', '71': 'West Bengal', '72': 'West Bengal', '73': 'West Bengal', '74': 'West Bengal',
+      '75': 'Odisha', '76': 'Odisha', '77': 'Odisha',
+      '78': 'Assam', '79': 'Northeast',
+      '80': 'Bihar', '81': 'Bihar', '82': 'Bihar', '83': 'Bihar', '84': 'Bihar',
+      '85': 'Jharkhand',
+    };
+
+    // Try to extract city from address parts
+    const state = zoneMap[prefix] || '';
+    return { state, city: '' };
+  };
+
+  // Generate Invoice Number (date-based)
+  const generateInvoiceNumber = (orderDate: string, orderId: string): string => {
+    const date = new Date(orderDate);
+    const dateStr = format(date, 'yyyyMMdd');
+    const shortId = orderId.slice(-6).toUpperCase();
+    return `INV-${dateStr}-${shortId}`;
+  };
+
+  // Generate Ship Order ID - use the actual order number directly
+  const generateShipOrderId = (orderNumber: string, orderId: string): string => {
+    // Use orderNumber directly if available (e.g., ORD-001234), otherwise fallback to orderId
+    return orderNumber || orderId;
+  };
+
+  // Generate Shipping Manifest CSV with exact fields requested
   const generateShippingManifest = () => {
     const selectedOrders = orders.filter(o => selectedOrderIds.has(o._id));
 
@@ -133,70 +183,106 @@ export default function AdminOrdersPage() {
       return;
     }
 
-    // Create CSV data with unique ship_order_id per vendor
+    // Create CSV data with exact columns requested
     const rows: any[][] = [];
 
-    // Headers
+    // Headers - exact fields as per user request
     rows.push([
-      "ship_order_id",
       "awb_number",
-      "order_date",
-      "customer_name",
-      "customer_phone",
-      "shipping_address",
-      "city",
-      "state",
-      "pincode",
+      "ship_order_id",
+      "name",
       "product_name",
-      "sku",
-      "quantity",
+      "products_desc",
+      "product_qty",
+      "product_price",
+      "shipment_address",
+      "shipment_state",
+      "shipment_city",
+      "shipment_pin",
+      "shipment_phone",
+      "shipment_quantity",
+      "shipment_weight",
+      "invoice_number",
+      "invoice_date",
+      "total_amount",
       "payment_mode",
       "cod_amount",
-      "weight_kg",
-      "partner_name",
-      "partner_id"
+      "email",
+      "delivery_mode"
     ]);
 
     // Data rows
     selectedOrders.forEach(order => {
-      // Generate unique ship_order_id: VENDORID_ORDERID
-      const vendorPrefix = (order.partnerId || 'VND').toString().toUpperCase().slice(0, 8);
-      const orderId = order.orderNumber || order.orderId || order._id;
-      const shipOrderId = `${vendorPrefix}_${orderId}`;
+      const pincode = order.pincode || extractPincode(order.shippingAddress);
+      const { state, city } = getStateFromPincode(pincode);
+
+      // Extract city from address if not available
+      const addressParts = (order.shippingAddress || '').split(',').map(s => s.trim());
+      const extractedCity = city || (addressParts.length > 1 ? addressParts[addressParts.length - 2] : '');
 
       // Payment logic
       const isCOD = order.paymentMethod?.toLowerCase() === 'cod';
       const paymentMode = isCOD ? 'COD' : 'Prepaid';
-      const codAmount = isCOD ? order.totalAmount?.toFixed(2) || '0' : '0';
+      const codAmount = isCOD ? '20' : '0';
 
-      // Extract city/state from address (basic parsing)
-      const addressParts = (order.shippingAddress || '').split(',').map(s => s.trim());
-      const city = addressParts.length > 1 ? addressParts[addressParts.length - 2] : '';
-      const state = addressParts.length > 0 ? addressParts[addressParts.length - 1] : '';
-      const pincode = extractPincode(order.shippingAddress);
+      // Generate IDs - ship_order_id is the actual order number
+      const shipOrderId = generateShipOrderId(order.orderNumber || '', order._id);
+      const invoiceNumber = generateInvoiceNumber(order.createdAt, order._id);
+      const invoiceDate = format(new Date(order.createdAt), 'dd/MM/yyyy');
 
-      // For each item in order
-      order.items?.forEach((item, idx) => {
+      // For each item in order (or single row if no items)
+      if (order.items && order.items.length > 0) {
+        order.items.forEach((item, idx) => {
+          rows.push([
+            '', // awb_number - not filled
+            idx === 0 ? shipOrderId : '', // ship_order_id - actual order number
+            order.customerName || '',
+            item.productName || '',
+            item.productName || '', // products_desc - using product name
+            item.quantity || 1, // product_qty
+            item.price || order.totalAmount || 0, // product_price
+            order.shippingAddress || '',
+            state,
+            extractedCity,
+            pincode,
+            order.customerPhone || '',
+            1, // shipment_quantity - default 1
+            '20g', // shipment_weight - default 20g
+            invoiceNumber,
+            invoiceDate,
+            order.totalAmount || 0,
+            paymentMode,
+            codAmount,
+            '', // email - not filled
+            'surface' // delivery_mode - default surface
+          ]);
+        });
+      } else {
+        // Single row for order without items array
         rows.push([
-          idx === 0 ? shipOrderId : '', // Only show ship_order_id for first item
-          '', // AWB - blank for manual entry
-          format(new Date(order.createdAt), 'dd/MM/yyyy'),
+          '', // awb_number - not filled
+          shipOrderId, // actual order number
           order.customerName || '',
-          order.customerPhone || '',
+          'Product', // product_name
+          'Product', // products_desc
+          1, // product_qty
+          order.totalAmount || 0, // product_price
           order.shippingAddress || '',
-          city,
           state,
+          extractedCity,
           pincode,
-          item.productName || '',
-          item.productSku || '',
-          item.quantity || 1,
+          order.customerPhone || '',
+          1, // shipment_quantity
+          '20g', // shipment_weight
+          invoiceNumber,
+          invoiceDate,
+          order.totalAmount || 0,
           paymentMode,
           codAmount,
-          '0.5', // Default weight
-          order.partnerName || '',
-          order.partnerId || ''
+          '', // email
+          'surface' // delivery_mode
         ]);
-      });
+      }
     });
 
     // Convert to CSV
@@ -232,19 +318,19 @@ export default function AdminOrdersPage() {
     try {
       setLoading(true);
       const statusToUse = statusOverride || activeTab;
-      
+
       const params = new URLSearchParams();
       params.append('excludeDraft', 'true');
       if (statusToUse !== 'all') {
         params.append('status', statusToUse);
       }
-      
+
       const response = await fetch(`/api/orders?${params.toString()}`);
       const data = await response.json();
 
       if (data.orders && Array.isArray(data.orders)) {
         // Sort by createdAt descending (newest first)
-        const sortedOrders = data.orders.sort((a: any, b: any) => 
+        const sortedOrders = data.orders.sort((a: any, b: any) =>
           new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
         );
         setOrders(sortedOrders);
@@ -295,7 +381,7 @@ export default function AdminOrdersPage() {
       // Auto-size columns
       const wscols = [
         { wch: 20 }, { wch: 15 }, { wch: 20 }, { wch: 30 },
-        { wch: 20 }, { wch: 15 }, { wch: 12 }, { wch: 15 }, 
+        { wch: 20 }, { wch: 15 }, { wch: 12 }, { wch: 15 },
         { wch: 15 }, { wch: 50 }, { wch: 15 }, { wch: 15 },
         { wch: 15 }, { wch: 20 }, { wch: 60 }
       ];
@@ -330,10 +416,10 @@ export default function AdminOrdersPage() {
 
   const handleStatusUpdate = async (orderId: string, newStatus: string) => {
     if (newStatus === 'cancelled') {
-        setCancelOrderId(orderId);
-        setCancelReason("");
-        setIsCancelDialogOpen(true);
-        return;
+      setCancelOrderId(orderId);
+      setCancelReason("");
+      setIsCancelDialogOpen(true);
+      return;
     }
 
     try {
@@ -351,7 +437,7 @@ export default function AdminOrdersPage() {
             return prevOrders.filter(o => o._id !== orderId);
           }
           // Otherwise just update the status
-          return prevOrders.map(o => 
+          return prevOrders.map(o =>
             o._id === orderId ? { ...o, status: newStatus } : o
           );
         });
@@ -373,54 +459,54 @@ export default function AdminOrdersPage() {
 
   const submitCancellation = async () => {
     if (!cancelOrderId || !cancelReason.trim()) {
-        toast({
-            title: "Reason Required",
-            description: "Please provide a reason for cancellation",
-            variant: "destructive"
-        });
-        return;
+      toast({
+        title: "Reason Required",
+        description: "Please provide a reason for cancellation",
+        variant: "destructive"
+      });
+      return;
     }
 
     setIsSubmittingCancel(true);
     try {
-        const response = await fetch('/api/orders', {
-            method: 'PUT',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ 
-                id: cancelOrderId, 
-                status: 'cancelled', 
-                cancellationReason: cancelReason 
-            })
+      const response = await fetch('/api/orders', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          id: cancelOrderId,
+          status: 'cancelled',
+          cancellationReason: cancelReason
+        })
+      });
+
+      if (response.ok) {
+        setOrders(prevOrders => {
+          if (activeTab !== 'all' && activeTab !== 'cancelled') {
+            return prevOrders.filter(o => o._id !== cancelOrderId);
+          }
+          return prevOrders.map(o =>
+            o._id === cancelOrderId ? { ...o, status: 'cancelled', cancellation_reason: cancelReason } : o
+          );
         });
 
-        if (response.ok) {
-            setOrders(prevOrders => {
-                if (activeTab !== 'all' && activeTab !== 'cancelled') {
-                    return prevOrders.filter(o => o._id !== cancelOrderId);
-                }
-                return prevOrders.map(o => 
-                    o._id === cancelOrderId ? { ...o, status: 'cancelled', cancellation_reason: cancelReason } : o
-                );
-            });
-
-            toast({
-                title: "Order Cancelled",
-                description: "Order has been cancelled with reason",
-            });
-            setIsCancelDialogOpen(false);
-            setCancelOrderId(null);
-            setCancelReason("");
-        } else {
-            throw new Error("Failed to cancel");
-        }
-    } catch (error) {
         toast({
-            title: "Error",
-            description: "Could not cancel the order",
-            variant: "destructive"
+          title: "Order Cancelled",
+          description: "Order has been cancelled with reason",
         });
+        setIsCancelDialogOpen(false);
+        setCancelOrderId(null);
+        setCancelReason("");
+      } else {
+        throw new Error("Failed to cancel");
+      }
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "Could not cancel the order",
+        variant: "destructive"
+      });
     } finally {
-        setIsSubmittingCancel(false);
+      setIsSubmittingCancel(false);
     }
   };
 
@@ -438,7 +524,7 @@ export default function AdminOrdersPage() {
         // Optimistic update
         setOrders(prevOrders => {
           const newStatus = trackingId ? 'in_transit' : 'confirmed';
-          
+
           // If we are in 'Confirmed' tab and moving to 'In Transit', remove it
           if (activeTab === 'confirmed' && newStatus === 'in_transit') {
             return prevOrders.filter(o => o._id !== orderId);
@@ -448,11 +534,11 @@ export default function AdminOrdersPage() {
           if (activeTab === 'pending' && newStatus === 'confirmed') {
             return prevOrders.filter(o => o._id !== orderId);
           }
-          
+
           // Otherwise update locally
-          return prevOrders.map(o => 
-            o._id === orderId 
-              ? { ...o, status: newStatus, trackingId: trackingId || o.trackingId } 
+          return prevOrders.map(o =>
+            o._id === orderId
+              ? { ...o, status: newStatus, trackingId: trackingId || o.trackingId }
               : o
           );
         });
@@ -555,13 +641,13 @@ export default function AdminOrdersPage() {
       start.setHours(12, 0, 0, 0);
       const end = new Date(start);
       end.setDate(end.getDate() + 1);
-      
+
       const created = new Date(order.createdAt);
       matchesDate = created >= start && created < end;
     } else if (dateFilter) {
       matchesDate = new Date(order.createdAt).toLocaleDateString() === new Date(dateFilter).toLocaleDateString();
     }
-    
+
     // Safety check for status if activeTab isn't 'all'
     const matchesStatus = activeTab === 'all' || order.status === activeTab;
 
@@ -572,7 +658,12 @@ export default function AdminOrdersPage() {
     window.open('https://www.shipbhai.com/', '_blank');
   };
 
+  // Calculate revenues
   const totalRevenue = orders
+    .filter(order => !['cancelled', 'rto', 'returned'].includes(order.status))
+    .reduce((sum, order) => sum + (order.totalAmount || 0), 0);
+
+  const deliveredRevenue = orders
     .filter(order => order.status === 'delivered')
     .reduce((sum, order) => sum + (order.totalAmount || 0), 0);
 
@@ -596,7 +687,10 @@ export default function AdminOrdersPage() {
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold text-green-600">₹{totalRevenue.toFixed(2)}</div>
-            <p className="text-xs text-muted-foreground">Delivered orders</p>
+            <p className="text-xs text-muted-foreground">All active orders</p>
+            {deliveredRevenue > 0 && (
+              <p className="text-xs text-green-500 mt-1">Delivered: ₹{deliveredRevenue.toFixed(2)}</p>
+            )}
           </CardContent>
         </Card>
         <Card>
@@ -648,10 +742,10 @@ export default function AdminOrdersPage() {
           <div className="flex items-center space-x-2 bg-blue-50 px-3 py-1.5 rounded-md border border-blue-100">
             <Clock className="h-4 w-4 text-blue-600" />
             <Label htmlFor="batch-mode" className="text-sm font-medium text-blue-800">12PM Batch</Label>
-            <Switch 
-              id="batch-mode" 
-              checked={isBatchMode} 
-              onCheckedChange={setIsBatchMode} 
+            <Switch
+              id="batch-mode"
+              checked={isBatchMode}
+              onCheckedChange={setIsBatchMode}
             />
           </div>
 
@@ -688,8 +782,9 @@ export default function AdminOrdersPage() {
         setActiveTab(value);
         loadOrders(value); // Pass the new value directly to avoid race condition
       }} className="w-full">
-        <TabsList className="grid grid-cols-5 sm:grid-cols-9 w-full h-auto p-1">
+        <TabsList className="grid grid-cols-5 sm:grid-cols-10 w-full h-auto p-1">
           <TabsTrigger value="all" className="text-xs py-2 px-2 sm:px-3">All</TabsTrigger>
+          <TabsTrigger value="pending" className="text-xs py-2 px-2 sm:px-3 bg-amber-100 data-[state=active]:bg-amber-500 data-[state=active]:text-white">Pending</TabsTrigger>
           <TabsTrigger value="confirmed" className="text-xs py-2 px-2 sm:px-3">Confirmed</TabsTrigger>
           <TabsTrigger value="in_transit" className="text-xs py-2 px-2 sm:px-3">In Transit</TabsTrigger>
           <TabsTrigger value="out_for_delivery" className="text-xs py-2 px-2 sm:px-3">OFD</TabsTrigger>
@@ -709,10 +804,10 @@ export default function AdminOrdersPage() {
               </div>
               {/* Export Section - Responsive */}
               <div className="flex flex-col sm:flex-row gap-2 items-start sm:items-center w-full sm:w-auto">
-                <Button 
-                  onClick={handleTrackOrder} 
-                  variant="outline" 
-                  size="sm" 
+                <Button
+                  onClick={handleTrackOrder}
+                  variant="outline"
+                  size="sm"
                   className="w-full sm:w-auto h-9"
                 >
                   <ExternalLink className="h-3 w-3 mr-1" />
@@ -812,10 +907,10 @@ export default function AdminOrdersPage() {
                           </TableCell>
                           <TableCell className="font-medium">
                             <div className="flex items-center gap-1">
-                                <div className="font-bold text-[10px]">{order.orderNumber || order.orderId}</div>
-                                {order.orderId?.startsWith('SHP-') && (
-                                    <Badge variant="outline" className="text-[8px] h-4 px-1 bg-green-50 text-green-700 border-green-200">Shopify</Badge>
-                                )}
+                              <div className="font-bold text-[10px]">{order.orderNumber || order.orderId}</div>
+                              {order.orderId?.startsWith('SHP-') && (
+                                <Badge variant="outline" className="text-[8px] h-4 px-1 bg-green-50 text-green-700 border-green-200">Shopify</Badge>
+                              )}
                             </div>
                             <div className="text-xs text-blue-600">{order.customerPhone}</div>
                             <div className="text-[10px] text-muted-foreground">{new Date(order.createdAt).toLocaleDateString()}</div>
@@ -1063,10 +1158,10 @@ export default function AdminOrdersPage() {
                 </SelectContent>
               </Select>
             </div>
-            
+
             <div className="space-y-2">
               <Label>Additional Notes</Label>
-              <Textarea 
+              <Textarea
                 placeholder="Type reason detail here..."
                 value={cancelReason === 'Other (Specify below)' ? '' : cancelReason}
                 onChange={(e) => setCancelReason(e.target.value)}
@@ -1075,14 +1170,14 @@ export default function AdminOrdersPage() {
             </div>
           </div>
           <DialogFooter className="gap-2">
-             <Button variant="outline" onClick={() => setIsCancelDialogOpen(false)}>Close</Button>
-             <Button 
-               variant="destructive" 
-               onClick={submitCancellation}
-               disabled={isSubmittingCancel || !cancelReason}
-             >
-               {isSubmittingCancel ? "Cancelling..." : "Confirm Cancellation"}
-             </Button>
+            <Button variant="outline" onClick={() => setIsCancelDialogOpen(false)}>Close</Button>
+            <Button
+              variant="destructive"
+              onClick={submitCancellation}
+              disabled={isSubmittingCancel || !cancelReason}
+            >
+              {isSubmittingCancel ? "Cancelling..." : "Confirm Cancellation"}
+            </Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>

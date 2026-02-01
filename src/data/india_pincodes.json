@@ -1,0 +1,1742 @@
+{
+    "110001": {
+        "state": "Delhi",
+        "city": "Connaught Place",
+        "zone": "North",
+        "serviceable": true
+    },
+    "110002": {
+        "state": "Delhi",
+        "city": "Darya Ganj",
+        "zone": "North",
+        "serviceable": true
+    },
+    "110003": {
+        "state": "Delhi",
+        "city": "Civil Lines",
+        "zone": "North",
+        "serviceable": true
+    },
+    "110005": {
+        "state": "Delhi",
+        "city": "Karol Bagh",
+        "zone": "North",
+        "serviceable": true
+    },
+    "110006": {
+        "state": "Delhi",
+        "city": "Sadar Bazaar",
+        "zone": "North",
+        "serviceable": true
+    },
+    "110007": {
+        "state": "Delhi",
+        "city": "Kamla Nagar",
+        "zone": "North",
+        "serviceable": true
+    },
+    "110008": {
+        "state": "Delhi",
+        "city": "Patel Nagar",
+        "zone": "North",
+        "serviceable": true
+    },
+    "110009": {
+        "state": "Delhi",
+        "city": "Model Town",
+        "zone": "North",
+        "serviceable": true
+    },
+    "110010": {
+        "state": "Delhi",
+        "city": "Gandhi Nagar",
+        "zone": "North",
+        "serviceable": true
+    },
+    "110015": {
+        "state": "Delhi",
+        "city": "Rajouri Garden",
+        "zone": "North",
+        "serviceable": true
+    },
+    "110016": {
+        "state": "Delhi",
+        "city": "Hauz Khas",
+        "zone": "North",
+        "serviceable": true
+    },
+    "110017": {
+        "state": "Delhi",
+        "city": "Malviya Nagar",
+        "zone": "North",
+        "serviceable": true
+    },
+    "110019": {
+        "state": "Delhi",
+        "city": "Kalkaji",
+        "zone": "North",
+        "serviceable": true
+    },
+    "110020": {
+        "state": "Delhi",
+        "city": "Okhla",
+        "zone": "North",
+        "serviceable": true
+    },
+    "110025": {
+        "state": "Delhi",
+        "city": "Nizamuddin",
+        "zone": "North",
+        "serviceable": true
+    },
+    "110030": {
+        "state": "Delhi",
+        "city": "Mehrauli",
+        "zone": "North",
+        "serviceable": true
+    },
+    "110044": {
+        "state": "Delhi",
+        "city": "Shahdara",
+        "zone": "North",
+        "serviceable": true
+    },
+    "110051": {
+        "state": "Delhi",
+        "city": "Krishna Nagar",
+        "zone": "North",
+        "serviceable": true
+    },
+    "110065": {
+        "state": "Delhi",
+        "city": "Saket",
+        "zone": "North",
+        "serviceable": true
+    },
+    "110085": {
+        "state": "Delhi",
+        "city": "Dilshad Garden",
+        "zone": "North",
+        "serviceable": true
+    },
+    "110091": {
+        "state": "Delhi",
+        "city": "Patparganj",
+        "zone": "North",
+        "serviceable": true
+    },
+    "110092": {
+        "state": "Delhi",
+        "city": "Anand Vihar",
+        "zone": "North",
+        "serviceable": true
+    },
+    "122001": {
+        "state": "Haryana",
+        "city": "Gurugram",
+        "zone": "North",
+        "serviceable": true
+    },
+    "122002": {
+        "state": "Haryana",
+        "city": "Sector 14 Gurugram",
+        "zone": "North",
+        "serviceable": true
+    },
+    "122003": {
+        "state": "Haryana",
+        "city": "DLF Phase 1",
+        "zone": "North",
+        "serviceable": true
+    },
+    "122018": {
+        "state": "Haryana",
+        "city": "Sector 44 Gurugram",
+        "zone": "North",
+        "serviceable": true
+    },
+    "121001": {
+        "state": "Haryana",
+        "city": "Faridabad",
+        "zone": "North",
+        "serviceable": true
+    },
+    "121002": {
+        "state": "Haryana",
+        "city": "NIT Faridabad",
+        "zone": "North",
+        "serviceable": true
+    },
+    "125001": {
+        "state": "Haryana",
+        "city": "Hisar",
+        "zone": "North",
+        "serviceable": true
+    },
+    "132001": {
+        "state": "Haryana",
+        "city": "Panipat",
+        "zone": "North",
+        "serviceable": true
+    },
+    "134109": {
+        "state": "Haryana",
+        "city": "Panchkula",
+        "zone": "North",
+        "serviceable": true
+    },
+    "201301": {
+        "state": "Uttar Pradesh",
+        "city": "Noida Sector 1",
+        "zone": "North",
+        "serviceable": true
+    },
+    "201302": {
+        "state": "Uttar Pradesh",
+        "city": "Noida Sector 15",
+        "zone": "North",
+        "serviceable": true
+    },
+    "201303": {
+        "state": "Uttar Pradesh",
+        "city": "Noida Sector 62",
+        "zone": "North",
+        "serviceable": true
+    },
+    "201304": {
+        "state": "Uttar Pradesh",
+        "city": "Greater Noida",
+        "zone": "North",
+        "serviceable": true
+    },
+    "201305": {
+        "state": "Uttar Pradesh",
+        "city": "Greater Noida West",
+        "zone": "North",
+        "serviceable": true
+    },
+    "201310": {
+        "state": "Uttar Pradesh",
+        "city": "Noida Sector 18",
+        "zone": "North",
+        "serviceable": true
+    },
+    "208001": {
+        "state": "Uttar Pradesh",
+        "city": "Kanpur GPO",
+        "zone": "North",
+        "serviceable": true
+    },
+    "211001": {
+        "state": "Uttar Pradesh",
+        "city": "Allahabad GPO",
+        "zone": "North",
+        "serviceable": true
+    },
+    "221001": {
+        "state": "Uttar Pradesh",
+        "city": "Varanasi GPO",
+        "zone": "North",
+        "serviceable": true
+    },
+    "226001": {
+        "state": "Uttar Pradesh",
+        "city": "Lucknow GPO",
+        "zone": "North",
+        "serviceable": true
+    },
+    "226010": {
+        "state": "Uttar Pradesh",
+        "city": "Gomti Nagar",
+        "zone": "North",
+        "serviceable": true
+    },
+    "226016": {
+        "state": "Uttar Pradesh",
+        "city": "Hazratganj",
+        "zone": "North",
+        "serviceable": true
+    },
+    "226022": {
+        "state": "Uttar Pradesh",
+        "city": "Aliganj",
+        "zone": "North",
+        "serviceable": true
+    },
+    "250001": {
+        "state": "Uttar Pradesh",
+        "city": "Meerut",
+        "zone": "North",
+        "serviceable": true
+    },
+    "282001": {
+        "state": "Uttar Pradesh",
+        "city": "Agra GPO",
+        "zone": "North",
+        "serviceable": true
+    },
+    "245001": {
+        "state": "Uttar Pradesh",
+        "city": "Ghaziabad",
+        "zone": "North",
+        "serviceable": true
+    },
+    "302001": {
+        "state": "Rajasthan",
+        "city": "Jaipur GPO",
+        "zone": "West",
+        "serviceable": true
+    },
+    "302002": {
+        "state": "Rajasthan",
+        "city": "Pink City",
+        "zone": "West",
+        "serviceable": true
+    },
+    "302015": {
+        "state": "Rajasthan",
+        "city": "Vaishali Nagar",
+        "zone": "West",
+        "serviceable": true
+    },
+    "302016": {
+        "state": "Rajasthan",
+        "city": "Vidhyadhar Nagar",
+        "zone": "West",
+        "serviceable": true
+    },
+    "302017": {
+        "state": "Rajasthan",
+        "city": "Malviya Nagar Jaipur",
+        "zone": "West",
+        "serviceable": true
+    },
+    "302020": {
+        "state": "Rajasthan",
+        "city": "Mansarovar",
+        "zone": "West",
+        "serviceable": true
+    },
+    "302021": {
+        "state": "Rajasthan",
+        "city": "Sanganer",
+        "zone": "West",
+        "serviceable": true
+    },
+    "311001": {
+        "state": "Rajasthan",
+        "city": "Bhilwara",
+        "zone": "West",
+        "serviceable": true
+    },
+    "313001": {
+        "state": "Rajasthan",
+        "city": "Udaipur",
+        "zone": "West",
+        "serviceable": true
+    },
+    "324001": {
+        "state": "Rajasthan",
+        "city": "Kota",
+        "zone": "West",
+        "serviceable": true
+    },
+    "342001": {
+        "state": "Rajasthan",
+        "city": "Jodhpur",
+        "zone": "West",
+        "serviceable": true
+    },
+    "305001": {
+        "state": "Rajasthan",
+        "city": "Ajmer",
+        "zone": "West",
+        "serviceable": true
+    },
+    "380001": {
+        "state": "Gujarat",
+        "city": "Ahmedabad GPO",
+        "zone": "West",
+        "serviceable": true
+    },
+    "380004": {
+        "state": "Gujarat",
+        "city": "Maninagar",
+        "zone": "West",
+        "serviceable": true
+    },
+    "380006": {
+        "state": "Gujarat",
+        "city": "Navrangpura",
+        "zone": "West",
+        "serviceable": true
+    },
+    "380007": {
+        "state": "Gujarat",
+        "city": "Ellisbridge",
+        "zone": "West",
+        "serviceable": true
+    },
+    "380009": {
+        "state": "Gujarat",
+        "city": "Vastrapur",
+        "zone": "West",
+        "serviceable": true
+    },
+    "380015": {
+        "state": "Gujarat",
+        "city": "Satellite",
+        "zone": "West",
+        "serviceable": true
+    },
+    "380051": {
+        "state": "Gujarat",
+        "city": "Chandkheda",
+        "zone": "West",
+        "serviceable": true
+    },
+    "380054": {
+        "state": "Gujarat",
+        "city": "SG Highway",
+        "zone": "West",
+        "serviceable": true
+    },
+    "380058": {
+        "state": "Gujarat",
+        "city": "Bopal",
+        "zone": "West",
+        "serviceable": true
+    },
+    "382010": {
+        "state": "Gujarat",
+        "city": "Gandhinagar",
+        "zone": "West",
+        "serviceable": true
+    },
+    "390001": {
+        "state": "Gujarat",
+        "city": "Vadodara GPO",
+        "zone": "West",
+        "serviceable": true
+    },
+    "395001": {
+        "state": "Gujarat",
+        "city": "Surat GPO",
+        "zone": "West",
+        "serviceable": true
+    },
+    "395003": {
+        "state": "Gujarat",
+        "city": "Athwa",
+        "zone": "West",
+        "serviceable": true
+    },
+    "395006": {
+        "state": "Gujarat",
+        "city": "Adajan",
+        "zone": "West",
+        "serviceable": true
+    },
+    "360001": {
+        "state": "Gujarat",
+        "city": "Rajkot",
+        "zone": "West",
+        "serviceable": true
+    },
+    "400001": {
+        "state": "Maharashtra",
+        "city": "Mumbai GPO",
+        "zone": "West",
+        "serviceable": true
+    },
+    "400002": {
+        "state": "Maharashtra",
+        "city": "Kalbadevi",
+        "zone": "West",
+        "serviceable": true
+    },
+    "400003": {
+        "state": "Maharashtra",
+        "city": "Masjid Bunder",
+        "zone": "West",
+        "serviceable": true
+    },
+    "400004": {
+        "state": "Maharashtra",
+        "city": "Girgaon",
+        "zone": "West",
+        "serviceable": true
+    },
+    "400005": {
+        "state": "Maharashtra",
+        "city": "Colaba",
+        "zone": "West",
+        "serviceable": true
+    },
+    "400007": {
+        "state": "Maharashtra",
+        "city": "Grant Road",
+        "zone": "West",
+        "serviceable": true
+    },
+    "400008": {
+        "state": "Maharashtra",
+        "city": "Mumbai Central",
+        "zone": "West",
+        "serviceable": true
+    },
+    "400011": {
+        "state": "Maharashtra",
+        "city": "Mahalaxmi",
+        "zone": "West",
+        "serviceable": true
+    },
+    "400012": {
+        "state": "Maharashtra",
+        "city": "Parel",
+        "zone": "West",
+        "serviceable": true
+    },
+    "400014": {
+        "state": "Maharashtra",
+        "city": "Dadar West",
+        "zone": "West",
+        "serviceable": true
+    },
+    "400016": {
+        "state": "Maharashtra",
+        "city": "Mahim",
+        "zone": "West",
+        "serviceable": true
+    },
+    "400017": {
+        "state": "Maharashtra",
+        "city": "Dharavi",
+        "zone": "West",
+        "serviceable": true
+    },
+    "400018": {
+        "state": "Maharashtra",
+        "city": "Worli",
+        "zone": "West",
+        "serviceable": true
+    },
+    "400020": {
+        "state": "Maharashtra",
+        "city": "Churchgate",
+        "zone": "West",
+        "serviceable": true
+    },
+    "400021": {
+        "state": "Maharashtra",
+        "city": "Nariman Point",
+        "zone": "West",
+        "serviceable": true
+    },
+    "400025": {
+        "state": "Maharashtra",
+        "city": "Prabhadevi",
+        "zone": "West",
+        "serviceable": true
+    },
+    "400028": {
+        "state": "Maharashtra",
+        "city": "Dadar East",
+        "zone": "West",
+        "serviceable": true
+    },
+    "400049": {
+        "state": "Maharashtra",
+        "city": "Bandra West",
+        "zone": "West",
+        "serviceable": true
+    },
+    "400050": {
+        "state": "Maharashtra",
+        "city": "Bandra East",
+        "zone": "West",
+        "serviceable": true
+    },
+    "400051": {
+        "state": "Maharashtra",
+        "city": "Khar",
+        "zone": "West",
+        "serviceable": true
+    },
+    "400052": {
+        "state": "Maharashtra",
+        "city": "Santacruz East",
+        "zone": "West",
+        "serviceable": true
+    },
+    "400053": {
+        "state": "Maharashtra",
+        "city": "Santacruz West",
+        "zone": "West",
+        "serviceable": true
+    },
+    "400054": {
+        "state": "Maharashtra",
+        "city": "Vile Parle East",
+        "zone": "West",
+        "serviceable": true
+    },
+    "400055": {
+        "state": "Maharashtra",
+        "city": "Santacruz Airport",
+        "zone": "West",
+        "serviceable": true
+    },
+    "400057": {
+        "state": "Maharashtra",
+        "city": "Vile Parle West",
+        "zone": "West",
+        "serviceable": true
+    },
+    "400058": {
+        "state": "Maharashtra",
+        "city": "Andheri West",
+        "zone": "West",
+        "serviceable": true
+    },
+    "400059": {
+        "state": "Maharashtra",
+        "city": "Andheri East",
+        "zone": "West",
+        "serviceable": true
+    },
+    "400060": {
+        "state": "Maharashtra",
+        "city": "Jogeshwari East",
+        "zone": "West",
+        "serviceable": true
+    },
+    "400061": {
+        "state": "Maharashtra",
+        "city": "Goregaon West",
+        "zone": "West",
+        "serviceable": true
+    },
+    "400063": {
+        "state": "Maharashtra",
+        "city": "Goregaon East",
+        "zone": "West",
+        "serviceable": true
+    },
+    "400064": {
+        "state": "Maharashtra",
+        "city": "Malad West",
+        "zone": "West",
+        "serviceable": true
+    },
+    "400065": {
+        "state": "Maharashtra",
+        "city": "Malad East",
+        "zone": "West",
+        "serviceable": true
+    },
+    "400066": {
+        "state": "Maharashtra",
+        "city": "Borivali West",
+        "zone": "West",
+        "serviceable": true
+    },
+    "400068": {
+        "state": "Maharashtra",
+        "city": "Kandivali West",
+        "zone": "West",
+        "serviceable": true
+    },
+    "400069": {
+        "state": "Maharashtra",
+        "city": "Andheri MIDC",
+        "zone": "West",
+        "serviceable": true
+    },
+    "400072": {
+        "state": "Maharashtra",
+        "city": "Kurla West",
+        "zone": "West",
+        "serviceable": true
+    },
+    "400076": {
+        "state": "Maharashtra",
+        "city": "Powai",
+        "zone": "West",
+        "serviceable": true
+    },
+    "400078": {
+        "state": "Maharashtra",
+        "city": "Bhandup",
+        "zone": "West",
+        "serviceable": true
+    },
+    "400086": {
+        "state": "Maharashtra",
+        "city": "Ghatkopar East",
+        "zone": "West",
+        "serviceable": true
+    },
+    "400089": {
+        "state": "Maharashtra",
+        "city": "Mulund East",
+        "zone": "West",
+        "serviceable": true
+    },
+    "400093": {
+        "state": "Maharashtra",
+        "city": "Vikhroli East",
+        "zone": "West",
+        "serviceable": true
+    },
+    "400097": {
+        "state": "Maharashtra",
+        "city": "Malad MIDC",
+        "zone": "West",
+        "serviceable": true
+    },
+    "400101": {
+        "state": "Maharashtra",
+        "city": "Kandivali East",
+        "zone": "West",
+        "serviceable": true
+    },
+    "400104": {
+        "state": "Maharashtra",
+        "city": "Borivali East",
+        "zone": "West",
+        "serviceable": true
+    },
+    "411001": {
+        "state": "Maharashtra",
+        "city": "Pune GPO",
+        "zone": "West",
+        "serviceable": true
+    },
+    "411004": {
+        "state": "Maharashtra",
+        "city": "Camp Pune",
+        "zone": "West",
+        "serviceable": true
+    },
+    "411006": {
+        "state": "Maharashtra",
+        "city": "Deccan Gymkhana",
+        "zone": "West",
+        "serviceable": true
+    },
+    "411014": {
+        "state": "Maharashtra",
+        "city": "Hadapsar",
+        "zone": "West",
+        "serviceable": true
+    },
+    "411020": {
+        "state": "Maharashtra",
+        "city": "JM Road",
+        "zone": "West",
+        "serviceable": true
+    },
+    "411021": {
+        "state": "Maharashtra",
+        "city": "Senapati Bapat Road",
+        "zone": "West",
+        "serviceable": true
+    },
+    "411027": {
+        "state": "Maharashtra",
+        "city": "Pashan",
+        "zone": "West",
+        "serviceable": true
+    },
+    "411028": {
+        "state": "Maharashtra",
+        "city": "Kothrud",
+        "zone": "West",
+        "serviceable": true
+    },
+    "411030": {
+        "state": "Maharashtra",
+        "city": "Erandwane",
+        "zone": "West",
+        "serviceable": true
+    },
+    "411033": {
+        "state": "Maharashtra",
+        "city": "Wakad",
+        "zone": "West",
+        "serviceable": true
+    },
+    "411038": {
+        "state": "Maharashtra",
+        "city": "Baner",
+        "zone": "West",
+        "serviceable": true
+    },
+    "411041": {
+        "state": "Maharashtra",
+        "city": "Pimple Saudagar",
+        "zone": "West",
+        "serviceable": true
+    },
+    "411045": {
+        "state": "Maharashtra",
+        "city": "Hinjewadi",
+        "zone": "West",
+        "serviceable": true
+    },
+    "411048": {
+        "state": "Maharashtra",
+        "city": "Aundh",
+        "zone": "West",
+        "serviceable": true
+    },
+    "411057": {
+        "state": "Maharashtra",
+        "city": "Pimpri",
+        "zone": "West",
+        "serviceable": true
+    },
+    "440001": {
+        "state": "Maharashtra",
+        "city": "Nagpur GPO",
+        "zone": "West",
+        "serviceable": true
+    },
+    "440010": {
+        "state": "Maharashtra",
+        "city": "Dharampeth",
+        "zone": "West",
+        "serviceable": true
+    },
+    "440012": {
+        "state": "Maharashtra",
+        "city": "Sitabuldi",
+        "zone": "West",
+        "serviceable": true
+    },
+    "422001": {
+        "state": "Maharashtra",
+        "city": "Nashik",
+        "zone": "West",
+        "serviceable": true
+    },
+    "416001": {
+        "state": "Maharashtra",
+        "city": "Kolhapur",
+        "zone": "West",
+        "serviceable": true
+    },
+    "431001": {
+        "state": "Maharashtra",
+        "city": "Aurangabad",
+        "zone": "West",
+        "serviceable": true
+    },
+    "400601": {
+        "state": "Maharashtra",
+        "city": "Thane",
+        "zone": "West",
+        "serviceable": true
+    },
+    "400614": {
+        "state": "Maharashtra",
+        "city": "Thane West",
+        "zone": "West",
+        "serviceable": true
+    },
+    "400703": {
+        "state": "Maharashtra",
+        "city": "Navi Mumbai CBD Belapur",
+        "zone": "West",
+        "serviceable": true
+    },
+    "400706": {
+        "state": "Maharashtra",
+        "city": "Vashi",
+        "zone": "West",
+        "serviceable": true
+    },
+    "400708": {
+        "state": "Maharashtra",
+        "city": "Airoli",
+        "zone": "West",
+        "serviceable": true
+    },
+    "452001": {
+        "state": "Madhya Pradesh",
+        "city": "Indore GPO",
+        "zone": "Central",
+        "serviceable": true
+    },
+    "452010": {
+        "state": "Madhya Pradesh",
+        "city": "Vijay Nagar Indore",
+        "zone": "Central",
+        "serviceable": true
+    },
+    "462001": {
+        "state": "Madhya Pradesh",
+        "city": "Bhopal GPO",
+        "zone": "Central",
+        "serviceable": true
+    },
+    "462016": {
+        "state": "Madhya Pradesh",
+        "city": "MP Nagar",
+        "zone": "Central",
+        "serviceable": true
+    },
+    "474001": {
+        "state": "Madhya Pradesh",
+        "city": "Gwalior",
+        "zone": "Central",
+        "serviceable": true
+    },
+    "482001": {
+        "state": "Madhya Pradesh",
+        "city": "Jabalpur",
+        "zone": "Central",
+        "serviceable": true
+    },
+    "500001": {
+        "state": "Telangana",
+        "city": "Hyderabad GPO",
+        "zone": "South",
+        "serviceable": true
+    },
+    "500003": {
+        "state": "Telangana",
+        "city": "Koti",
+        "zone": "South",
+        "serviceable": true
+    },
+    "500004": {
+        "state": "Telangana",
+        "city": "Sultan Bazaar",
+        "zone": "South",
+        "serviceable": true
+    },
+    "500016": {
+        "state": "Telangana",
+        "city": "Ameerpet",
+        "zone": "South",
+        "serviceable": true
+    },
+    "500018": {
+        "state": "Telangana",
+        "city": "Somajiguda",
+        "zone": "South",
+        "serviceable": true
+    },
+    "500020": {
+        "state": "Telangana",
+        "city": "Punjagutta",
+        "zone": "South",
+        "serviceable": true
+    },
+    "500029": {
+        "state": "Telangana",
+        "city": "Jubilee Hills",
+        "zone": "South",
+        "serviceable": true
+    },
+    "500032": {
+        "state": "Telangana",
+        "city": "Banjara Hills",
+        "zone": "South",
+        "serviceable": true
+    },
+    "500033": {
+        "state": "Telangana",
+        "city": "Madhapur",
+        "zone": "South",
+        "serviceable": true
+    },
+    "500034": {
+        "state": "Telangana",
+        "city": "HITEC City",
+        "zone": "South",
+        "serviceable": true
+    },
+    "500072": {
+        "state": "Telangana",
+        "city": "Kukatpally",
+        "zone": "South",
+        "serviceable": true
+    },
+    "500081": {
+        "state": "Telangana",
+        "city": "Gachibowli",
+        "zone": "South",
+        "serviceable": true
+    },
+    "500084": {
+        "state": "Telangana",
+        "city": "Kondapur",
+        "zone": "South",
+        "serviceable": true
+    },
+    "500090": {
+        "state": "Telangana",
+        "city": "Manikonda",
+        "zone": "South",
+        "serviceable": true
+    },
+    "560001": {
+        "state": "Karnataka",
+        "city": "Bangalore GPO",
+        "zone": "South",
+        "serviceable": true
+    },
+    "560002": {
+        "state": "Karnataka",
+        "city": "Ulsoor",
+        "zone": "South",
+        "serviceable": true
+    },
+    "560003": {
+        "state": "Karnataka",
+        "city": "Richmond Town",
+        "zone": "South",
+        "serviceable": true
+    },
+    "560004": {
+        "state": "Karnataka",
+        "city": "Basavanagudi",
+        "zone": "South",
+        "serviceable": true
+    },
+    "560008": {
+        "state": "Karnataka",
+        "city": "Shivajinagar",
+        "zone": "South",
+        "serviceable": true
+    },
+    "560010": {
+        "state": "Karnataka",
+        "city": "Frazer Town",
+        "zone": "South",
+        "serviceable": true
+    },
+    "560011": {
+        "state": "Karnataka",
+        "city": "Malleswaram",
+        "zone": "South",
+        "serviceable": true
+    },
+    "560017": {
+        "state": "Karnataka",
+        "city": "Sadashivanagar",
+        "zone": "South",
+        "serviceable": true
+    },
+    "560022": {
+        "state": "Karnataka",
+        "city": "Rajajinagar",
+        "zone": "South",
+        "serviceable": true
+    },
+    "560025": {
+        "state": "Karnataka",
+        "city": "Jayanagar",
+        "zone": "South",
+        "serviceable": true
+    },
+    "560034": {
+        "state": "Karnataka",
+        "city": "Koramangala",
+        "zone": "South",
+        "serviceable": true
+    },
+    "560037": {
+        "state": "Karnataka",
+        "city": "BTM Layout",
+        "zone": "South",
+        "serviceable": true
+    },
+    "560038": {
+        "state": "Karnataka",
+        "city": "Indiranagar",
+        "zone": "South",
+        "serviceable": true
+    },
+    "560047": {
+        "state": "Karnataka",
+        "city": "Marathahalli",
+        "zone": "South",
+        "serviceable": true
+    },
+    "560066": {
+        "state": "Karnataka",
+        "city": "Whitefield",
+        "zone": "South",
+        "serviceable": true
+    },
+    "560068": {
+        "state": "Karnataka",
+        "city": "Bellandur",
+        "zone": "South",
+        "serviceable": true
+    },
+    "560076": {
+        "state": "Karnataka",
+        "city": "HSR Layout",
+        "zone": "South",
+        "serviceable": true
+    },
+    "560078": {
+        "state": "Karnataka",
+        "city": "Electronic City",
+        "zone": "South",
+        "serviceable": true
+    },
+    "560085": {
+        "state": "Karnataka",
+        "city": "HAL Airport",
+        "zone": "South",
+        "serviceable": true
+    },
+    "560095": {
+        "state": "Karnataka",
+        "city": "Hebbal",
+        "zone": "South",
+        "serviceable": true
+    },
+    "560097": {
+        "state": "Karnataka",
+        "city": "Yelahanka",
+        "zone": "South",
+        "serviceable": true
+    },
+    "560100": {
+        "state": "Karnataka",
+        "city": "Sarjapur",
+        "zone": "South",
+        "serviceable": true
+    },
+    "570001": {
+        "state": "Karnataka",
+        "city": "Mysore GPO",
+        "zone": "South",
+        "serviceable": true
+    },
+    "575001": {
+        "state": "Karnataka",
+        "city": "Mangalore GPO",
+        "zone": "South",
+        "serviceable": true
+    },
+    "600001": {
+        "state": "Tamil Nadu",
+        "city": "Chennai GPO",
+        "zone": "South",
+        "serviceable": true
+    },
+    "600002": {
+        "state": "Tamil Nadu",
+        "city": "Parrys",
+        "zone": "South",
+        "serviceable": true
+    },
+    "600003": {
+        "state": "Tamil Nadu",
+        "city": "Park Town",
+        "zone": "South",
+        "serviceable": true
+    },
+    "600004": {
+        "state": "Tamil Nadu",
+        "city": "George Town",
+        "zone": "South",
+        "serviceable": true
+    },
+    "600006": {
+        "state": "Tamil Nadu",
+        "city": "Triplicane",
+        "zone": "South",
+        "serviceable": true
+    },
+    "600008": {
+        "state": "Tamil Nadu",
+        "city": "Egmore",
+        "zone": "South",
+        "serviceable": true
+    },
+    "600010": {
+        "state": "Tamil Nadu",
+        "city": "Chetpet",
+        "zone": "South",
+        "serviceable": true
+    },
+    "600014": {
+        "state": "Tamil Nadu",
+        "city": "Nungambakkam",
+        "zone": "South",
+        "serviceable": true
+    },
+    "600017": {
+        "state": "Tamil Nadu",
+        "city": "T Nagar",
+        "zone": "South",
+        "serviceable": true
+    },
+    "600018": {
+        "state": "Tamil Nadu",
+        "city": "Mylapore",
+        "zone": "South",
+        "serviceable": true
+    },
+    "600020": {
+        "state": "Tamil Nadu",
+        "city": "Besant Nagar",
+        "zone": "South",
+        "serviceable": true
+    },
+    "600024": {
+        "state": "Tamil Nadu",
+        "city": "Vadapalani",
+        "zone": "South",
+        "serviceable": true
+    },
+    "600026": {
+        "state": "Tamil Nadu",
+        "city": "Anna Nagar",
+        "zone": "South",
+        "serviceable": true
+    },
+    "600028": {
+        "state": "Tamil Nadu",
+        "city": "Alwarpet",
+        "zone": "South",
+        "serviceable": true
+    },
+    "600034": {
+        "state": "Tamil Nadu",
+        "city": "Kilpauk",
+        "zone": "South",
+        "serviceable": true
+    },
+    "600040": {
+        "state": "Tamil Nadu",
+        "city": "Ashok Nagar",
+        "zone": "South",
+        "serviceable": true
+    },
+    "600042": {
+        "state": "Tamil Nadu",
+        "city": "Velachery",
+        "zone": "South",
+        "serviceable": true
+    },
+    "600080": {
+        "state": "Tamil Nadu",
+        "city": "Tambaram",
+        "zone": "South",
+        "serviceable": true
+    },
+    "600096": {
+        "state": "Tamil Nadu",
+        "city": "Sholinganallur",
+        "zone": "South",
+        "serviceable": true
+    },
+    "600097": {
+        "state": "Tamil Nadu",
+        "city": "OMR",
+        "zone": "South",
+        "serviceable": true
+    },
+    "600100": {
+        "state": "Tamil Nadu",
+        "city": "Kelambakkam",
+        "zone": "South",
+        "serviceable": true
+    },
+    "603103": {
+        "state": "Tamil Nadu",
+        "city": "ECR",
+        "zone": "South",
+        "serviceable": true
+    },
+    "625001": {
+        "state": "Tamil Nadu",
+        "city": "Madurai GPO",
+        "zone": "South",
+        "serviceable": true
+    },
+    "641001": {
+        "state": "Tamil Nadu",
+        "city": "Coimbatore GPO",
+        "zone": "South",
+        "serviceable": true
+    },
+    "636001": {
+        "state": "Tamil Nadu",
+        "city": "Salem GPO",
+        "zone": "South",
+        "serviceable": true
+    },
+    "620001": {
+        "state": "Tamil Nadu",
+        "city": "Trichy GPO",
+        "zone": "South",
+        "serviceable": true
+    },
+    "670001": {
+        "state": "Kerala",
+        "city": "Kannur GPO",
+        "zone": "South",
+        "serviceable": true
+    },
+    "673001": {
+        "state": "Kerala",
+        "city": "Kozhikode GPO",
+        "zone": "South",
+        "serviceable": true
+    },
+    "680001": {
+        "state": "Kerala",
+        "city": "Thrissur GPO",
+        "zone": "South",
+        "serviceable": true
+    },
+    "682001": {
+        "state": "Kerala",
+        "city": "Kochi GPO",
+        "zone": "South",
+        "serviceable": true
+    },
+    "682016": {
+        "state": "Kerala",
+        "city": "Edappally",
+        "zone": "South",
+        "serviceable": true
+    },
+    "682020": {
+        "state": "Kerala",
+        "city": "Kakkanad",
+        "zone": "South",
+        "serviceable": true
+    },
+    "682024": {
+        "state": "Kerala",
+        "city": "MG Road Kochi",
+        "zone": "South",
+        "serviceable": true
+    },
+    "682030": {
+        "state": "Kerala",
+        "city": "Tripunithura",
+        "zone": "South",
+        "serviceable": true
+    },
+    "695001": {
+        "state": "Kerala",
+        "city": "Trivandrum GPO",
+        "zone": "South",
+        "serviceable": true
+    },
+    "695014": {
+        "state": "Kerala",
+        "city": "Technopark",
+        "zone": "South",
+        "serviceable": true
+    },
+    "700001": {
+        "state": "West Bengal",
+        "city": "Kolkata GPO",
+        "zone": "East",
+        "serviceable": true
+    },
+    "700007": {
+        "state": "West Bengal",
+        "city": "Bowbazar",
+        "zone": "East",
+        "serviceable": true
+    },
+    "700012": {
+        "state": "West Bengal",
+        "city": "Ballygunge",
+        "zone": "East",
+        "serviceable": true
+    },
+    "700016": {
+        "state": "West Bengal",
+        "city": "Alipore",
+        "zone": "East",
+        "serviceable": true
+    },
+    "700017": {
+        "state": "West Bengal",
+        "city": "Park Street",
+        "zone": "East",
+        "serviceable": true
+    },
+    "700019": {
+        "state": "West Bengal",
+        "city": "Bhowanipore",
+        "zone": "East",
+        "serviceable": true
+    },
+    "700020": {
+        "state": "West Bengal",
+        "city": "Hazra",
+        "zone": "East",
+        "serviceable": true
+    },
+    "700026": {
+        "state": "West Bengal",
+        "city": "Lake Town",
+        "zone": "East",
+        "serviceable": true
+    },
+    "700027": {
+        "state": "West Bengal",
+        "city": "Dumdum",
+        "zone": "East",
+        "serviceable": true
+    },
+    "700029": {
+        "state": "West Bengal",
+        "city": "Gariahat",
+        "zone": "East",
+        "serviceable": true
+    },
+    "700032": {
+        "state": "West Bengal",
+        "city": "Jadavpur",
+        "zone": "East",
+        "serviceable": true
+    },
+    "700040": {
+        "state": "West Bengal",
+        "city": "Kasba",
+        "zone": "East",
+        "serviceable": true
+    },
+    "700053": {
+        "state": "West Bengal",
+        "city": "Behala",
+        "zone": "East",
+        "serviceable": true
+    },
+    "700064": {
+        "state": "West Bengal",
+        "city": "Newtown",
+        "zone": "East",
+        "serviceable": true
+    },
+    "700091": {
+        "state": "West Bengal",
+        "city": "Salt Lake",
+        "zone": "East",
+        "serviceable": true
+    },
+    "700106": {
+        "state": "West Bengal",
+        "city": "Rajarhat",
+        "zone": "East",
+        "serviceable": true
+    },
+    "700135": {
+        "state": "West Bengal",
+        "city": "Sector V Salt Lake",
+        "zone": "East",
+        "serviceable": true
+    },
+    "800001": {
+        "state": "Bihar",
+        "city": "Patna GPO",
+        "zone": "East",
+        "serviceable": true
+    },
+    "800004": {
+        "state": "Bihar",
+        "city": "Boring Road",
+        "zone": "East",
+        "serviceable": true
+    },
+    "800006": {
+        "state": "Bihar",
+        "city": "Patliputra",
+        "zone": "East",
+        "serviceable": true
+    },
+    "800020": {
+        "state": "Bihar",
+        "city": "Danapur",
+        "zone": "East",
+        "serviceable": true
+    },
+    "842001": {
+        "state": "Bihar",
+        "city": "Muzaffarpur",
+        "zone": "East",
+        "serviceable": true
+    },
+    "751001": {
+        "state": "Odisha",
+        "city": "Bhubaneswar GPO",
+        "zone": "East",
+        "serviceable": true
+    },
+    "751009": {
+        "state": "Odisha",
+        "city": "Saheed Nagar",
+        "zone": "East",
+        "serviceable": true
+    },
+    "751012": {
+        "state": "Odisha",
+        "city": "Patia",
+        "zone": "East",
+        "serviceable": true
+    },
+    "753001": {
+        "state": "Odisha",
+        "city": "Cuttack GPO",
+        "zone": "East",
+        "serviceable": true
+    },
+    "781001": {
+        "state": "Assam",
+        "city": "Guwahati GPO",
+        "zone": "Northeast",
+        "serviceable": true
+    },
+    "781005": {
+        "state": "Assam",
+        "city": "Ulubari",
+        "zone": "Northeast",
+        "serviceable": true
+    },
+    "781006": {
+        "state": "Assam",
+        "city": "Panbazar",
+        "zone": "Northeast",
+        "serviceable": true
+    },
+    "781021": {
+        "state": "Assam",
+        "city": "Six Mile",
+        "zone": "Northeast",
+        "serviceable": true
+    },
+    "788001": {
+        "state": "Assam",
+        "city": "Silchar GPO",
+        "zone": "Northeast",
+        "serviceable": false
+    },
+    "831001": {
+        "state": "Jharkhand",
+        "city": "Jamshedpur GPO",
+        "zone": "East",
+        "serviceable": true
+    },
+    "834001": {
+        "state": "Jharkhand",
+        "city": "Ranchi GPO",
+        "zone": "East",
+        "serviceable": true
+    },
+    "492001": {
+        "state": "Chhattisgarh",
+        "city": "Raipur GPO",
+        "zone": "Central",
+        "serviceable": true
+    },
+    "490001": {
+        "state": "Chhattisgarh",
+        "city": "Durg GPO",
+        "zone": "Central",
+        "serviceable": true
+    },
+    "403001": {
+        "state": "Goa",
+        "city": "Panaji GPO",
+        "zone": "South",
+        "serviceable": true
+    },
+    "403601": {
+        "state": "Goa",
+        "city": "Margao",
+        "zone": "South",
+        "serviceable": true
+    },
+    "403507": {
+        "state": "Goa",
+        "city": "Mapusa",
+        "zone": "South",
+        "serviceable": true
+    },
+    "520001": {
+        "state": "Andhra Pradesh",
+        "city": "Vijayawada GPO",
+        "zone": "South",
+        "serviceable": true
+    },
+    "530001": {
+        "state": "Andhra Pradesh",
+        "city": "Visakhapatnam GPO",
+        "zone": "South",
+        "serviceable": true
+    },
+    "530003": {
+        "state": "Andhra Pradesh",
+        "city": "Dwaraka Nagar",
+        "zone": "South",
+        "serviceable": true
+    },
+    "515001": {
+        "state": "Andhra Pradesh",
+        "city": "Anantapur GPO",
+        "zone": "South",
+        "serviceable": true
+    },
+    "517001": {
+        "state": "Andhra Pradesh",
+        "city": "Tirupati GPO",
+        "zone": "South",
+        "serviceable": true
+    },
+    "140001": {
+        "state": "Punjab",
+        "city": "Ludhiana GPO",
+        "zone": "North",
+        "serviceable": true
+    },
+    "141001": {
+        "state": "Punjab",
+        "city": "Ludhiana City",
+        "zone": "North",
+        "serviceable": true
+    },
+    "143001": {
+        "state": "Punjab",
+        "city": "Amritsar GPO",
+        "zone": "North",
+        "serviceable": true
+    },
+    "144001": {
+        "state": "Punjab",
+        "city": "Jalandhar GPO",
+        "zone": "North",
+        "serviceable": true
+    },
+    "147001": {
+        "state": "Punjab",
+        "city": "Patiala GPO",
+        "zone": "North",
+        "serviceable": true
+    },
+    "160001": {
+        "state": "Punjab",
+        "city": "Chandigarh GPO",
+        "zone": "North",
+        "serviceable": true
+    },
+    "160017": {
+        "state": "Punjab",
+        "city": "Sector 17 Chandigarh",
+        "zone": "North",
+        "serviceable": true
+    },
+    "160022": {
+        "state": "Punjab",
+        "city": "Sector 22 Chandigarh",
+        "zone": "North",
+        "serviceable": true
+    },
+    "171001": {
+        "state": "Himachal Pradesh",
+        "city": "Shimla GPO",
+        "zone": "North",
+        "serviceable": true
+    },
+    "176001": {
+        "state": "Himachal Pradesh",
+        "city": "Kangra",
+        "zone": "North",
+        "serviceable": false
+    },
+    "175001": {
+        "state": "Himachal Pradesh",
+        "city": "Mandi",
+        "zone": "North",
+        "serviceable": false
+    },
+    "180001": {
+        "state": "Jammu & Kashmir",
+        "city": "Jammu GPO",
+        "zone": "North",
+        "serviceable": true
+    },
+    "190001": {
+        "state": "Jammu & Kashmir",
+        "city": "Srinagar GPO",
+        "zone": "North",
+        "serviceable": false
+    },
+    "248001": {
+        "state": "Uttarakhand",
+        "city": "Dehradun GPO",
+        "zone": "North",
+        "serviceable": true
+    },
+    "249001": {
+        "state": "Uttarakhand",
+        "city": "Haridwar GPO",
+        "zone": "North",
+        "serviceable": true
+    },
+    "263001": {
+        "state": "Uttarakhand",
+        "city": "Nainital GPO",
+        "zone": "North",
+        "serviceable": false
+    },
+    "793001": {
+        "state": "Meghalaya",
+        "city": "Shillong GPO",
+        "zone": "Northeast",
+        "serviceable": false
+    },
+    "795001": {
+        "state": "Manipur",
+        "city": "Imphal GPO",
+        "zone": "Northeast",
+        "serviceable": false
+    },
+    "796001": {
+        "state": "Mizoram",
+        "city": "Aizawl GPO",
+        "zone": "Northeast",
+        "serviceable": false
+    },
+    "797001": {
+        "state": "Nagaland",
+        "city": "Kohima GPO",
+        "zone": "Northeast",
+        "serviceable": false
+    },
+    "791001": {
+        "state": "Arunachal Pradesh",
+        "city": "Itanagar GPO",
+        "zone": "Northeast",
+        "serviceable": false
+    },
+    "799001": {
+        "state": "Tripura",
+        "city": "Agartala GPO",
+        "zone": "Northeast",
+        "serviceable": false
+    },
+    "737101": {
+        "state": "Sikkim",
+        "city": "Gangtok GPO",
+        "zone": "Northeast",
+        "serviceable": false
+    }
+}

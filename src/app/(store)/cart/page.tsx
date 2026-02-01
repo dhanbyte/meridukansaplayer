@@ -6,6 +6,9 @@ import { Input } from "@/components/ui/input";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Separator } from "@/components/ui/separator";
 import {
   Dialog,
   DialogContent,
@@ -15,8 +18,19 @@ import {
   DialogFooter,
   DialogClose,
 } from "@/components/ui/dialog";
-import { Minus, Plus, Search, ShoppingBag } from "lucide-react";
-import type { Order } from "@/lib/types";
+import {
+  Minus,
+  Plus,
+  Search,
+  ShoppingBag,
+  Package,
+  Truck,
+  CreditCard,
+  Percent,
+  Gift,
+  Receipt,
+  Trash2
+} from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
 import { useCart } from "@/lib/CartContext";
 import { useAuth } from "@/lib/AuthContext";
@@ -34,18 +48,30 @@ interface Product {
   image: string;
   sku?: string;
   productSku?: string;
+  packingCostPerUnit?: number;
 }
 
 export default function CartPage() {
-  const { cart, removeFromCart, increaseQuantity, decreaseQuantity, clearCart, placeOrder, getTotalPrice, addToCart } = useCart();
+  const {
+    cart,
+    removeFromCart,
+    increaseQuantity,
+    decreaseQuantity,
+    clearCart,
+    addToCart,
+    paymentMethod,
+    setPaymentMethod,
+    getChargesBreakdown,
+    settings
+  } = useCart();
   const { user } = useAuth();
   const { toast } = useToast();
-  const [paymentMethod, setPaymentMethod] = React.useState("prepaid");
   const [isAddressDialogOpen, setIsAddressDialogOpen] = React.useState(false);
   const [shippingInfo, setShippingInfo] = React.useState<ShippingInfo | null>(null);
   const [products, setProducts] = React.useState<Product[]>([]);
   const [productSearch, setProductSearch] = React.useState("");
   const [isProductDialogOpen, setIsProductDialogOpen] = React.useState(false);
+  const [isOrderPlacing, setIsOrderPlacing] = React.useState(false);
 
   // State for the address form fields
   const [formName, setFormName] = React.useState("");
@@ -69,8 +95,8 @@ export default function CartPage() {
     }
   };
 
-  const totalCartPrice = getTotalPrice();
-  const finalTotal = totalCartPrice;
+  // Get charges breakdown
+  const charges = getChargesBreakdown();
 
   const handleSaveAddress = (e: React.FormEvent) => {
     e.preventDefault();
@@ -120,6 +146,8 @@ export default function CartPage() {
       return;
     }
 
+    setIsOrderPlacing(true);
+
     try {
       const getNumericPrice = (p: any) => {
         if (typeof p === 'number') return p;
@@ -141,10 +169,19 @@ export default function CartPage() {
             productSku: item.productSku || item.sku || 'N/A',
             quantity: item.quantity,
             price: itemPrice,
+            packingCost: item.packingCostPerUnit || 0,
             total: itemPrice * item.quantity
           };
         }),
-        totalAmount: finalTotal,
+        // Include all charges in order
+        charges: {
+          productCost: charges.productCost,
+          packingCharges: charges.packingCharges,
+          deliveryCharges: charges.deliveryCharges,
+          platformFees: charges.platformFees,
+          codCharges: charges.codCharges
+        },
+        totalAmount: charges.grandTotal,
         paymentMethod: paymentMethod,
         status: 'draft',
       };
@@ -164,6 +201,8 @@ export default function CartPage() {
       }
     } catch (error) {
       toast({ variant: "destructive", title: "Order Failed", description: "Could not place your order." });
+    } finally {
+      setIsOrderPlacing(false);
     }
   };
 
@@ -176,7 +215,8 @@ export default function CartPage() {
       quantity: 1,
       sku: product.sku || product.productSku || 'N/A',
       productSku: product.sku || product.productSku || 'N/A',
-      category: 'General', // Fallback as item needs category
+      packingCostPerUnit: product.packingCostPerUnit || 0,
+      category: 'General',
     });
     setIsProductDialogOpen(false);
     setProductSearch("");
@@ -190,10 +230,22 @@ export default function CartPage() {
     product.name.toLowerCase().includes(productSearch.toLowerCase())
   );
 
+  const formatCurrency = (amount: number) => {
+    return new Intl.NumberFormat('en-IN', {
+      style: 'currency',
+      currency: 'INR',
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 0,
+    }).format(amount);
+  };
+
   return (
     <div className="container mx-auto px-4 py-6 max-w-6xl">
       <div className="mb-6">
-        <h1 className="text-2xl sm:text-3xl font-bold">Your Cart ({cart.length} items)</h1>
+        <h1 className="text-2xl sm:text-3xl font-bold flex items-center gap-2">
+          <ShoppingBag className="h-8 w-8 text-blue-600" />
+          Your Cart ({cart.length} items)
+        </h1>
       </div>
 
       {cart.length === 0 ? (
@@ -217,119 +269,243 @@ export default function CartPage() {
                 Add Products
               </Button>
               <Button variant="outline" onClick={() => clearCart()}>
+                <Trash2 className="h-4 w-4 mr-2" />
                 Clear Cart
               </Button>
             </div>
 
             {/* Cart Items */}
             <div className="space-y-4">
-              {cart.map((item) => (
-                <div key={item.id} className="border rounded-lg p-4 flex gap-4">
-                  <Image
-                    src={item.image}
-                    alt={item.name}
-                    width={80}
-                    height={80}
-                    className="rounded-md w-16 h-16 sm:w-20 sm:h-20 object-cover"
-                  />
-                  <div className="flex-1 w-full">
-                    <h4 className="text-sm sm:text-base font-semibold line-clamp-2">{item.name}</h4>
-                    <div className="flex items-center justify-between mt-2">
-                      <div className="flex items-center">
-                        <Button size="icon" variant="outline" className="h-7 w-7 sm:h-8 sm:w-8" onClick={() => decreaseQuantity(item.id)}>
-                          <Minus className="h-3 w-3 sm:h-4 sm:w-4" />
-                        </Button>
-                        <Input
-                          type="number"
-                          value={item.quantity}
-                          readOnly
-                          className="w-10 sm:w-12 text-center mx-1 sm:mx-2 h-7 sm:h-8 text-sm"
+              {cart.map((item) => {
+                const itemPrice = typeof item.price === 'number' ? item.price : (item.price?.discounted || item.price?.original || 0);
+                return (
+                  <Card key={item.id}>
+                    <CardContent className="p-4">
+                      <div className="flex gap-4">
+                        <Image
+                          src={item.image}
+                          alt={item.name}
+                          width={80}
+                          height={80}
+                          className="rounded-md w-16 h-16 sm:w-20 sm:h-20 object-cover"
                         />
-                        <Button size="icon" variant="outline" className="h-7 w-7 sm:h-8 sm:w-8" onClick={() => increaseQuantity(item.id)}>
-                          <Plus className="h-3 w-3 sm:h-4 sm:w-4" />
-                        </Button>
+                        <div className="flex-1">
+                          <h4 className="font-semibold line-clamp-2">{item.name}</h4>
+                          <div className="flex items-center gap-2 mt-1">
+                            <span className="text-green-600 font-medium">{formatCurrency(itemPrice)}</span>
+                            {item.packingCostPerUnit && item.packingCostPerUnit > 0 && (
+                              <Badge variant="secondary" className="text-xs">
+                                +{formatCurrency(item.packingCostPerUnit)}/unit packing
+                              </Badge>
+                            )}
+                          </div>
+                          <div className="flex items-center justify-between mt-3">
+                            <div className="flex items-center">
+                              <Button size="icon" variant="outline" className="h-8 w-8" onClick={() => decreaseQuantity(item.id)}>
+                                <Minus className="h-4 w-4" />
+                              </Button>
+                              <Input
+                                type="number"
+                                value={item.quantity}
+                                readOnly
+                                className="w-12 text-center mx-2 h-8"
+                              />
+                              <Button size="icon" variant="outline" className="h-8 w-8" onClick={() => increaseQuantity(item.id)}>
+                                <Plus className="h-4 w-4" />
+                              </Button>
+                            </div>
+                            <div className="text-right">
+                              <p className="font-semibold">{formatCurrency(itemPrice * item.quantity)}</p>
+                              <Button variant="link" className="p-0 h-auto text-red-500 text-xs" onClick={() => removeFromCart(item.id)}>
+                                Remove
+                              </Button>
+                            </div>
+                          </div>
+                        </div>
                       </div>
-                      <p className="text-sm sm:text-base font-semibold">
-                        ₹{((typeof item.price === 'number' ? item.price : (item.price?.discounted || item.price?.original || 0)) * item.quantity).toFixed(2)}
-                      </p>
-                    </div>
-                    <Button variant="link" className="p-0 h-auto text-red-500 mt-2 text-xs" onClick={() => removeFromCart(item.id)}>
-                      Remove
-                    </Button>
-                  </div>
-                </div>
-              ))}
+                    </CardContent>
+                  </Card>
+                );
+              })}
             </div>
           </div>
 
-          {/* Right Column: Order Details */}
-          <div className="space-y-4 sm:space-y-6">
-            <div className="border rounded-lg p-3 sm:p-4">
-              <h3 className="font-semibold mb-2 text-sm sm:text-base">Shipping Address</h3>
-              {shippingInfo ? (
-                <div className="text-xs sm:text-sm">
-                  <p className="font-medium">{shippingInfo.customerName}</p>
-                  <p>{shippingInfo.customerPhone}</p>
-                  <p className="text-muted-foreground break-words">{shippingInfo.address}</p>
-                  <Button variant="link" className="p-0 h-auto mt-2 text-xs sm:text-sm" onClick={() => setIsAddressDialogOpen(true)}>Change Address</Button>
-                </div>
-              ) : (
-                <Dialog open={isAddressDialogOpen} onOpenChange={setIsAddressDialogOpen}>
-                  <DialogTrigger asChild>
-                    <Button variant="destructive">Add New Address</Button>
-                  </DialogTrigger>
-                  <DialogContent className="w-[95vw] max-w-md">
-                    <DialogHeader>
-                      <DialogTitle className="text-base sm:text-lg">Add Shipping Address</DialogTitle>
-                    </DialogHeader>
-                    <form onSubmit={handleSaveAddress}>
-                      <div className="grid gap-4 py-4">
-                        <div className="space-y-2">
-                          <Label htmlFor="name" className="text-sm">Name</Label>
-                          <Input id="name" value={formName} onChange={e => setFormName(e.target.value)} placeholder="Full Name" required />
+          {/* Right Column: Order Details & Invoice */}
+          <div className="space-y-4">
+            {/* Shipping Address */}
+            <Card>
+              <CardHeader className="pb-3">
+                <CardTitle className="text-base flex items-center gap-2">
+                  <Truck className="h-4 w-4" />
+                  Shipping Address
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                {shippingInfo ? (
+                  <div className="text-sm space-y-1">
+                    <p className="font-medium">{shippingInfo.customerName}</p>
+                    <p className="text-gray-600">{shippingInfo.customerPhone}</p>
+                    <p className="text-gray-500">{shippingInfo.address}</p>
+                    <Button variant="link" className="p-0 h-auto text-sm" onClick={() => setIsAddressDialogOpen(true)}>
+                      Change Address
+                    </Button>
+                  </div>
+                ) : (
+                  <Dialog open={isAddressDialogOpen} onOpenChange={setIsAddressDialogOpen}>
+                    <DialogTrigger asChild>
+                      <Button variant="destructive" className="w-full">Add New Address</Button>
+                    </DialogTrigger>
+                    <DialogContent className="w-[95vw] max-w-md">
+                      <DialogHeader>
+                        <DialogTitle>Add Shipping Address</DialogTitle>
+                      </DialogHeader>
+                      <form onSubmit={handleSaveAddress}>
+                        <div className="grid gap-4 py-4">
+                          <div className="space-y-2">
+                            <Label htmlFor="name">Name</Label>
+                            <Input id="name" value={formName} onChange={e => setFormName(e.target.value)} placeholder="Full Name" required />
+                          </div>
+                          <div className="space-y-2">
+                            <Label htmlFor="phone">Phone</Label>
+                            <Input id="phone" value={formPhone} onChange={e => setFormPhone(e.target.value)} placeholder="Phone Number" required />
+                          </div>
+                          <div className="space-y-2">
+                            <Label htmlFor="address">Address</Label>
+                            <Textarea id="address" value={formAddress} onChange={e => setFormAddress(e.target.value)} placeholder="Full shipping address" required />
+                          </div>
                         </div>
-                        <div className="space-y-2">
-                          <Label htmlFor="phone" className="text-sm">Phone</Label>
-                          <Input id="phone" value={formPhone} onChange={e => setFormPhone(e.target.value)} placeholder="Phone Number" required />
-                        </div>
-                        <div className="space-y-2">
-                          <Label htmlFor="address" className="text-sm">Address</Label>
-                          <Textarea id="address" value={formAddress} onChange={e => setFormAddress(e.target.value)} placeholder="Full shipping address" required />
-                        </div>
-                      </div>
-                      <DialogFooter>
-                        <DialogClose asChild>
-                          <Button type="button" variant="secondary">Cancel</Button>
-                        </DialogClose>
-                        <Button type="submit">Save Address</Button>
-                      </DialogFooter>
-                    </form>
-                  </DialogContent>
-                </Dialog>
-              )}
-            </div>
-            <div className="border rounded-lg p-3 sm:p-4">
-              <h3 className="font-semibold mb-2 text-sm sm:text-base">Payment Method</h3>
-              <RadioGroup value={paymentMethod} onValueChange={setPaymentMethod}>
-                <div className="flex items-center space-x-2">
-                  <RadioGroupItem value="prepaid" id="prepaid" />
-                  <Label htmlFor="prepaid">Prepaid</Label>
+                        <DialogFooter>
+                          <DialogClose asChild>
+                            <Button type="button" variant="secondary">Cancel</Button>
+                          </DialogClose>
+                          <Button type="submit">Save Address</Button>
+                        </DialogFooter>
+                      </form>
+                    </DialogContent>
+                  </Dialog>
+                )}
+              </CardContent>
+            </Card>
+
+            {/* Payment Method */}
+            <Card>
+              <CardHeader className="pb-3">
+                <CardTitle className="text-base flex items-center gap-2">
+                  <CreditCard className="h-4 w-4" />
+                  Payment Method
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <RadioGroup value={paymentMethod} onValueChange={(val) => setPaymentMethod(val as 'prepaid' | 'cod')}>
+                  <div className="flex items-center space-x-2">
+                    <RadioGroupItem value="prepaid" id="prepaid" />
+                    <Label htmlFor="prepaid" className="flex items-center gap-2">
+                      Prepaid
+                      {paymentMethod === 'prepaid' && (
+                        <Badge variant="secondary" className="text-xs bg-green-100 text-green-700">No COD Charge</Badge>
+                      )}
+                    </Label>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <RadioGroupItem value="cod" id="cod" />
+                    <Label htmlFor="cod" className="flex items-center gap-2">
+                      Cash On Delivery
+                      {paymentMethod === 'cod' && (
+                        <Badge variant="secondary" className="text-xs bg-orange-100 text-orange-700">+{formatCurrency(settings.cod_charge)}</Badge>
+                      )}
+                    </Label>
+                  </div>
+                </RadioGroup>
+              </CardContent>
+            </Card>
+
+            {/* Invoice Breakdown */}
+            <Card className="bg-gradient-to-br from-slate-50 to-blue-50">
+              <CardHeader className="pb-3">
+                <CardTitle className="text-base flex items-center gap-2">
+                  <Receipt className="h-4 w-4" />
+                  Invoice Breakdown
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-3">
+                {/* Product Cost */}
+                <div className="flex justify-between items-center">
+                  <div className="flex items-center gap-2 text-sm">
+                    <Package className="h-4 w-4 text-gray-500" />
+                    Product Cost
+                  </div>
+                  <span className="font-medium">{formatCurrency(charges.productCost)}</span>
                 </div>
-                <div className="flex items-center space-x-2">
-                  <RadioGroupItem value="cod" id="cod" />
-                  <Label htmlFor="cod">Cash On Delivery</Label>
+
+                {/* Packing Charges */}
+                <div className="flex justify-between items-center">
+                  <div className="flex items-center gap-2 text-sm">
+                    <Gift className="h-4 w-4 text-gray-500" />
+                    Packing Charges
+                  </div>
+                  <span className="font-medium text-gray-600">+ {formatCurrency(charges.packingCharges)}</span>
                 </div>
-              </RadioGroup>
-            </div>
-            <div className="border rounded-lg p-3 sm:p-4 space-y-2">
-              <h3 className="font-semibold mb-2 text-sm sm:text-base">Order Summary</h3>
-              <div className="flex justify-between font-bold text-lg border-t pt-2 mt-2">
-                <span>Total:</span>
-                <span>₹{finalTotal.toFixed(2)}</span>
-              </div>
-            </div>
-            <Button className="w-full bg-slate-900 text-white hover:bg-slate-800 text-sm sm:text-base py-2 sm:py-3" onClick={handlePlaceOrder}>
-              Place Order
+
+                {/* Delivery Charges */}
+                <div className="flex justify-between items-center">
+                  <div className="flex items-center gap-2 text-sm">
+                    <Truck className="h-4 w-4 text-gray-500" />
+                    Delivery Charges
+                    {charges.isFreeDelivery && (
+                      <Badge className="text-xs bg-green-500">FREE</Badge>
+                    )}
+                  </div>
+                  <span className={`font-medium ${charges.isFreeDelivery ? 'text-green-600 line-through' : 'text-gray-600'}`}>
+                    {charges.isFreeDelivery ? formatCurrency(settings.delivery_charge) : `+ ${formatCurrency(charges.deliveryCharges)}`}
+                  </span>
+                </div>
+                {!charges.isFreeDelivery && charges.productCost > 0 && (
+                  <p className="text-xs text-gray-500 ml-6">
+                    Free delivery on orders above {formatCurrency(settings.free_delivery_threshold)}
+                  </p>
+                )}
+
+                {/* Handling Fees (Platform Fee) */}
+                <div className="flex justify-between items-center">
+                  <div className="flex items-center gap-2 text-sm">
+                    <Percent className="h-4 w-4 text-gray-500" />
+                    Handling Fees
+                    <span className="text-xs text-gray-400">({settings.platform_fee_percent}%)</span>
+                  </div>
+                  <span className="font-medium text-gray-600">+ {formatCurrency(charges.platformFees)}</span>
+                </div>
+
+                {/* COD Charges */}
+                {paymentMethod === 'cod' && (
+                  <div className="flex justify-between items-center">
+                    <div className="flex items-center gap-2 text-sm">
+                      <CreditCard className="h-4 w-4 text-orange-500" />
+                      COD Charges
+                    </div>
+                    <span className="font-medium text-orange-600">+ {formatCurrency(charges.codCharges)}</span>
+                  </div>
+                )}
+
+                <Separator className="my-3" />
+
+                {/* Grand Total */}
+                <div className="flex justify-between items-center bg-white rounded-lg p-3 shadow-sm">
+                  <div className="text-base font-semibold">
+                    GRAND TOTAL
+                    <p className="text-xs font-normal text-gray-500">Vendor Payable Amount</p>
+                  </div>
+                  <span className="text-xl font-bold text-green-700">{formatCurrency(charges.grandTotal)}</span>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Place Order Button */}
+            <Button
+              className="w-full bg-slate-900 text-white hover:bg-slate-800 py-6 text-lg"
+              onClick={handlePlaceOrder}
+              disabled={isOrderPlacing}
+            >
+              {isOrderPlacing ? 'Placing Order...' : `Place Order - ${formatCurrency(charges.grandTotal)}`}
             </Button>
           </div>
         </div>
@@ -368,7 +544,12 @@ export default function CartPage() {
                     />
                     <div className="flex-1">
                       <h4 className="font-medium text-sm line-clamp-2">{product.name}</h4>
-                      <p className="text-green-600 font-semibold">₹{product.price}</p>
+                      <div className="flex items-center gap-2">
+                        <p className="text-green-600 font-semibold">{formatCurrency(product.price)}</p>
+                        {product.packingCostPerUnit && product.packingCostPerUnit > 0 && (
+                          <span className="text-xs text-gray-400">+{formatCurrency(product.packingCostPerUnit)} packing</span>
+                        )}
+                      </div>
                     </div>
                     <Button size="sm" onClick={() => handleAddProduct(product)}>
                       Add

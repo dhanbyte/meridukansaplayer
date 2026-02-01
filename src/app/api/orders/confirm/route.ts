@@ -24,29 +24,50 @@ export async function POST(request: Request) {
 
     console.log('[Confirm] Current order status:', currentOrder.status);
 
-    // Allow confirming from pending or confirmed status
-    if (currentOrder.status !== 'pending' && currentOrder.status !== 'confirmed') {
+    // Define allowed statuses for different operations
+    // Order Flow: pending → confirmed → in_transit → delivered
+    // Also allow: draft → pending/confirmed
+    const allowedForConfirm = ['draft', 'pending', 'confirmed'];
+    const allowedForTrackingUpdate = ['confirmed', 'in_transit', 'dispatched'];
+
+    // Check if we can process this order
+    const canConfirm = allowedForConfirm.includes(currentOrder.status);
+    const canUpdateTracking = allowedForTrackingUpdate.includes(currentOrder.status);
+
+    if (!canConfirm && !canUpdateTracking) {
       return NextResponse.json({
-        error: `Cannot confirm order with status: ${currentOrder.status}. Only pending or confirmed orders can be processed.`
+        error: `Cannot process order with status: ${currentOrder.status}. Order must be in pending, confirmed, or in_transit status.`
       }, { status: 400 });
     }
 
-    // Build update data based on current status
+    // Build update data based on current status and request
     const updateData: any = {
       updated_at: new Date().toISOString()
     };
 
-    // If it's pending, set to confirmed
-    if (currentOrder.status === 'pending') {
+    // Status transition logic
+    if (currentOrder.status === 'draft') {
+      // draft → pending (or confirmed if approving)
+      updateData.status = 'pending';
+    } else if (currentOrder.status === 'pending' && !trackingId) {
+      // pending → confirmed (approve without tracking)
       updateData.status = 'confirmed';
       updateData.confirmed_at = new Date().toISOString();
-    }
-
-    // If tracking ID is provided, set status to in_transit
-    if (trackingId && trackingId.trim()) {
+    } else if (currentOrder.status === 'pending' && trackingId) {
+      // pending → in_transit (approve with tracking directly)
+      updateData.status = 'in_transit';
+      updateData.confirmed_at = new Date().toISOString();
+      updateData.in_transit_at = new Date().toISOString();
       updateData.tracking_id = trackingId.trim();
+    } else if (currentOrder.status === 'confirmed' && trackingId) {
+      // confirmed → in_transit (add tracking)
       updateData.status = 'in_transit';
       updateData.in_transit_at = new Date().toISOString();
+      updateData.tracking_id = trackingId.trim();
+    } else if ((currentOrder.status === 'in_transit' || currentOrder.status === 'dispatched') && trackingId) {
+      // Already in_transit, just update tracking ID
+      updateData.tracking_id = trackingId.trim();
+      console.log('[Confirm] Updating tracking ID for in_transit order');
     }
 
     const { error: updateError } = await supabase
@@ -59,11 +80,12 @@ export async function POST(request: Request) {
       throw updateError;
     }
 
+
     // --- Shopify Sync Logic ---
     if (trackingId && trackingId.trim() && currentOrder.order_id?.startsWith('SHP-')) {
       try {
         const shopifyOrderId = currentOrder.order_id.replace('SHP-', '');
-        
+
         // Find the partner credentials
         const { data: partner } = await supabase
           .from('users')
@@ -73,20 +95,20 @@ export async function POST(request: Request) {
 
         if (partner && partner.shopify_is_connected) {
           console.log(`[Shopify Sync] Updating fulfillment for order ${shopifyOrderId}`);
-          
+
           // 1. Get fulfillment orders for this order
           const foResp = await fetch(`https://${partner.shopify_store_url}/admin/api/2024-01/orders/${shopifyOrderId}/fulfillment_orders.json`, {
             headers: { 'X-Shopify-Access-Token': partner.shopify_access_token }
           });
           const foData = await foResp.json();
-          
+
           if (foResp.ok && foData.fulfillment_orders?.length > 0) {
             const fulfillmentOrderId = foData.fulfillment_orders[0].id;
-            
+
             // 2. Create fulfillment
             const fResp = await fetch(`https://${partner.shopify_store_url}/admin/api/2024-01/fulfillments.json`, {
               method: 'POST',
-              headers: { 
+              headers: {
                 'X-Shopify-Access-Token': partner.shopify_access_token,
                 'Content-Type': 'application/json'
               },
@@ -111,7 +133,7 @@ export async function POST(request: Request) {
                 }
               })
             });
-            
+
             const fData = await fResp.json();
             if (fResp.ok) {
               console.log(`[Shopify Sync] Successfully fulfilled order ${shopifyOrderId}`);

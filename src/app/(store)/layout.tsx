@@ -21,7 +21,8 @@ import {
   Video,
   RefreshCw,
   LayoutDashboard,
-  Package
+  Package,
+  BarChart3
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -218,9 +219,9 @@ function MobileNav() {
             <Box className="h-5 w-5" />
             <span>Orders</span>
           </Link>
-          <Link href="/shopify" className="flex items-center space-x-3 p-2 rounded-md hover:bg-gray-100">
-            <RefreshCw className="h-5 w-5 text-green-600" />
-            <span>Shopify Sync</span>
+          <Link href="/analytics" className="flex items-center space-x-3 p-2 rounded-md hover:bg-gray-100">
+            <BarChart3 className="h-5 w-5 text-purple-600" />
+            <span>Analytics</span>
           </Link>
           <Link href="/learning" className="flex items-center space-x-3 p-2 rounded-md hover:bg-gray-100">
             <Video className="h-5 w-5" />
@@ -280,9 +281,9 @@ function Header() {
               <Box className="h-5 w-5" />
               <span className="font-medium">Orders</span>
             </Link>
-            <Link href="/shopify" className="flex items-center space-x-2 text-gray-600 hover:text-brand-navy hover:bg-gray-50 px-3 py-2 rounded-md transition-colors">
-              <RefreshCw className="h-5 w-5 text-green-600" />
-              <span className="font-medium">Shopify Sync</span>
+            <Link href="/analytics" className="flex items-center space-x-2 text-gray-600 hover:text-brand-navy hover:bg-gray-50 px-3 py-2 rounded-md transition-colors">
+              <BarChart3 className="h-5 w-5 text-purple-600" />
+              <span className="font-medium">Analytics</span>
             </Link>
             <Link href="/learning" className="flex items-center space-x-2 text-gray-600 hover:text-brand-navy hover:bg-gray-50 px-3 py-2 rounded-md transition-colors">
               <Video className="h-5 w-5" />
@@ -323,6 +324,12 @@ function Header() {
                 <DropdownMenuContent>
                   <DropdownMenuItem asChild>
                     <Link href="/profile" className="w-full cursor-pointer">Profile</Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem asChild>
+                    <Link href="/shopify" className="w-full cursor-pointer flex items-center gap-2">
+                      <RefreshCw className="h-4 w-4 text-green-600" />
+                      Shopify Sync
+                    </Link>
                   </DropdownMenuItem>
                   <DropdownMenuItem onClick={handleLogout} className="cursor-pointer text-red-600">Logout</DropdownMenuItem>
                 </DropdownMenuContent>

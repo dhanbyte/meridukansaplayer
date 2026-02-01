@@ -11,6 +11,7 @@ export interface Product {
     currency?: string;
   };
   originalPrice?: number;
+  mrp?: number;
   stock?: number;
   quantity?: number;
   image: string;
@@ -28,6 +29,7 @@ export interface Product {
   isCustomizable?: boolean;
   tags?: string[];
   weight?: number;
+  packingCostPerUnit?: number;
   source?: string;
   createdAt?: string | Date;
   productSku?: string;
@@ -51,18 +53,18 @@ export interface Partner {
 }
 
 export interface Order {
-    id: string;
-    partnerId: string;
-    customerName: string;
-    customerPhone: string;
-    shippingAddress: string;
-    productSku: string;
-    quantity: number;
-    paymentMethod: string;
-    status: 'Pending' | 'Accepted' | 'Rejected' | 'Shipped' | 'Delivered' | 'Cancelled';
-    trackingId?: string;
-    amount: number;
-    orderDate: any; // Using 'any' for Firebase ServerTimestamp
+  id: string;
+  partnerId: string;
+  customerName: string;
+  customerPhone: string;
+  shippingAddress: string;
+  productSku: string;
+  quantity: number;
+  paymentMethod: string;
+  status: 'Pending' | 'Accepted' | 'Rejected' | 'Shipped' | 'Delivered' | 'Cancelled';
+  trackingId?: string;
+  amount: number;
+  orderDate: any; // Using 'any' for Firebase ServerTimestamp
 }
 
 export interface RechargeRequest {

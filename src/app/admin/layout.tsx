@@ -13,7 +13,8 @@ import {
   ChevronDown,
   Video,
   BookOpen,
-  Plus
+  Settings,
+  BarChart3
 } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
@@ -69,11 +70,12 @@ export default function AdminLayout({
 
   const navItems = [
     { href: "/admin", icon: Home, label: "Dashboard" },
+    { href: "/admin/analytics", icon: BarChart3, label: "Analytics" },
     { href: "/admin/orders", icon: Package, label: "Orders" },
-    { href: "/admin/create-order", icon: Plus, label: "Create Order" },
     { href: "/admin/users", icon: Users, label: "Users" },
     { href: "/admin/wallet", icon: Wallet, label: "Wallet" },
     { href: "/admin/products", icon: Package, label: "Products" },
+    { href: "/admin/settings", icon: Settings, label: "Settings" },
     { href: "/admin/tickets", icon: MessageSquare, label: "Support" },
     { href: "/admin/learning-videos", icon: BookOpen, label: "Learning Videos" },
   ];
@@ -186,8 +188,20 @@ export default function AdminLayout({
             <Home className="h-5 w-5 transition-all group-hover:scale-110" />
             <span className="sr-only">Dashboard</span>
           </Link>
-          
+
           <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Link
+                  href="/admin/analytics"
+                  className="flex h-10 w-10 items-center justify-center rounded-lg text-gray-600 transition-colors hover:text-gray-900 hover:bg-gray-100 md:h-9 md:w-9"
+                >
+                  <BarChart3 className="h-5 w-5" />
+                  <span className="sr-only">Analytics</span>
+                </Link>
+              </TooltipTrigger>
+              <TooltipContent side="right">Analytics</TooltipContent>
+            </Tooltip>
             <Tooltip>
               <TooltipTrigger asChild>
                 <Link
@@ -211,18 +225,6 @@ export default function AdminLayout({
                 </Link>
               </TooltipTrigger>
               <TooltipContent side="right">Orders</TooltipContent>
-            </Tooltip>
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <Link
-                  href="/admin/create-order"
-                  className="flex h-10 w-10 items-center justify-center rounded-lg text-gray-600 transition-colors hover:text-gray-900 hover:bg-gray-100 md:h-9 md:w-9"
-                >
-                  <Plus className="h-5 w-5" />
-                  <span className="sr-only">Create Order</span>
-                </Link>
-              </TooltipTrigger>
-              <TooltipContent side="right">Create Order</TooltipContent>
             </Tooltip>
             <Tooltip>
               <TooltipTrigger asChild>
@@ -283,6 +285,18 @@ export default function AdminLayout({
                 </Link>
               </TooltipTrigger>
               <TooltipContent side="right">Learning Videos</TooltipContent>
+            </Tooltip>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Link
+                  href="/admin/settings"
+                  className="flex h-10 w-10 items-center justify-center rounded-lg text-gray-600 transition-colors hover:text-gray-900 hover:bg-gray-100 md:h-9 md:w-9"
+                >
+                  <Settings className="h-5 w-5" />
+                  <span className="sr-only">Settings</span>
+                </Link>
+              </TooltipTrigger>
+              <TooltipContent side="right">Global Settings</TooltipContent>
             </Tooltip>
           </TooltipProvider>
         </nav>
